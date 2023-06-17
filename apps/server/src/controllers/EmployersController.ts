@@ -1,29 +1,43 @@
-function createEmployer() {}
+import { NextFunction, Request, Response } from 'express';
+import Employers from '../models/Employers';
 
-function loginEmployer() {}
+import dotenv from 'dotenv';
 
-function getEmployers() {}
+dotenv.config();
 
-function getEmployer() {}
+const EmployersController = {
+  async createEmployer(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id, name, logoUrl, website } = req.body;
+      const employer = await Employers.create(id, name, logoUrl, website);
+      res.status(201).json(employer);
+    } catch (error) {
+      next(error);
+    }
+  },
 
-function updateEmployer() {}
+  // function loginEmployer() {}
 
-function deleteEmployer() {}
+  // function getEmployers() {}
 
-function createJob() {}
+  async getEmployers(req: Request, res: Response, next: NextFunction) {
+    try {
+      const employers = await Employers.getAll();
+      res.json(employers);
+    } catch (error) {
+      next(error);
+    }
+  },
 
-function updateJob() {}
+  // function updateEmployer() {}
 
-function deleteJob() {}
+  // function deleteEmployer() {}
 
-export default {
-  createEmployer,
-  loginEmployer,
-  getEmployers,
-  getEmployer,
-  updateEmployer,
-  deleteEmployer,
-  createJob,
-  updateJob,
-  deleteJob,
+  // function createJob() {}
+
+  // function updateJob() {}
+
+  // function deleteJob() {}
 };
+
+export default EmployersController;
