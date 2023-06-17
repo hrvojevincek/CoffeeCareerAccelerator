@@ -1,0 +1,20 @@
+{
+  "name": "javapp",
+  "version": "1.0.0",
+  "description": "An app for searching your coffee roaster new job",
+  "main": "index.js",
+  "repository": "git@github.com:hrvojevincek/solo-project.git",
+  "author": "hrvoje <vincekhrvoje@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "devDependencies": {
+    "turbo": "^1.10.3"
+  }
+}

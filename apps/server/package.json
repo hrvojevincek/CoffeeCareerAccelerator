@@ -31,7 +31,7 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "dev": "ts-node-dev src/index.ts"
+    "dev": "nodemon ./src/index.ts"
   },
   "eslintConfig": {
     "parserOptions": {
