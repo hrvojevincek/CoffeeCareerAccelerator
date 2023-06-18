@@ -1,10 +1,15 @@
 import './App.css';
+import FeaturedJobs from './components/FeaturedJobs';
+import MainPage from './components/MainPage';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <div className="bg-slate-300">
-      <h1 className="text-3xl font-bold text-black-600">COFFEE JOBS</h1>
-    </div>
+    <>
+      <Navbar />
+      <MainPage />
+      <FeaturedJobs />
+    </>
   );
 }
 
