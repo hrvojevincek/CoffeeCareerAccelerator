@@ -7,9 +7,10 @@ const router = Router();
 
 //!===================================================================USER
 // router.post('/users', UsersController.createUser);
+// router.get('/users/:userId', UsersController.getUser);
+
 // router.get('/users/login', UsersController.loginUser);
 
-// router.get('/users/:userId', UsersController.getUser);
 // router.get('/users/', UsersController.getUsers);
 // router.put('/users/:userId', UsersController.updateUser);
 // router.delete('/user/:userId', UsersController.deleteUser);
@@ -22,8 +23,8 @@ const router = Router();
 //!=========================================================================EMPLOYER
 
 router.post('/employers', EmployersController.createEmployer);
-// router.get('/employers/login', EmployersController.loginEmployer);
 router.get('/employers/', EmployersController.getEmployers);
+// router.get('/employers/login', EmployersController.loginEmployer);
 // router.get('/employers/:employerId', EmployersController.getEmployer);
 // router.put('/employers/:employerId', EmployersController.updateEmployer);
 // router.delete('/employers/:employerId', EmployersController.deleteEmployer);
