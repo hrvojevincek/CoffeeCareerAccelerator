@@ -59,6 +59,7 @@ async function main() {
       name: 'Starbucks',
       logoUrl: 'https://starbuckslogo.com/logo.jpg',
       website: 'https://www.starbucks.com',
+      location: 'Los Angeles, USA',
     },
   });
 
@@ -68,6 +69,7 @@ async function main() {
       logoUrl:
         'https://upload.wikimedia.org/wikipedia/en/thumb/0/06/Blue_Bottle_Coffee_logo.svg/1200px-Blue_Bottle_Coffee_logo.svg.png',
       website: 'https://www.bluebottlecoffee.com',
+      location: 'New York, USA',
     },
   });
   const fabricaCoffee = await prisma.employer.create({
@@ -75,6 +77,7 @@ async function main() {
       name: 'Fabrica Coffee Roasters',
       logoUrl: 'https://example.com/fabrica-coffee.png',
       website: 'https://www.fabricacoffee.com',
+      location: 'Lisbon, Portugal',
     },
   });
   const nomadcoffee = await prisma.employer.create({
@@ -82,6 +85,7 @@ async function main() {
       name: 'Nømad Coffee',
       logoUrl: 'https://example.com/nomad-coffee.png',
       website: 'https://www.nomadcoffee.es',
+      location: 'Barcelona, Spain',
     },
   });
   const magnifico = await prisma.employer.create({
@@ -89,17 +93,7 @@ async function main() {
       name: 'Café El Magnífico',
       logoUrl: 'https://example.com/el-magnifico.png',
       website: 'https://www.cafeelmagnifico.com',
-    },
-  });
-
-  // Create a job
-  const baristaJob = await prisma.job.create({
-    data: {
-      title: 'Barista',
-      description: 'Looking for a skilled barista to join our team.',
-      location: 'San Francisco',
-      employerId: blueBottle.id,
-      posted: true,
+      location: 'Barcelona, Spain',
     },
   });
 
@@ -107,6 +101,7 @@ async function main() {
   const jobsData = [
     {
       title: 'Barista',
+      category: 'Barista',
       description: 'Join our team of passionate baristas.',
       location: 'Madrid, Spain',
       employerId: blueBottle.id,
@@ -114,6 +109,7 @@ async function main() {
     },
     {
       title: 'Head Barista',
+      category: 'Head Barista',
       description: 'Experienced barista with leadership skills needed.',
       location: 'Lisbon, Portugal',
       employerId: starbucks.id,
@@ -121,6 +117,7 @@ async function main() {
     },
     {
       title: 'Assistant Roaster',
+      category: 'Assistant Roaster',
       description: 'Assist in coffee roasting operations.',
       location: 'Barcelona, Spain',
       employerId: magnifico.id,
@@ -128,6 +125,7 @@ async function main() {
     },
     {
       title: 'Roaster',
+      category: 'Roaster',
       description: 'Experienced roaster for specialty coffee beans.',
       location: 'Porto, Portugal',
       employerId: fabricaCoffee.id,
@@ -135,6 +133,7 @@ async function main() {
     },
     {
       title: 'Head Roaster',
+      category: 'Head Roaster',
       description: 'Lead the coffee roasting team.',
       location: 'Barcelona, Spain',
       employerId: nomadcoffee.id,

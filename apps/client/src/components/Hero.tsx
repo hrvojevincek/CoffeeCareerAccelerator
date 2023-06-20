@@ -1,17 +1,19 @@
-function MainPage() {
+import { Link } from 'react-router-dom';
+
+function Hero() {
   return (
-    <section className="bg-right bg-no-repeat bg-[url('https://media.timeout.com/images/105871441/image.jpg')] bg-gray-400 bg-blend-multiply">
-      <div className="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
-        <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
+    <section className="h-screen flex items-center justify-center bg-no-repeat sm:bg-cover md:bg-cover bg-fixed bg-[url('https://media.timeout.com/images/105871441/image.jpg')] bg-gray-600 bg-blend-multiply">
+      <div className="px-4 mx-auto max-w-screen-xl text-center ">
+        <h1 className="mb-10 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
           Coffee Career Accelerator
         </h1>
-        <p className="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
+        <p className="mb-10 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
           "Land your dream barista job quickly and effortlessly through our
-          user-friendly platform."
+          platform."
         </p>
         <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-          <a
-            href="#"
+          <Link
+            to="/jobs"
             className="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400"
           >
             Find Jobs
@@ -28,17 +30,17 @@ function MainPage() {
                 clipRule="evenodd"
               ></path>
             </svg>
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="/company"
             className="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400"
           >
             For Companies
-          </a>
+          </Link>
         </div>
       </div>
     </section>
   );
 }
 
-export default MainPage;
+export default Hero;

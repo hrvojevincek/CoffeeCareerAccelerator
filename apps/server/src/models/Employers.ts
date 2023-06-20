@@ -7,17 +7,19 @@ class Employers {
     id: number,
     name: string,
     logoUrl: string,
-    website: string
+    website: string,
+    location: string
   ): Promise<Employers> {
-    const job = await prisma.employer.create({
+    const employer = await prisma.employer.create({
       data: {
         id,
         name,
         logoUrl,
         website,
+        location,
       },
     });
-    return job;
+    return employer;
   }
 
   static async getAll(): Promise<Employers[]> {

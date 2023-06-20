@@ -20,7 +20,7 @@ const router = Router();
 // router.put('/users/experiences/:id', UsersController.updateExperience);
 // router.delete('/users/experiences/:id', UsersController.deleteExperience);
 
-//!=========================================================================EMPLOYER
+//!===================================================================EMPLOYER
 
 router.post('/employers', EmployersController.createEmployer);
 router.get('/employers/', EmployersController.getEmployers);
@@ -40,6 +40,9 @@ router.get('/employers/', EmployersController.getEmployers);
 
 router.get('/jobs', JobsController.getJobs);
 router.post('/jobs', JobsController.createJob);
+router.get('/jobs/categories/:category', JobsController.findByCategory);
 router.delete('/jobs/:id', JobsController.deleteJob);
+
+router.get('/jobs/:id', JobsController.getJob);
 
 export default router;

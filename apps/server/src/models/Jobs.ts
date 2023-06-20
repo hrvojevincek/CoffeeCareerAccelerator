@@ -1,29 +1,66 @@
-import { PrismaClient } from '@prisma/client';
+import { Job, PrismaClient } from '@prisma/client';
+
 const prisma = new PrismaClient();
 
 class Jobs {
   static async create(
-    id: number,
     title: string,
+    categories: string,
     description: string,
     location: string,
-    employerId: number
+    money: string,
+    employerId?: number
   ): Promise<Jobs> {
     const job = await prisma.job.create({
       data: {
-        id,
         title,
+        categories,
         description,
         location,
-        employerId,
+        money,
+        employer: {
+          connect: { id: employerId },
+        },
       },
     });
     return job;
   }
 
   static async getAll(): Promise<Jobs[]> {
-    const jobs = await prisma.job.findMany();
+    const jobs = await prisma.job.findMany({
+      include: {
+        employer: true,
+      },
+    });
     return jobs;
+  }
+
+  static async getJob(id: number): Promise<Jobs> {
+    const job = await prisma.job.findUnique({
+      where: { id },
+      include: {
+        employer: true,
+      },
+    });
+    return [job];
+  }
+
+  static async deleteJob(id: number): Promise<Jobs> {
+    const job = await prisma.job.delete({
+      where: { id },
+    });
+    return job;
+  }
+
+  static async findByCategory(category: string): Promise<Jobs> {
+    return await prisma.job.findMany({
+      where: {
+        categories: category,
+      },
+      include: {
+        employer: true,
+      },
+    });
   }
 }
 
