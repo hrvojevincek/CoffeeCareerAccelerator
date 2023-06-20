@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import FeaturedJobs from '../components/FeaturedJobs';
 import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import { JobData } from '../types';
 

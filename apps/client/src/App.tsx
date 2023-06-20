@@ -4,6 +4,7 @@ import JobDetailPage from './pages/JobDetailPage';
 import CompanyPage from './pages/CompanyPage';
 import JobsPage from './pages/JobsPage';
 import 'flowbite/dist/flowbite.css';
+import 'flowbite';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
           <Route path="/jobs/" element={<JobsPage />} />
           {/* <Route path="/jobs/categories/:category" element={<JobsPage />} /> */}
           <Route path="/jobs/:id" element={<JobDetailPage />} />
-          <Route path="/company/:id" element={<CompanyPage />} />
+          <Route path="/company" element={<CompanyPage />} />
         </Routes>
       </BrowserRouter>
     </>

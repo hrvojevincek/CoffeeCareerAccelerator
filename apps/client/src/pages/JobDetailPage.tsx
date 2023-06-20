@@ -27,7 +27,6 @@ function JobDetails() {
     <div>
       <Navbar />
       <DetailWork data={job} />
-      {/* {job ? JSON.stringify(job) : 'Loading...'} */}
       <RelatedJobs />
       <Footer />
     </div>

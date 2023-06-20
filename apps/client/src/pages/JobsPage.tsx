@@ -48,8 +48,8 @@ function Jobs() {
               </a>
             </li>
 
-            {categories.map((category) => (
-              <li className="mr-2">
+            {categories.map((category, i) => (
+              <li key={i} className="mr-2">
                 <a
                   className={`${
                     category === selectedCategory
