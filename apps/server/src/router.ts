@@ -25,9 +25,9 @@ router.get('/users', UsersController.getUsers);
 
 router.post('/employers/singup', EmployersController.createEmployer);
 router.get('/employers/', EmployersController.getEmployers);
+router.put('/employer/:employerId', EmployersController.updateEmployer);
 // router.get('/employers/login', EmployersController.loginEmployer);
 // router.get('/employers/:employerId', EmployersController.getEmployer);
-// router.put('/employers/:employerId', EmployersController.updateEmployer);
 // router.delete('/employers/:employerId', EmployersController.deleteEmployer);
 
 // router.post('/employer/:employerId/jobs', EmployersController.createJob);

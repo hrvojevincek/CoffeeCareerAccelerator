@@ -1,11 +1,5 @@
-import Navbar from '../components/Navbar';
-
 function CompanyPage() {
-  return (
-    <div>
-      <Navbar />
-    </div>
-  );
+  return <div className="bg-gray-50">HELLO</div>;
 }
 
 export default CompanyPage;

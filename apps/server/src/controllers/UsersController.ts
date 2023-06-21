@@ -76,8 +76,23 @@ const UsersController = {
       next(e);
     }
   },
-  // function getUsers() {}
-  // function updateUser() {}
+
+  async getUser(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+
+    try {
+      const user = await User.getUser(Number(id));
+      if (user) {
+        res.json(user);
+      } else {
+        res.status(404).json({ message: 'User not found' });
+      }
+    } catch (error) {
+      next(error);
+    }
+  },
+  async updateUser(req: Request, res: Response, next: NextFunction) {},
+
   // function deleteUser() {}
   // function createExperience() {}
   // function getExperience() {}

@@ -3,7 +3,12 @@ import FeaturedJobs from '../components/FeaturedJobs';
 import Navbar from '../components/Navbar';
 import { JobData } from '../types';
 
-function Jobs() {
+function Jobs(props: LoggedInProp) {
+  const { isLoggedIn } = props;
+
+  //check if cookies have the token
+
+
   const [selectedCategory, setSelectedCategory] = useState('');
   const [categories, setCategories] = useState<string[]>([]);
   const [data, setData] = useState<JobData[]>([]);
@@ -30,7 +35,7 @@ function Jobs() {
 
   return (
     <div className="dark:bg-gray-900 ">
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} />
       <div className="m-5 mx-auto max-w-4xl gap-10 justify-center">
         <div className="z-10 rounded-xl border-2 border-white">
           <h1 className="m-5 dark:text-white text-2xl font-semibold whitespace-nowrap">

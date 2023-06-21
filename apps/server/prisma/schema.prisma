@@ -37,20 +37,6 @@ model Employer {
   updatedAt DateTime @updatedAt
 }
 
-model Experience {
-  userId      Int
-  jobtitle    String
-  jobrole     String
-  company     String
-  startDate   DateTime
-  finishDate  DateTime
-  description String
-  user        User?    @relation(fields: [userId], references: [id])
-  currentJob  Boolean  @default(false)
-
-  @@id([userId, jobtitle])
-}
-
 model Job {
   id           Int           @id @default(autoincrement())
   title        String
@@ -64,6 +50,20 @@ model Job {
   employerId   Int
   posted       Boolean       @default(true)
   applications Application[]
+}
+
+model Experience {
+  userId      Int
+  jobtitle    String
+  jobrole     String
+  company     String
+  startDate   DateTime
+  finishDate  DateTime
+  description String
+  user        User?    @relation(fields: [userId], references: [id])
+  currentJob  Boolean  @default(false)
+
+  @@id([userId, jobtitle])
 }
 
 model Application {

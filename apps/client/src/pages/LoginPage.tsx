@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 
-const LoginPage: React.FC = () => {
+const LoginPage = (props: LoggedInProp) => {
+  const { isLoggedIn } = props;
+
   return (
     <div className="h-screen flex items-center justify-center bg-no-repeat sm:bg-cover md:bg-cover bg-fixed bg-[url('https://europeancoffeetrip.com/wp-content/uploads/2018/12/Elbgold-Coffee-Lab-2.jpg')]">
       <div className="w-1/3 bg-white rounded-lg shadow dark:bg-gray-800">

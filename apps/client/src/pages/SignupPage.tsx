@@ -3,7 +3,9 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { Inputs } from '../types';
 
-const SignupPage = () => {
+const SignupPage = (props: LoggedInProp) => {
+  const { setisLoggedIn } = props;
+
   const {
     register,
     setValue,

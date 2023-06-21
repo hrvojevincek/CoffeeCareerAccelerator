@@ -10,19 +10,29 @@ import JobsPage from './pages/JobsPage';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
 import UserPage from './pages/UserPage';
+import { useState } from 'react';
 
 function App() {
+  const [isLoggedIn, setisLoggedIn] = useState(true);
+
+
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/jobs/" element={<JobsPage />} />
+          <Route path="/jobs/" element={<JobsPage isLoggedIn={isLoggedIn} />} />
           {/* <Route path="/jobs/categories/:category" element={<JobsPage />} /> */}
           <Route path="/jobs/:id" element={<JobDetailPage />} />
           <Route path="/company" element={<CompanyPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/signup"
+            element={<SignupPage setisLoggedIn={setisLoggedIn} />}
+          />
+          <Route
+            path="/login"
+            element={<LoginPage setisLoggedIn={setisLoggedIn} />}
+          />
           <Route path="/user/:id" element={<UserPage />} />
         </Routes>
       </BrowserRouter>

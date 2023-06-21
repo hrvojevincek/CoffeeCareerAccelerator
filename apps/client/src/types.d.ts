@@ -1,4 +1,4 @@
-export type JobData = {
+type JobData = {
   id: number;
   title: string;
   description: string;
@@ -13,9 +13,14 @@ export type JobData = {
   };
 };
 
-export type Inputs = {
+type Inputs = {
   username: string;
   email: string;
   password: string;
   category: string;
+};
+
+type LoggedInProp = {
+  isLoggedIn?: boolean | undefined;
+  setisLoggedIn?: React.Dispatch<React.SetStateAction<boolean>>;
 };

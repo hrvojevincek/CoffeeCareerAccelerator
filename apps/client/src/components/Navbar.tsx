@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 
-const Navbar: React.FC = () => {
+const Navbar = (props: LoggedInProp) => {
+  const { isLoggedIn } = props;
+
   return (
     <>
       <header>
@@ -12,17 +14,24 @@ const Navbar: React.FC = () => {
               </span>
             </Link>
             <div className="flex md:order-2">
-              {/* HAHAH[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[A */}
-
-              <Link
-                to="/signup"
-                type="button"
-                className="mr-10 inline-flex justify-center hover:text-gray-900 items-center py-3 px-4 text-base font-medium text-center text-gray-50 border-b-2 border-white hover:bg-gray-100 hover:rounded-lg focus:ring-4 focus:ring-gray-400"
-              >
-                Get Started
-              </Link>
-
-              {/*? HA==============================================================HAH */}
+              {/* //use cookies instead of logged in */}
+              {isLoggedIn ? (
+                <Link
+                  to="/signup"
+                  type="button"
+                  className="mr-10 inline-flex justify-center hover:text-gray-900 items-center py-3 px-4 text-base font-medium text-center text-gray-50 border-b-2 border-white hover:bg-gray-100 hover:rounded-lg focus:ring-4 focus:ring-gray-400"
+                >
+                  My Dashboard
+                </Link>
+              ) : (
+                <Link
+                  to="/signup"
+                  type="button"
+                  className="mr-10 inline-flex justify-center hover:text-gray-900 items-center py-3 px-4 text-base font-medium text-center text-gray-50 border-b-2 border-white hover:bg-gray-100 hover:rounded-lg focus:ring-4 focus:ring-gray-400"
+                >
+                  Get Started
+                </Link>
+              )}
             </div>
             <div
               className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"

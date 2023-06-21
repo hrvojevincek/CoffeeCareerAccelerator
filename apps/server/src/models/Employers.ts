@@ -7,12 +7,17 @@ class Employers {
     username: 'string',
     password: string,
     email: string
-  ): Promise<Employers> {
+  ): Promise<Partial<Employers>> {
     const employer = await prisma.employer.create({
       data: {
         username,
         password,
         email,
+      },
+      select: {
+        id: true,
+        username: true,
+        email: true,
       },
     });
     return employer;
@@ -21,6 +26,27 @@ class Employers {
   static async getAll(): Promise<Employers[]> {
     const employers = await prisma.employer.findMany();
     return employers;
+  }
+
+  static async updateEmployer(
+    employerId: number,
+    employerName: string,
+    logoUrl: string,
+    website: string,
+    location: string
+  ): Promise<Employers> {
+    const employer = await prisma.employer.update({
+      where: {
+        id: employerId,
+      },
+      data: {
+        name: employerName,
+        logoUrl,
+        website,
+        location,
+      },
+    });
+    return employer;
   }
 }
 

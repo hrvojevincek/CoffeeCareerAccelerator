@@ -22,6 +22,16 @@ class User {
     const users = await prisma.user.findMany();
     return users;
   }
+
+  static async getUser(id: number): Promise<User> {
+    const user = await prisma.user.findUnique({
+      where: { id },
+    });
+    if (user === null) {
+      throw new Error('User not found');
+    }
+    return user;
+  }
 }
 
 export default User;

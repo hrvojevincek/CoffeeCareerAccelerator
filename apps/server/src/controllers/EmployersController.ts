@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+
 import Employers from '../models/Employers';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
@@ -21,6 +22,7 @@ const EmployersController = {
       next(e);
     }
   },
+  // async loginEmployer(req: Request, res: Response, next: NextFunction) {}
 
   async getEmployers(req: Request, res: Response, next: NextFunction) {
     try {
@@ -31,9 +33,25 @@ const EmployersController = {
     }
   },
 
-  // function loginEmployer() {}
+  async updateEmployer(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { employerId } = req.params;
 
-  // function updateEmployer() {}
+      const { name, logoUrl, website, location } = req.body;
+
+      const updatedEmployer = await Employers.updateEmployer(
+        parseInt(employerId),
+        name,
+        logoUrl,
+        website,
+        location
+      );
+      return res.json(updatedEmployer);
+    } catch (error) {
+      res;
+      next(error);
+    }
+  },
 
   // function deleteEmployer() {}
 
