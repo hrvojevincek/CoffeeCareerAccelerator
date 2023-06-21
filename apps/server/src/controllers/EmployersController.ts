@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import Employers from '../models/Employers';
-
+import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -8,23 +8,19 @@ dotenv.config();
 const EmployersController = {
   async createEmployer(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id, name, logoUrl, website, location } = req.body.data;
-      const employer = await Employers.createEmployer(
-        id,
-        name,
-        logoUrl,
-        website,
-        location
-      );
-      res.status(201).json(employer);
-    } catch (error) {
-      next(error);
+      const { username, password, email } = req.body.data;
+      if (!password || !username || !email) {
+        throw new Error('missing pass, username or email');
+      }
+      const hashPassword = await bcrypt.hash(password, 10);
+
+      await Employers.createEmployer(username, hashPassword, email);
+
+      res.status(201).json({ message: 'Employer created successfully' });
+    } catch (e) {
+      next(e);
     }
   },
-
-  // function loginEmployer() {}
-
-  // function getEmployers() {}
 
   async getEmployers(req: Request, res: Response, next: NextFunction) {
     try {
@@ -34,6 +30,8 @@ const EmployersController = {
       next(error);
     }
   },
+
+  // function loginEmployer() {}
 
   // function updateEmployer() {}
 

@@ -4,19 +4,15 @@ const prisma = new PrismaClient();
 
 class Employers {
   static async createEmployer(
-    id: number,
-    name: string,
-    logoUrl: string,
-    website: string,
-    location: string
+    username: 'string',
+    password: string,
+    email: string
   ): Promise<Employers> {
     const employer = await prisma.employer.create({
       data: {
-        id,
-        name,
-        logoUrl,
-        website,
-        location,
+        username,
+        password,
+        email,
       },
     });
     return employer;

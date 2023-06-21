@@ -7,7 +7,7 @@ const router = Router();
 
 //!===================================================================USER
 router.post('/user/signup', UsersController.createUser);
-// router.get('/users', UsersController.getUsers);
+router.get('/users', UsersController.getUsers);
 // router.get('/users/:userId', UsersController.getUser);
 
 // router.get('/users/login', UsersController.loginUser);
@@ -32,18 +32,14 @@ router.get('/employers/', EmployersController.getEmployers);
 
 // router.post('/employer/:employerId/jobs', EmployersController.createJob);
 // router.put('/employer/:employerId/jobs/:jobId', EmployersController.updateJob);
-// router.delete(
-//   '/employer/:employerId/jobs/:jobId',
-//   EmployersController.deleteJob
-// );
+// router.delete('/employer/:employerId/jobs/:jobId', EmployersController.deleteJob);
 
 //!=====================================================JOBS
 
 router.get('/jobs', JobsController.getJobs);
+router.get('/jobs/:id', JobsController.getJob);
 router.post('/jobs', JobsController.createJob);
 router.get('/jobs/categories/:category', JobsController.findByCategory);
 router.delete('/jobs/:id', JobsController.deleteJob);
-
-router.get('/jobs/:id', JobsController.getJob);
 
 export default router;

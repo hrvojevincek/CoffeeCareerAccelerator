@@ -18,7 +18,7 @@ class User {
     return user;
   }
 
-  static async getAllUsers(): Promise<User> {
+  static async getAllUsers(): Promise<User[]> {
     const users = await prisma.user.findMany();
     return users;
   }

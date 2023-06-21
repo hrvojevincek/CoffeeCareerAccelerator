@@ -13,7 +13,7 @@ datasource db {
 model User {
   id           Int           @id @default(autoincrement())
   username     String        @unique
-  email        String?       @unique
+  email        String        @unique
   password     String
   name         String?
   city         String?
@@ -21,6 +21,20 @@ model User {
   updatedAt    DateTime      @updatedAt
   applications Application[]
   experience   Experience[]
+}
+
+model Employer {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  name      String?
+  logoUrl   String?
+  website   String?
+  location  String?
+  jobs      Job[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Experience {
@@ -50,19 +64,6 @@ model Job {
   employerId   Int
   posted       Boolean       @default(true)
   applications Application[]
-}
-
-model Employer {
-  id        Int      @id @default(autoincrement())
-  name      String
-  password  String
-  email     String
-  logoUrl   String?
-  website   String?
-  location  String
-  jobs      Job[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Application {

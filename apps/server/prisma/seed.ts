@@ -4,25 +4,21 @@ const prisma = new PrismaClient();
 
 async function main() {
   // Create some users
-  // const john = await prisma.user.create({
-  //   data: {
-  //     username: 'john123',
-  //     email: 'john@example.com',
-  //     password: 'secret123',
-  //     name: 'John Doe',
-  //     city: 'New York',
-  //   },
-  // });
+  const john = await prisma.user.create({
+    data: {
+      username: 'john123',
+      email: 'john@example.com',
+      password: 'secret123',
+    },
+  });
 
-  // const jane = await prisma.user.create({
-  //   data: {
-  //     username: 'jane123',
-  //     email: 'jane@example.com',
-  //     password: 'secret123',
-  //     name: 'Jane Doe',
-  //     city: 'Los Angeles',
-  //   },
-  // });
+  const jane = await prisma.user.create({
+    data: {
+      username: 'jane123',
+      email: 'jane@example.com',
+      password: 'secret123',
+    },
+  });
 
   // // Add some experience for John
   // await prisma.experience.create({

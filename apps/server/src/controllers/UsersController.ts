@@ -12,7 +12,6 @@ const UsersController = {
         throw new Error('missing pass, username or email');
       }
       const hashPassword = await bcrypt.hash(password, 10);
-      console.log('here');
 
       await User.createUser(username, hashPassword, email);
 
