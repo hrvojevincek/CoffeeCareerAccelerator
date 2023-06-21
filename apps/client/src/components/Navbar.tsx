@@ -1,13 +1,8 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import ModalSignIn from './ModalSignIn';
 
 const Navbar: React.FC = () => {
-  const [modal, setModal] = useState(false);
-
   return (
     <>
-      {modal && <ModalSignIn />}
       <header>
         <nav className="px-4 lg:px-6 py-2.5 dark:bg-gray-8900">
           <div className="max-w-4xl flex flex-wrap items-center justify-between mx-auto p-1">
@@ -19,15 +14,13 @@ const Navbar: React.FC = () => {
             <div className="flex md:order-2">
               {/* HAHAH[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[A */}
 
-              <button
-                onClick={() => {
-                  console.log('here'), setModal(true);
-                }}
+              <Link
+                to="/signup"
                 type="button"
                 className="mr-10 inline-flex justify-center hover:text-gray-900 items-center py-3 px-4 text-base font-medium text-center text-gray-50 border-b-2 border-white hover:bg-gray-100 hover:rounded-lg focus:ring-4 focus:ring-gray-400"
               >
                 Get Started
-              </button>
+              </Link>
 
               {/*? HA==============================================================HAH */}
             </div>

@@ -8,8 +8,8 @@ dotenv.config();
 const EmployersController = {
   async createEmployer(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id, name, logoUrl, website, location } = req.body;
-      const employer = await Employers.create(
+      const { id, name, logoUrl, website, location } = req.body.data;
+      const employer = await Employers.createEmployer(
         id,
         name,
         logoUrl,

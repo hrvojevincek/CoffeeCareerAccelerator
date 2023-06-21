@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 class Employers {
-  static async create(
+  static async createEmployer(
     id: number,
     name: string,
     logoUrl: string,

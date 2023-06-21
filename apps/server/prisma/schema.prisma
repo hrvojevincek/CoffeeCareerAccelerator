@@ -55,6 +55,8 @@ model Job {
 model Employer {
   id        Int      @id @default(autoincrement())
   name      String
+  password  String
+  email     String
   logoUrl   String?
   website   String?
   location  String

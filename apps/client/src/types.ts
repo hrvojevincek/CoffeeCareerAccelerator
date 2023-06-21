@@ -12,3 +12,10 @@ export type JobData = {
     name: string;
   };
 };
+
+export type Inputs = {
+  username: string;
+  email: string;
+  password: string;
+  category: string;
+};

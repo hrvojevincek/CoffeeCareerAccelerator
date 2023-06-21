@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 class User {
-  static async create(
+  static async createUser(
     username: string,
     password: string,
     email: string
@@ -16,6 +16,11 @@ class User {
       },
     });
     return user;
+  }
+
+  static async getAllUsers(): Promise<User> {
+    const users = await prisma.user.findMany();
+    return users;
   }
 }
 

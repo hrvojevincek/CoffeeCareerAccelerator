@@ -22,6 +22,7 @@ const JobsController = {
       next(error);
     }
   },
+
   async getJobs(req: Request, res: Response, next: NextFunction) {
     try {
       const jobs = await Jobs.getAll();

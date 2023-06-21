@@ -1,26 +1,9 @@
-const ModalSignIn: React.FC = () => {
+import { Link } from 'react-router-dom';
+
+const LoginPage: React.FC = () => {
   return (
-    <div className="bg-black">
-      <div className="duration-300 z-20 top-5 left-1/3 absolute max-w-md bg-white rounded-lg shadow dark:bg-gray-700">
-        <button
-          type="button"
-          className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-        >
-          <svg
-            aria-hidden="true"
-            className="w-5 h-5"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            ></path>
-          </svg>
-          <span className="sr-only">Close modal</span>
-        </button>
+    <div className="h-screen flex items-center justify-center bg-no-repeat sm:bg-cover md:bg-cover bg-fixed bg-[url('https://europeancoffeetrip.com/wp-content/uploads/2018/12/Elbgold-Coffee-Lab-2.jpg')]">
+      <div className="w-1/3 bg-white rounded-lg shadow dark:bg-gray-800">
         <div className="px-6 py-6 lg:px-8">
           <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
             Sign in to our platform
@@ -89,14 +72,14 @@ const ModalSignIn: React.FC = () => {
             >
               Login to your account
             </button>
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
+            <div className="pl-2 text-sm font-medium text-gray-500 dark:text-gray-300">
               Not registered?{' '}
-              <a
-                href="#"
-                className="text-blue-700 hover:underline dark:text-blue-500"
+              <Link
+                to="/signup"
+                className="pl-4 text-blue-700 hover:underline dark:text-blue-500"
               >
                 Create account
-              </a>
+              </Link>
             </div>
           </form>
         </div>
@@ -105,4 +88,4 @@ const ModalSignIn: React.FC = () => {
   );
 };
 
-export default ModalSignIn;
+export default LoginPage;

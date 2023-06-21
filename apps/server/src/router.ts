@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import EmployersController from './controllers/EmployersController';
-// import UsersController from './controllers/UsersController';
+import UsersController from './controllers/UsersController';
 import JobsController from './controllers/JobsController';
 
 const router = Router();
 
 //!===================================================================USER
-// router.post('/users', UsersController.createUser);
+router.post('/user/signup', UsersController.createUser);
+// router.get('/users', UsersController.getUsers);
 // router.get('/users/:userId', UsersController.getUser);
 
 // router.get('/users/login', UsersController.loginUser);
@@ -22,7 +23,7 @@ const router = Router();
 
 //!===================================================================EMPLOYER
 
-router.post('/employers', EmployersController.createEmployer);
+router.post('/employers/singup', EmployersController.createEmployer);
 router.get('/employers/', EmployersController.getEmployers);
 // router.get('/employers/login', EmployersController.loginEmployer);
 // router.get('/employers/:employerId', EmployersController.getEmployer);
