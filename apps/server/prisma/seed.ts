@@ -54,7 +54,7 @@ async function main() {
       password: 'stumptown123',
     },
     {
-      username: 'La Marzocco',
+      username: 'laMarzocco',
       email: 'info@lamarzocco.com',
       password: 'lamarzocco123',
     },
@@ -92,6 +92,40 @@ async function main() {
   for (const employerData of employersData) {
     await prisma.employer.create({ data: employerData });
   }
+
+  // const blueBottle = await prisma.employer.update({
+  //   data: {
+  //     name: 'Blue Bottle Coffee',
+  //     logoUrl:
+  //       'https://upload.wikimedia.org/wikipedia/en/thumb/0/06/Blue_Bottle_Coffee_logo.svg/1200px-Blue_Bottle_Coffee_logo.svg.png',
+  //     website: 'https://www.bluebottlecoffee.com',
+  //     location: 'New York, USA',
+  //   },
+  // });
+  // const fabricaCoffee = await prisma.employer.update({
+  //   data: {
+  //     name: 'Fabrica Coffee Roasters',
+  //     logoUrl: 'https://example.com/fabrica-coffee.png',
+  //     website: 'https://www.fabricacoffee.com',
+  //     location: 'Lisbon, Portugal',
+  //   },
+  // });
+  // const nomadcoffee = await prisma.employer.update({
+  //   data: {
+  //     name: 'Nømad Coffee',
+  //     logoUrl: 'https://example.com/nomad-coffee.png',
+  //     website: 'https://www.nomadcoffee.es',
+  //     location: 'Barcelona, Spain',
+  //   },
+  // });
+  // const magnifico = await prisma.employer.update({
+  //   data: {
+  //     name: 'Café El Magnífico',
+  //     logoUrl: 'https://example.com/el-magnifico.png',
+  //     website: 'https://www.cafeelmagnifico.com',
+  //     location: 'Barcelona, Spain',
+  //   },
+  // });
 
   // Jobs Data
   // const jobsData = [

@@ -32,6 +32,23 @@ class User {
     }
     return user;
   }
+
+  static async updateUser(
+    userId: number,
+    userName: string,
+    city: string
+  ): Promise<User> {
+    const user = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        name: userName,
+        city,
+      },
+    });
+    return user;
+  }
 }
 
 export default User;

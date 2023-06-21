@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import FeaturedJobs from '../components/FeaturedJobs';
 import Navbar from '../components/Navbar';
-import { JobData } from '../types';
 
 function Jobs(props: LoggedInProp) {
   const { isLoggedIn } = props;
 
   //check if cookies have the token
-
 
   const [selectedCategory, setSelectedCategory] = useState('');
   const [categories, setCategories] = useState<string[]>([]);

@@ -5,15 +5,11 @@ import JobsController from './controllers/JobsController';
 
 const router = Router();
 
-//!===================================================================USER
+//? router.get('/users/login', UsersController.loginUser);
 router.post('/user/signup', UsersController.createUser);
 router.get('/users', UsersController.getUsers);
-// router.get('/users/:userId', UsersController.getUser);
-
-// router.get('/users/login', UsersController.loginUser);
-
-// router.get('/users/', UsersController.getUsers);
-// router.put('/users/:userId', UsersController.updateUser);
+router.get('/users/:userId', UsersController.getUser);
+router.put('/users/:userId', UsersController.updateUser);
 // router.delete('/user/:userId', UsersController.deleteUser);
 
 // router.post('/users/experiences', UsersController.createExperience);
@@ -21,16 +17,14 @@ router.get('/users', UsersController.getUsers);
 // router.put('/users/experiences/:id', UsersController.updateExperience);
 // router.delete('/users/experiences/:id', UsersController.deleteExperience);
 
-//!===================================================================EMPLOYER
-
+//? router.get('/employers/login', EmployersController.loginEmployer);
 router.post('/employers/singup', EmployersController.createEmployer);
 router.get('/employers/', EmployersController.getEmployers);
 router.put('/employer/:employerId', EmployersController.updateEmployer);
-// router.get('/employers/login', EmployersController.loginEmployer);
-// router.get('/employers/:employerId', EmployersController.getEmployer);
-// router.delete('/employers/:employerId', EmployersController.deleteEmployer);
+router.get('/employers/:employerId', EmployersController.getEmployer);
+router.post('/employer/:employerId/jobs', EmployersController.createJob);
 
-// router.post('/employer/:employerId/jobs', EmployersController.createJob);
+// router.delete('/employers/:employerId', EmployersController.deleteEmployer);
 // router.put('/employer/:employerId/jobs/:jobId', EmployersController.updateJob);
 // router.delete('/employer/:employerId/jobs/:jobId', EmployersController.deleteJob);
 

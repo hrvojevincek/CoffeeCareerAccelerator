@@ -48,6 +48,16 @@ class Employers {
     });
     return employer;
   }
+
+  static async getEmployer(id: number): Promise<Employers> {
+    const employer = await prisma.employer.findUnique({
+      where: { id },
+    });
+    if (employer === null) {
+      throw new Error('User not found');
+    }
+    return employer;
+  }
 }
 
 export default Employers;

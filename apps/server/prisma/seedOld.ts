@@ -179,49 +179,49 @@
 //     },
 //   });
 
-//   // const blueBottle = await prisma.employer.create({
-//   //   data: {
-//   //     name: 'Blue Bottle Coffee',
-//   //     logoUrl:
-//   //       'https://upload.wikimedia.org/wikipedia/en/thumb/0/06/Blue_Bottle_Coffee_logo.svg/1200px-Blue_Bottle_Coffee_logo.svg.png',
-//   //     website: 'https://www.bluebottlecoffee.com',
-//   //     location: 'New York, USA',
-//   //   },
-//   // });
-//   // const fabricaCoffee = await prisma.employer.create({
-//   //   data: {
-//   //     name: 'Fabrica Coffee Roasters',
-//   //     logoUrl: 'https://example.com/fabrica-coffee.png',
-//   //     website: 'https://www.fabricacoffee.com',
-//   //     location: 'Lisbon, Portugal',
-//   //   },
-//   // });
-//   // const nomadcoffee = await prisma.employer.create({
-//   //   data: {
-//   //     name: 'Nømad Coffee',
-//   //     logoUrl: 'https://example.com/nomad-coffee.png',
-//   //     website: 'https://www.nomadcoffee.es',
-//   //     location: 'Barcelona, Spain',
-//   //   },
-//   // });
-//   // const magnifico = await prisma.employer.create({
-//   //   data: {
-//   //     name: 'Café El Magnífico',
-//   //     logoUrl: 'https://example.com/el-magnifico.png',
-//   //     website: 'https://www.cafeelmagnifico.com',
-//   //     location: 'Barcelona, Spain',
-//   //   },
-//   // });
+  // const blueBottle = await prisma.employer.create({
+  //   data: {
+  //     name: 'Blue Bottle Coffee',
+  //     logoUrl:
+  //       'https://upload.wikimedia.org/wikipedia/en/thumb/0/06/Blue_Bottle_Coffee_logo.svg/1200px-Blue_Bottle_Coffee_logo.svg.png',
+  //     website: 'https://www.bluebottlecoffee.com',
+  //     location: 'New York, USA',
+  //   },
+  // });
+  // const fabricaCoffee = await prisma.employer.create({
+  //   data: {
+  //     name: 'Fabrica Coffee Roasters',
+  //     logoUrl: 'https://example.com/fabrica-coffee.png',
+  //     website: 'https://www.fabricacoffee.com',
+  //     location: 'Lisbon, Portugal',
+  //   },
+  // });
+  // const nomadcoffee = await prisma.employer.create({
+  //   data: {
+  //     name: 'Nømad Coffee',
+  //     logoUrl: 'https://example.com/nomad-coffee.png',
+  //     website: 'https://www.nomadcoffee.es',
+  //     location: 'Barcelona, Spain',
+  //   },
+  // });
+  // const magnifico = await prisma.employer.create({
+  //   data: {
+  //     name: 'Café El Magnífico',
+  //     logoUrl: 'https://example.com/el-magnifico.png',
+  //     website: 'https://www.cafeelmagnifico.com',
+  //     location: 'Barcelona, Spain',
+  //   },
+  // });
 
-//   // // Create an application for the job
-//   // await prisma.application.create({
-//   //   data: {
-//   //     userId: john.id,
-//   //     jobId: baristaJob.id,
-//   //     hired: false,
-//   //   },
-//   // });
-// }
+  // // Create an application for the job
+  // await prisma.application.create({
+  //   data: {
+  //     userId: john.id,
+  //     jobId: baristaJob.id,
+  //     hired: false,
+  //   },
+  // });
+}
 
 // main()
 //   .catch((e) => {
