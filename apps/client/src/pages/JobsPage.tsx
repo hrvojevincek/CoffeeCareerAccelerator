@@ -32,19 +32,20 @@ function Jobs(props: LoggedInProp) {
   }, [selectedCategory]);
 
   return (
-    <div className="dark:bg-gray-900 ">
+    <div className="bg-right bg-fixed h-screen  dark:bg-slate-500 dark:bg-opacity-80 bg-[url('https://www.theradicalproject.com/wp-content/uploads/2023/04/00-coffee-roastery-landscape-image.jpg')] ">
       <Navbar isLoggedIn={isLoggedIn} />
-      <div className="m-5 mx-auto max-w-4xl gap-10 justify-center">
-        <div className="z-10 rounded-xl border-2 border-white">
-          <h1 className="m-5 dark:text-white text-2xl font-semibold whitespace-nowrap">
+
+      <div className="mt-10 rounded-lg bg-black mx-auto  md:max-w-4xl lg:max-w-6xl gap-10">
+        <div className="mx-10 py-4 z-10 rounded-xl border-white">
+          <h1 className=" dark:text-white text-2xl font-semibold">
             Filter Jobs
           </h1>
-          <ul className="px-5 pb-4 flex flex-wrap text-1xl text-center border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+          <ul className=" flex flex-wrap pt-10 text-1xl text-center  dark:text-white">
             <li className="mr-2">
               <a
                 className={`${
                   '' === selectedCategory ? '' : 'font-bold text-neutral-50'
-                } cursor-pointer border-transparent rounded-t-lg hover:text-gray-50 hover:border-gray-300 dark:hover:text-gray-300`}
+                } cursor-pointer border-transparent rounded-t-lg hover:text-gray-100 hover:border-gray-300 dark:hover:text-gray-300`}
                 onClick={() => setSelectedCategory('')}
               >
                 All
@@ -58,7 +59,7 @@ function Jobs(props: LoggedInProp) {
                     category === selectedCategory
                       ? 'font-bold text-neutral-50'
                       : ''
-                  } cursor-pointer border-transparent rounded-t-lg hover:text-gray-50 hover:border-gray-300 dark:hover:text-white`}
+                  } cursor-pointer border-transparent rounded-t-lg hover:text-gray-50 hover:border-gray-300 dark:hover:text-gray-100`}
                   onClick={() => setSelectedCategory(category)}
                 >
                   {category}
@@ -67,9 +68,9 @@ function Jobs(props: LoggedInProp) {
             ))}
           </ul>
         </div>
-        <div className="">
-          <FeaturedJobs data={data} />
-        </div>
+      </div>
+      <div className="mx-auto lg:max-w-7xl">
+        <FeaturedJobs data={data} />
       </div>
     </div>
   );

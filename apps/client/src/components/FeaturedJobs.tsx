@@ -23,14 +23,14 @@ type FeaturedJobsProps = {
 const FeaturedJobs: React.FC<FeaturedJobsProps> = ({ data }) => {
   return (
     <>
-      <div className="bg-opacity-95 overflow-auto relative flex h-screen flex-col dark:bg-gray-900 p-10 ">
+      <div className="my-10 flex flex-col mx-auto lg:max-w-7xl">
         {data.map((job) => {
           return (
             <div
               key={job.id}
-              className="flex flex-col jus items-center justify-center bg-gray-20 p-3"
+              className="flex flex-col jus items-center justify-center p-3"
             >
-              <div className="bg-blue-100  shadow-xl  w-full max-w-4xl flex flex-col sm:flex-row gap-3 sm:items-center  justify-between px-5 py-4 rounded-md">
+              <div className="dark:bg-orange-50 lg:max-w-6xl  shadow-xl w-full max-w-4xl flex flex-col sm:flex-row gap-3 sm:items-center justify-between px-5 py-4 rounded-md">
                 <div>
                   <span className="text-sky-900 text-sm">
                     {job.employer.name}
@@ -68,7 +68,7 @@ const FeaturedJobs: React.FC<FeaturedJobsProps> = ({ data }) => {
                 <div>
                   <Link
                     to={`/jobs/${job.id}`}
-                    className="bg-sky-900 text-white font-medium px-4 py-1 rounded-md flex gap-1 items-center"
+                    className="bg-black text-white font-medium px-4 py-1 rounded-md flex gap-1 items-center"
                   >
                     Apply Now
                     <svg
