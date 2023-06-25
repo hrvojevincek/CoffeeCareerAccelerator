@@ -20,7 +20,16 @@ type Inputs = {
   category: string;
 };
 
-type LoggedInProp = {
-  isLoggedIn?: boolean | undefined;
-  setisLoggedIn?: React.Dispatch<React.SetStateAction<boolean>>;
-};
+declare function useNavigate(): NavigateFunction;
+
+interface NavigateFunction {
+  (
+    to: To,
+    options?: {
+      replace?: boolean;
+      state?: any;
+      relative?: RelativeRoutingType;
+    }
+  ): void;
+  (delta: number): void;
+}

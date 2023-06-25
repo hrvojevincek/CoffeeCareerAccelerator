@@ -26,10 +26,9 @@ const MainPage = () => {
   };
 
   return (
-    <div className="format">
+    <div className="">
       <Hero />
       <FeaturedJobs data={data} />
-      <Footer />
     </div>
   );
 };

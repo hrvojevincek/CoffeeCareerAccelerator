@@ -58,6 +58,15 @@ class Employers {
     }
     return employer;
   }
+
+  static async findEmployerByUsername(username: string) {
+    const employer = await prisma.employer.findUnique({
+      where: {
+        username,
+      },
+    });
+    return employer;
+  }
 }
 
 export default Employers;

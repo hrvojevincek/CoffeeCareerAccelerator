@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import FeaturedJobs from '../components/FeaturedJobs';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function Jobs(props: LoggedInProp) {
   const { isLoggedIn } = props;
@@ -32,47 +33,50 @@ function Jobs(props: LoggedInProp) {
   }, [selectedCategory]);
 
   return (
-    <div className="bg-right bg-fixed h-screen  dark:bg-slate-500 dark:bg-opacity-80 bg-[url('https://www.theradicalproject.com/wp-content/uploads/2023/04/00-coffee-roastery-landscape-image.jpg')] ">
-      <Navbar isLoggedIn={isLoggedIn} />
+    <>
+      <div className="h-screen bg-right bg-fixed bg-[url('https://www.theradicalproject.com/wp-content/uploads/2023/04/00-coffee-roastery-landscape-image.jpg')] ">
+        <Navbar isLoggedIn={isLoggedIn} />
 
-      <div className="mt-10 rounded-lg bg-black mx-auto  md:max-w-4xl lg:max-w-6xl gap-10">
-        <div className="mx-10 py-4 z-10 rounded-xl border-white">
-          <h1 className=" dark:text-white text-2xl font-semibold">
-            Filter Jobs
-          </h1>
-          <ul className=" flex flex-wrap pt-10 text-1xl text-center  dark:text-white">
-            <li className="mr-2">
-              <a
-                className={`${
-                  '' === selectedCategory ? '' : 'font-bold text-neutral-50'
-                } cursor-pointer border-transparent rounded-t-lg hover:text-gray-100 hover:border-gray-300 dark:hover:text-gray-300`}
-                onClick={() => setSelectedCategory('')}
-              >
-                All
-              </a>
-            </li>
-
-            {categories.map((category, i) => (
-              <li key={i} className="mr-2">
+        <div className="mt-10 rounded-lg bg-black mx-auto  md:max-w-4xl lg:max-w-6xl gap-10">
+          <div className="mx-10 py-4 z-10 rounded-xl border-white">
+            <h1 className=" dark:text-white text-2xl font-semibold">
+              Filter Jobs
+            </h1>
+            <ul className=" flex flex-wrap pt-10 text-1xl text-center  dark:text-white">
+              <li className="mr-2">
                 <a
                   className={`${
-                    category === selectedCategory
-                      ? 'font-bold text-neutral-50'
-                      : ''
-                  } cursor-pointer border-transparent rounded-t-lg hover:text-gray-50 hover:border-gray-300 dark:hover:text-gray-100`}
-                  onClick={() => setSelectedCategory(category)}
+                    '' === selectedCategory ? '' : 'font-bold text-neutral-50'
+                  } cursor-pointer border-transparent rounded-t-lg hover:text-gray-100 hover:border-gray-300 dark:hover:text-gray-300`}
+                  onClick={() => setSelectedCategory('')}
                 >
-                  {category}
+                  All
                 </a>
               </li>
-            ))}
-          </ul>
+
+              {categories.map((category, i) => (
+                <li key={i} className="mr-2">
+                  <a
+                    className={`${
+                      category === selectedCategory
+                        ? 'font-bold text-neutral-50'
+                        : ''
+                    } cursor-pointer border-transparent rounded-t-lg hover:text-gray-50 hover:border-gray-300 dark:hover:text-gray-100`}
+                    onClick={() => setSelectedCategory(category)}
+                  >
+                    {category}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="mx-auto lg:max-w-7xl">
+          <FeaturedJobs data={data} />
         </div>
       </div>
-      <div className="mx-auto lg:max-w-7xl">
-        <FeaturedJobs data={data} />
-      </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 

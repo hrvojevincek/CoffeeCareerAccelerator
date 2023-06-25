@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 
 import Employers from '../models/Employers';
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
-import { runInNewContext } from 'vm';
 
 dotenv.config();
 
@@ -23,7 +23,37 @@ const EmployersController = {
       next(e);
     }
   },
-  // async loginEmployer(req: Request, res: Response, next: NextFunction) {}
+
+  async loginEmployer(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { username, password } = req.body.data;
+      if (!username || !password) {
+        throw new Error('Username or password missing');
+      }
+
+      const employer = await Employers.findEmployerByUsername(username);
+
+      if (!employer) {
+        throw new Error('Employer not found');
+      }
+
+      const isPasswordValid = await bcrypt.compare(password, employer.password);
+
+      if (!isPasswordValid) {
+        throw new Error('Invalid password');
+      }
+
+      const token = jwt.sign(
+        { id: employer.id, username: employer.username },
+        process.env.JWT_SECRET as string,
+        { expiresIn: '1h' }
+      );
+
+      res.status(200).json({ token });
+    } catch (e) {
+      next(e);
+    }
+  },
 
   async getEmployers(req: Request, res: Response, next: NextFunction) {
     try {

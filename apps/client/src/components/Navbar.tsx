@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const Navbar = (props: LoggedInProp) => {
-  const { isLoggedIn } = props;
-
+const Navbar = () => {
   return (
     <nav className="bg-black py-3 w-screen lg:max-w-8xl">
       <div className="max-w-5xl flex  flex-wrap items-center justify-between mx-auto">
@@ -12,24 +10,21 @@ const Navbar = (props: LoggedInProp) => {
           </span>
         </Link>
         <div className="flex md:order-2">
-          {/* //use cookies instead of logged in */}
-          {isLoggedIn ? (
-            <Link
-              to="/signup"
-              type="button"
-              className="inline-flex justify-center hover:text-gray-400 items-center  text-lg font-medium text-center text-gray-50 border-b-2 border-white"
-            >
-              My Dashboard
-            </Link>
-          ) : (
-            <Link
-              to="/signup"
-              type="button"
-              className="mr-10 inline-flex justify-center hover:text-gray-900 items-center py-3 px-4 text-base font-medium text-center text-gray-50 border-b-2 border-white  "
-            >
-              Get Started
-            </Link>
-          )}
+          {/* <Link
+            to="/signup"
+            type="button"
+            className="inline-flex justify-center hover:text-gray-400 items-center  text-lg font-medium text-center text-gray-50 border-b-2 border-white"
+          >
+            My Dashboard
+          </Link>
+           */}
+          <Link
+            to="/signup"
+            type="button"
+            className="inline-flex justify-center hover:text-gray-400 items-center  text-lg font-medium text-center text-gray-50 border-b-2 border-white  "
+          >
+            Get Started
+          </Link>
         </div>
         <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
           <ul className="flex flex-col md:p-0 mt-4 font-medium text-white rounded-lg md:flex-row md:space-x-8 md:mt-0">
@@ -42,13 +37,13 @@ const Navbar = (props: LoggedInProp) => {
               </Link>
             </li>
             <li>
-              <Link to="/" className="block py-2 pl-3 pr-4 md:p-0">
+              <Link to="/company" className="block py-2 pl-3 pr-4 md:p-0">
                 Companies
               </Link>
             </li>
             <li>
               <a href="#" className="block py-2 pl-3 pr-4 md:p-0">
-                Contact
+                Blog
               </a>
             </li>
           </ul>

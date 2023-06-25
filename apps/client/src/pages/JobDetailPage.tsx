@@ -24,7 +24,7 @@ function JobDetails() {
   };
 
   return (
-    <div>
+    <div className="bg-cover bg-[url(https://perfectdailygrind.com/wp-content/uploads/2019/02/coffee-bar.jpg)]">
       <Navbar />
       <DetailWork data={job} />
       <RelatedJobs />

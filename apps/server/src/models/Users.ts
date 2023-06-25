@@ -18,14 +18,23 @@ class User {
     return user;
   }
 
+  static async findUserByUsername(username: string) {
+    const user = await prisma.user.findUnique({
+      where: {
+        username,
+      },
+    });
+    return user;
+  }
+
   static async getAllUsers(): Promise<User[]> {
     const users = await prisma.user.findMany();
     return users;
   }
 
-  static async getUser(id: number): Promise<User> {
+  static async getUser(username: string): Promise<User> {
     const user = await prisma.user.findUnique({
-      where: { id },
+      where: { username },
     });
     if (user === null) {
       throw new Error('User not found');

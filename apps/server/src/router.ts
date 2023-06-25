@@ -5,11 +5,13 @@ import JobsController from './controllers/JobsController';
 
 const router = Router();
 
-//? router.get('/users/login', UsersController.loginUser);
+router.post('/users/login', UsersController.loginUser);
 router.post('/user/signup', UsersController.createUser);
 router.get('/users', UsersController.getUsers);
 router.get('/users/:userId', UsersController.getUser);
 router.put('/users/:userId', UsersController.updateUser);
+router.get('/user/username/:username', UsersController.getUser);
+
 // router.delete('/user/:userId', UsersController.deleteUser);
 
 // router.post('/users/experiences', UsersController.createExperience);
@@ -17,7 +19,7 @@ router.put('/users/:userId', UsersController.updateUser);
 // router.put('/users/experiences/:id', UsersController.updateExperience);
 // router.delete('/users/experiences/:id', UsersController.deleteExperience);
 
-//? router.get('/employers/login', EmployersController.loginEmployer);
+router.post('/employers/login', EmployersController.loginEmployer);
 router.post('/employers/singup', EmployersController.createEmployer);
 router.get('/employers/', EmployersController.getEmployers);
 router.put('/employer/:employerId', EmployersController.updateEmployer);
