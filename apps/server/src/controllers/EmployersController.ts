@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-
 import Employers from '../models/Employers';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
@@ -10,46 +9,18 @@ dotenv.config();
 const EmployersController = {
   async createEmployer(req: Request, res: Response, next: NextFunction) {
     try {
-      const { username, password, email } = req.body.data;
-      if (!password || !username || !email) {
-        throw new Error('missing pass, username or email');
+      const { username, password, email, category } = req.body.data;
+      if (username === undefined) {
+        throw new Error('Missing parameters: username');
+      }
+      if (password === undefined) {
+        throw new Error('Missing parameters: password');
       }
       const hashPassword = await bcrypt.hash(password, 10);
 
-      await Employers.createEmployer(username, hashPassword, email);
+      await Employers.createEmployer(username, hashPassword, email, category);
 
       res.status(201).json({ message: 'Employer created successfully' });
-    } catch (e) {
-      next(e);
-    }
-  },
-
-  async loginEmployer(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { username, password } = req.body.data;
-      if (!username || !password) {
-        throw new Error('Username or password missing');
-      }
-
-      const employer = await Employers.findEmployerByUsername(username);
-
-      if (!employer) {
-        throw new Error('Employer not found');
-      }
-
-      const isPasswordValid = await bcrypt.compare(password, employer.password);
-
-      if (!isPasswordValid) {
-        throw new Error('Invalid password');
-      }
-
-      const token = jwt.sign(
-        { id: employer.id, username: employer.username },
-        process.env.JWT_SECRET as string,
-        { expiresIn: '1h' }
-      );
-
-      res.status(200).json({ token });
     } catch (e) {
       next(e);
     }

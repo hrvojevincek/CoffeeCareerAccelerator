@@ -35,7 +35,7 @@ function Jobs(props: LoggedInProp) {
   return (
     <>
       <div className="h-screen bg-right bg-fixed bg-[url('https://www.theradicalproject.com/wp-content/uploads/2023/04/00-coffee-roastery-landscape-image.jpg')] ">
-        <Navbar isLoggedIn={isLoggedIn} />
+        <Navbar />
 
         <div className="mt-10 rounded-lg bg-black mx-auto  md:max-w-4xl lg:max-w-6xl gap-10">
           <div className="mx-10 py-4 z-10 rounded-xl border-white">

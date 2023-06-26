@@ -10,11 +10,19 @@ import JobsPage from './pages/JobsPage';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
 import UserPage from './pages/UserPage';
+import { useState } from 'react';
+import React from 'react';
+
+// type contextValue = [user: User | null, setUser: () => void];
+
+export const userContext = React.createContext<User | null>(null);
 
 function App() {
+  const [user, setUser] = useState<User | null>(null);
+
   return (
     <>
-      <>
+      <userContext.Provider value={user}>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/jobs/" element={<JobsPage />} />
@@ -25,7 +33,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/user/:id" element={<UserPage />} />
         </Routes>
-      </>
+      </userContext.Provider>
     </>
   );
 }

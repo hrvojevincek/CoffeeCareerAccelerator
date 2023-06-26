@@ -2,22 +2,32 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+// type Employer = {
+//   username: string;
+//   password: string;
+//   email: string;
+//   category: string;
+// };
+
 class Employers {
   static async createEmployer(
-    username: 'string',
+    username: string,
     password: string,
-    email: string
+    email: string,
+    category: string
   ): Promise<Partial<Employers>> {
     const employer = await prisma.employer.create({
       data: {
         username,
         password,
         email,
+        category,
       },
       select: {
         id: true,
         username: true,
         email: true,
+        category: true,
       },
     });
     return employer;
@@ -64,7 +74,25 @@ class Employers {
       where: {
         username,
       },
+      select: {
+        password: true,
+        id: true,
+      },
     });
+    return employer;
+  }
+
+  static async findById(id: number): Promise<Employers | null> {
+    const employer = await prisma.employer.findUnique({
+      where: { id },
+      select: {
+        username: true,
+        category: true,
+      },
+    });
+    if (employer === null) {
+      throw new Error('User does not exist.');
+    }
     return employer;
   }
 }

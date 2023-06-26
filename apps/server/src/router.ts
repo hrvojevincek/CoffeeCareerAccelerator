@@ -2,14 +2,20 @@ import { Router } from 'express';
 import EmployersController from './controllers/EmployersController';
 import UsersController from './controllers/UsersController';
 import JobsController from './controllers/JobsController';
+import TypeController from './controllers/TypeController';
 
 const router = Router();
 
-router.post('/users/login', UsersController.loginUser);
+router.post('/login', TypeController.login);
+router.post('/me', TypeController.authVerification);
+
+///
+
+// router.post('/user/login', UsersController.loginUser);
 router.post('/user/signup', UsersController.createUser);
 router.get('/users', UsersController.getUsers);
-router.get('/users/:userId', UsersController.getUser);
-router.put('/users/:userId', UsersController.updateUser);
+router.get('/user/:userId', UsersController.getUser);
+router.put('/users:userId', UsersController.updateUser);
 router.get('/user/username/:username', UsersController.getUser);
 
 // router.delete('/user/:userId', UsersController.deleteUser);
@@ -19,11 +25,11 @@ router.get('/user/username/:username', UsersController.getUser);
 // router.put('/users/experiences/:id', UsersController.updateExperience);
 // router.delete('/users/experiences/:id', UsersController.deleteExperience);
 
-router.post('/employers/login', EmployersController.loginEmployer);
-router.post('/employers/singup', EmployersController.createEmployer);
-router.get('/employers/', EmployersController.getEmployers);
+// router.post('/login', EmployersController.loginEmployer);
+router.post('/employer/signup', EmployersController.createEmployer);
+router.get('/employer/', EmployersController.getEmployers);
 router.put('/employer/:employerId', EmployersController.updateEmployer);
-router.get('/employers/:employerId', EmployersController.getEmployer);
+router.get('/employer/:employerId', EmployersController.getEmployer);
 router.post('/employer/:employerId/jobs', EmployersController.createJob);
 
 // router.delete('/employers/:employerId', EmployersController.deleteEmployer);

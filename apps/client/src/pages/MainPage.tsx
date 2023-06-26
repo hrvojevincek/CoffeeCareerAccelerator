@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import FeaturedJobs from '../components/FeaturedJobs';
-import Footer from '../components/Footer';
 import Hero from '../components/Hero';
-import { JobData } from '../types';
+import Navbar from '../components/Navbar';
 
 const MainPage = () => {
   useEffect(() => {
@@ -27,6 +26,7 @@ const MainPage = () => {
 
   return (
     <div className="">
+      <Navbar />
       <Hero />
       <FeaturedJobs data={data} />
     </div>

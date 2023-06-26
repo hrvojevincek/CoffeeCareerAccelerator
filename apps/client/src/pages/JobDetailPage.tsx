@@ -24,12 +24,16 @@ function JobDetails() {
   };
 
   return (
-    <div className="bg-cover bg-[url(https://perfectdailygrind.com/wp-content/uploads/2019/02/coffee-bar.jpg)]">
-      <Navbar />
-      <DetailWork data={job} />
-      <RelatedJobs />
-      <Footer />
-    </div>
+    <>
+      <div className="h-screen bg-cover bg-[url(https://perfectdailygrind.com/wp-content/uploads/2019/02/coffee-bar.jpg)]">
+        <div className="min-h-screen flex flex-col justify-between">
+          <Navbar />
+          <DetailWork data={job} />
+          <RelatedJobs />
+        </div>
+        <Footer />
+      </div>
+    </>
   );
 }
 

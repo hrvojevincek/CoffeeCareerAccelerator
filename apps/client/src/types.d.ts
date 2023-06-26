@@ -33,3 +33,13 @@ interface NavigateFunction {
   ): void;
   (delta: number): void;
 }
+
+interface UserProviderProps {
+  children: ReactNode;
+}
+
+type User = {
+  username: string;
+  category: string;
+  id: number;
+};

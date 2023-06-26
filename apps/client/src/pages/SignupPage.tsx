@@ -2,9 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Navbar from '../components/Navbar';
+import { useState } from 'react';
 
 const SignupPage = () => {
   const history = useNavigate();
+
+  const [user, setUser] = useState({});
 
   const {
     register,
@@ -18,6 +21,7 @@ const SignupPage = () => {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
+
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
@@ -40,27 +44,14 @@ const SignupPage = () => {
         if (result.error) {
           console.error(result.error);
         } else {
+          console.log(result);
+          setUser(result);
           history('/'); // redirects to home page
         }
       })
       .catch((error) => {
         console.error('error', error);
       });
-  };
-
-  const checkUsername = async () => {
-    const username = getValues('username');
-    const response = await fetch(
-      `http://localhost:8080/user/username/${username}`
-    );
-    console.log(response);
-    const data = await response.json();
-    if (data.exists) {
-      console.error('Username is taken');
-      // set some state to display the error on the form
-    } else {
-      console.log('Username is available');
-    }
   };
 
   return (
@@ -92,7 +83,7 @@ const SignupPage = () => {
                         value: 5,
                         message: 'Enter min 5 characters',
                       },
-                      maxLength: 10,
+                      maxLength: 20,
                       pattern: /^[A-Za-z]+$/i,
                     })}
                     min="5"
@@ -100,7 +91,6 @@ const SignupPage = () => {
                     name="username"
                     id="username"
                     placeholder="username"
-                    onChange={checkUsername}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-l-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />

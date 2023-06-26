@@ -1,27 +1,85 @@
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+import React, { useContext } from 'react';
+import { userContext } from '../App';
+
+type Inputs = {
+  username: string;
+  category: string;
+  password: string;
+};
+
+const LoginPage: React.FC = () => {
+  const history = useNavigate();
+
+  const [user, setUser] = useContext<User | null>(userContext);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>({
+    mode: 'onChange',
+  });
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const requestOptions: RequestInit = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // Authorization: `Bearer ${document.cookie.split('=')[1]}`, // Retrieve the token from the cookie
+      },
+      body: JSON.stringify({ data }),
+      redirect: 'follow',
+    };
+
+    // const forReal = await fetch(`http://localhost:8080/me`, requestOptions);
+
+    // if (forReal.status === 404) {}
+
+    fetch(`http://localhost:8080/login`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.error) {
+          console.error(result.error);
+        } else {
+          setUser(result);
+          history('/'); // redirects to home page
+        }
+      })
+      .catch((error) => {
+        console.error('error', error);
+      });
+  };
+
   return (
     <>
       <Navbar />
       <div className="h-screen flex justify-center items-center sm:bg-cover md:bg-cover bg-cover bg-[url('https://europeancoffeetrip.com/wp-content/uploads/2018/12/Elbgold-Coffee-Lab-2.jpg')]">
-        <div className="w-1/3 bg-white rounded-lg shadow dark:bg-gray-800">
+        <div className="w-full rounded-lg shadow dark:border sm:max-w-md dark:bg-gray-800 dark:border-gray-900">
           <div className="px-6 py-6 lg:px-8">
-            <form className="space-y-6" action="#">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-6"
+              action="#"
+            >
               <div>
                 <label
-                  htmlFor="email"
+                  htmlFor="username"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Your email
+                  Your username
                 </label>
                 <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  placeholder="name@company.com"
+                  {...register('username', { required: true })}
+                  type="username"
+                  name="username"
+                  id="username"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="username"
                   required
                 />
               </div>
@@ -33,13 +91,28 @@ const LoginPage = () => {
                   Your password
                 </label>
                 <input
+                  {...register('password', {
+                    required: true,
+                    minLength: 8,
+                    maxLength: 15,
+                  })}
                   type="password"
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
+                {errors.password && (
+                  <span className="block pl-3 mt-1 text-xs text-red-200">
+                    Minimum length 8 characters
+                  </span>
+                )}
+                {errors.password && errors.password.type === 'maxLength' && (
+                  <span className="block pl-3 mt-1 text-xs text-red-200">
+                    Max length exceeded
+                  </span>
+                )}
               </div>
               <div className="flex justify-between">
                 <div className="flex items-start">

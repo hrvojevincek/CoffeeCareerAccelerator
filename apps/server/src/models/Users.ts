@@ -6,13 +6,15 @@ class User {
   static async createUser(
     username: string,
     password: string,
-    email: string
+    email: string,
+    category: string
   ): Promise<User> {
     const user = await prisma.user.create({
       data: {
         username,
         password,
         email,
+        category,
       },
     });
     return user;
@@ -22,6 +24,10 @@ class User {
     const user = await prisma.user.findUnique({
       where: {
         username,
+      },
+      select: {
+        password: true,
+        id: true,
       },
     });
     return user;
@@ -56,6 +62,19 @@ class User {
         city,
       },
     });
+    return user;
+  }
+  static async findById(id: number): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: { id },
+      select: {
+        username: true,
+        category: true,
+      },
+    });
+    if (user === null) {
+      throw new Error('User does not exist.');
+    }
     return user;
   }
 }
