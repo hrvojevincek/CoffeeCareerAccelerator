@@ -20,8 +20,6 @@ const SignupPage = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 

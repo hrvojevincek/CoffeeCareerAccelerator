@@ -8,8 +8,6 @@ const Navbar = () => {
   //{username: 'vincek', category: 'user', id: 3}
   //{username: 'victorski', category: 'employer', id: 3}
 
-  console.log(user);
-
   return (
     <nav className="bg-black py-3 w-screen lg:max-w-8xl">
       <div className="max-w-5xl flex flex-wrap items-center justify-around mx-auto">

@@ -1,7 +1,9 @@
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { userContext } from '../App';
+import { useContext } from 'react';
 
 type JobData = {
   id: number;
@@ -22,14 +24,30 @@ type FeaturedJobsProps = {
 };
 
 const DetailWork: React.FC<FeaturedJobsProps> = ({ data }) => {
-  const applyForJob = async (jobId: number) => {
-    // replace with your API endpoint
+  // const navigate = useNavigate();
+
+  const notify = () => toast('Wow so easy!');
+
+  const [user, setUser] = useContext(userContext);
+  const { id } = useParams<{ id: string }>();
+
+  console.log('DETAILWORK:', user, id);
+
+  const applyForJob = async (id: number, user: User) => {
+    if (!user) {
+      console.error(
+        'DETAILWORK:',
+        'No registered user found. Register or Login'
+      );
+      alert('Please go Log in or Registrate!');
+      // navigate('/login');
+    }
+
     const url = 'http://localhost:8080/user/application/';
 
     const applicationData = {
-      jobId: jobId,
-      userId: userId,
-      // add other required fields here
+      jobId: id,
+      userId: user.id,
     };
 
     const response = await fetch(url, {
@@ -41,6 +59,7 @@ const DetailWork: React.FC<FeaturedJobsProps> = ({ data }) => {
     });
 
     if (response.ok) {
+      notify();
       toast.success('Application sent!');
     } else {
       toast.error('Failed to send application. Please try again.');
@@ -73,13 +92,15 @@ const DetailWork: React.FC<FeaturedJobsProps> = ({ data }) => {
                   30,000 € Annual
                 </p>
 
-                <Link
-                  onClick={() => applyForJob(data.id)}
+                <button
+                  onClick={() =>
+                    id !== undefined && user && applyForJob(parseInt(id), user)
+                  }
                   type="button"
                   className="mt-10 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-20 py-1.5 text-center mr-2 mb-2"
                 >
                   Apply
-                </Link>
+                </button>
               </div>
               <div className=" lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8">
                 <div className="">

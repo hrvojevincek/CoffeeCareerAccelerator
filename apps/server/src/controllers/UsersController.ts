@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/Users';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import Experience from '../models/Experience';
+import Application from '../models/Application';
 
 dotenv.config();
 
@@ -71,27 +71,21 @@ const UsersController = {
       next(error);
     }
   },
-
   async createApplication(req: Request, res: Response, next: NextFunction) {
+    console.log(req.body);
     try {
       const { jobId, userId } = req.body;
-      const newApplication = await prisma.application.create({
-        data: {
-          jobId: jobId,
-          userId: userId,
-        },
+      const newApplication = await Application.createApplication({
+        jobId,
+        userId,
       });
 
       res.status(201).json(newApplication);
     } catch (error) {
+      res.status(500).json({ message: 'createApp controller fault' });
       next(error);
     }
   },
-
-  // function createExperience() {}
-  // function getExperience() {}
-  // function updateExperience() {}
-  // function deleteExperience() {}
 };
 
 export default UsersController;

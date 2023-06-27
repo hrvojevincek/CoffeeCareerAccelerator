@@ -14,7 +14,6 @@ const MainPage = () => {
     await fetch('http://localhost:8080/jobs/')
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setData(data);
       })
       .catch((err) => console.error(err));

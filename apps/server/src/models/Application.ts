@@ -1,20 +1,35 @@
-import { PrismaClient, Application } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-class Applications {
-  static async createApplication(
-    jobId: number,
-    userId: number
-  ): Promise<Partial<Application | null>> {
+class Application {
+  static async createApplication(data: {
+    jobId: number;
+    userId: number;
+  }): Promise<Partial<Application | null>> {
+    const existingApplication = await prisma.application.findUnique({
+      where: { userId_jobId: { userId: data.userId, jobId: data.jobId } },
+    });
+    if (existingApplication) {
+      throw new Error('Application already exists for this user and job');
+    }
+
     const application = await prisma.application.create({
       data: {
-        jobId,
-        userId,
+        job: {
+          connect: {
+            id: data.jobId,
+          },
+        },
+        user: {
+          connect: {
+            id: data.userId,
+          },
+        },
       },
     });
     return application;
   }
 }
 
-export default Applications;
+export default Application;
