@@ -15,23 +15,35 @@ import React from 'react';
 
 // type contextValue = [user: User | null, setUser: () => void];
 
-export const userContext = React.createContext<User | null>(null);
+type UserContextType = [
+  user: User | null,
+  setUser: React.Dispatch<React.SetStateAction<User | null>>
+];
+
+const initialContextState: UserContextType = [
+  null,
+  () => {
+    console.warn('setUser function not yet provided');
+  },
+];
+
+export const userContext =
+  React.createContext<UserContextType>(initialContextState);
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
 
   return (
     <>
-      <userContext.Provider value={user}>
+      <userContext.Provider value={[user, setUser]}>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/jobs/" element={<JobsPage />} />
-          {/* <Route path="/jobs/categories/:category" element={<JobsPage />} /> */}
-          <Route path="/jobs/:id" element={<JobDetailPage />} />
-          <Route path="/company" element={<CompanyPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/user/:id" element={<UserPage />} />
+          <Route path="/jobs/" element={<JobsPage />} />
+          <Route path="/jobs/:id" element={<JobDetailPage />} />
+          <Route path="/user/:id/*" element={<UserPage />} />
+          <Route path="/employer/:id/*" element={<CompanyPage />} />
         </Routes>
       </userContext.Provider>
     </>
@@ -39,3 +51,10 @@ function App() {
 }
 
 export default App;
+
+//company post job
+//user send aplication
+// ====
+//do filters for job
+//company recieve aplication
+//add user experience

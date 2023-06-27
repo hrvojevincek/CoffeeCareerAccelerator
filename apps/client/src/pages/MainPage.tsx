@@ -6,10 +6,6 @@ import Navbar from '../components/Navbar';
 const MainPage = () => {
   useEffect(() => {
     fetchData();
-    // const dataIntervalID = setInterval(fetchData, 500)
-    // return () => {
-    //   clearInterval(dataIntervalID)
-    // }
   }, []);
 
   const [data, setData] = useState<JobData[]>([]);

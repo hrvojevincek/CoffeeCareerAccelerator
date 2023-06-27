@@ -17,3 +17,9 @@ interface DecodedToken extends JwtPayload {
 declare class Logger {
   error: (message: string) => void;
 }
+
+type GenericType<T> = T[];
+
+// Now you can use this type with any other type
+let numbers: GenericType<number>;
+let strings: GenericType<string>;

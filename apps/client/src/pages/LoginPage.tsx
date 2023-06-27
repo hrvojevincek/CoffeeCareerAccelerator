@@ -13,9 +13,9 @@ type Inputs = {
 };
 
 const LoginPage: React.FC = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
 
-  const [user, setUser] = useContext<User | null>(userContext);
+  const [user, setUser] = useContext(userContext);
 
   const {
     register,
@@ -47,13 +47,15 @@ const LoginPage: React.FC = () => {
           console.error(result.error);
         } else {
           setUser(result);
-          history('/'); // redirects to home page
+          navigate('/'); // redirects to home page
         }
       })
       .catch((error) => {
         console.error('error', error);
       });
   };
+
+  //{id, username, category}
 
   return (
     <>

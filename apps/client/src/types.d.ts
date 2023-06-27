@@ -41,5 +41,47 @@ interface UserProviderProps {
 type User = {
   username: string;
   category: string;
+  id: number | undefined;
+};
+
+type UserProfile = {
+  firstName: string;
+  surname: string;
+  city: string;
+  email: string;
+  bio: string;
+};
+
+type UserExp = {
+  jobtitle: string;
+  company: string;
+  dates: string;
+  description: string;
+};
+
+type UserData = {
+  bio: string;
+  category: string;
+  applications: Application[];
+  city: string;
+  email: string;
+  experience: Experience[];
   id: number;
+  name: string;
+  surname: string;
+  username: string;
+};
+
+type Application = {
+  jobId: number;
+  userId: number;
+  hired: boolean;
+};
+
+type Experience = {
+  userId: number;
+  jobtitle: string;
+  company: string;
+  dates: string;
+  description: string;
 };

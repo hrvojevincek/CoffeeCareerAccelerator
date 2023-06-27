@@ -38,9 +38,13 @@ class User {
     return users;
   }
 
-  static async getUser(username: string): Promise<User> {
+  static async getUser(userId: number): Promise<User> {
     const user = await prisma.user.findUnique({
-      where: { username },
+      where: { id: userId },
+      include: {
+        experience: true,
+        applications: true,
+      },
     });
     if (user === null) {
       throw new Error('User not found');
@@ -50,16 +54,22 @@ class User {
 
   static async updateUser(
     userId: number,
-    userName: string,
-    city: string
+    email: string,
+    name: string,
+    surname: string,
+    city: string,
+    bio: string
   ): Promise<User> {
     const user = await prisma.user.update({
       where: {
         id: userId,
       },
       data: {
-        name: userName,
+        email,
+        name,
+        surname,
         city,
+        bio,
       },
     });
     return user;

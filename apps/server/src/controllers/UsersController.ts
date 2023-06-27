@@ -3,13 +3,13 @@ import bcrypt from 'bcrypt';
 import User from '../models/Users';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import Experience from '../models/Experience';
 
 dotenv.config();
 
 const UsersController = {
   async createUser(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log(req.body);
       const { password, username, email, category } = req.body.data;
       if (username === undefined) {
         throw new Error('Missing parameters: username');
@@ -37,12 +37,12 @@ const UsersController = {
   },
 
   async getUser(req: Request, res: Response, next: NextFunction) {
-    const { username } = req.params;
-
     try {
-      const user = await User.getUser(String(username));
+      const { userId } = req.params;
+
+      const user = await User.getUser(parseInt(userId));
       if (user) {
-        res.json(user);
+        res.status(201).json(user);
       } else {
         res.status(404).json({ message: 'User not found' });
       }
@@ -55,9 +55,16 @@ const UsersController = {
     try {
       const { userId } = req.params;
 
-      const { name, city } = req.body;
+      const { email, name, surname, city, bio } = req.body.data || {};
 
-      const updatedUser = await User.updateUser(parseInt(userId), name, city);
+      const updatedUser = await User.updateUser(
+        parseInt(userId),
+        email || '',
+        name || '',
+        surname || '',
+        city || '',
+        bio || ''
+      );
       return res.json(updatedUser);
     } catch (error) {
       res;
@@ -65,8 +72,21 @@ const UsersController = {
     }
   },
 
-  // async deleteUser(req: Request, res: Response, next: NextFunction) {
-  // },
+  async createApplication(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { jobId, userId } = req.body;
+      const newApplication = await prisma.application.create({
+        data: {
+          jobId: jobId,
+          userId: userId,
+        },
+      });
+
+      res.status(201).json(newApplication);
+    } catch (error) {
+      next(error);
+    }
+  },
 
   // function createExperience() {}
   // function getExperience() {}

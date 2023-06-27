@@ -1,4 +1,7 @@
 import moment from 'moment';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type JobData = {
   id: number;
@@ -19,6 +22,31 @@ type FeaturedJobsProps = {
 };
 
 const DetailWork: React.FC<FeaturedJobsProps> = ({ data }) => {
+  const applyForJob = async (jobId: number) => {
+    // replace with your API endpoint
+    const url = 'http://localhost:8080/user/application/';
+
+    const applicationData = {
+      jobId: jobId,
+      userId: userId,
+      // add other required fields here
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(applicationData),
+    });
+
+    if (response.ok) {
+      toast.success('Application sent!');
+    } else {
+      toast.error('Failed to send application. Please try again.');
+    }
+  };
+
   return (
     <div className="">
       {data.map((data) => {
@@ -45,12 +73,13 @@ const DetailWork: React.FC<FeaturedJobsProps> = ({ data }) => {
                   30,000 € Annual
                 </p>
 
-                <button
+                <Link
+                  onClick={() => applyForJob(data.id)}
                   type="button"
                   className="mt-10 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-20 py-1.5 text-center mr-2 mb-2"
                 >
                   Apply
-                </button>
+                </Link>
               </div>
               <div className=" lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8">
                 <div className="">

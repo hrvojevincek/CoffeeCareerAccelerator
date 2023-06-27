@@ -1,17 +1,22 @@
 import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { userContext } from '../../App';
 
 function Aside() {
+  const [user, setUser] = useContext(userContext);
+
   return (
-    <aside className="w-64 h-screen  sm:translate-x-0">
+    <aside className="sticky top-0 w-64 h-screen  sm:translate-x-0">
       <div className="overflow-y-auto py-5 px-3 h-full border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <ul className="space-y-2">
           <li>
             <h2 className="dark:text-white text-xl font-bold ml-3">
-              HELLO NOMAD!
+              HELLO {user?.username.toUpperCase()}!
             </h2>
           </li>
           <li>
-            <button
+            <Link
+              to=""
               type="button"
               className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
             >
@@ -27,13 +32,14 @@ function Aside() {
                 ></path>
               </svg>
               <span className="flex-1 ml-3 text-left whitespace-nowrap">
-                Applications
+                Profile
               </span>
-            </button>
+            </Link>
           </li>
           <li>
-            <a
-              href="#"
+            <Link
+              // to="cvpage"
+              to=""
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <svg
@@ -50,11 +56,11 @@ function Aside() {
               <span className="inline-flex justify-center items-center w-5 h-5 text-xs font-semibold rounded-full text-primary-800 bg-primary-100 dark:bg-primary-200 dark:text-primary-800">
                 6
               </span>
-            </a>
+            </Link>
           </li>
           <li>
-            <button
-              type="button"
+            <Link
+              to="cvpage"
               className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
             >
               <svg
@@ -71,12 +77,35 @@ function Aside() {
                 ></path>
               </svg>
               <span className="flex-1 ml-3 text-left whitespace-nowrap">
-                Your CV
+                Edit Your CV
               </span>
-            </button>
+            </Link>
           </li>
         </ul>
         <ul className="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
+          <li>
+            <Link
+              to="edit"
+              type="button"
+              className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+            >
+              <svg
+                className="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+              <span className="flex-1 ml-3 text-left whitespace-nowrap">
+                Edit Profile
+              </span>
+            </Link>
+          </li>
+
           <li>
             <a
               href="#"
@@ -99,8 +128,11 @@ function Aside() {
             </a>
           </li>
           <li>
-            <a
-              href="#"
+            <Link
+              onClick={() => {
+                setUser(null);
+              }}
+              to="/"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
             >
               <svg
@@ -113,7 +145,7 @@ function Aside() {
                 <path d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"></path>
               </svg>
               <span className="ml-3">Logout</span>
-            </a>
+            </Link>
           </li>
         </ul>
         <Link to="/">

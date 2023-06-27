@@ -3,27 +3,35 @@ import EmployersController from './controllers/EmployersController';
 import UsersController from './controllers/UsersController';
 import JobsController from './controllers/JobsController';
 import TypeController from './controllers/TypeController';
+import ExperienceController from './controllers/ExperienceController';
 
 const router = Router();
 
+//AUTHENTICATION
 router.post('/login', TypeController.login);
 router.post('/me', TypeController.authVerification);
 
-///
+// EXPERIENCE
+router.post('/user/:userId/edit', ExperienceController.createExperience);
+router.get('/user/:userId/experiences', ExperienceController.getExperience);
+
+// USER BRO
 
 // router.post('/user/login', UsersController.loginUser);
 router.post('/user/signup', UsersController.createUser);
 router.get('/users', UsersController.getUsers);
 router.get('/user/:userId', UsersController.getUser);
-router.put('/users:userId', UsersController.updateUser);
-router.get('/user/username/:username', UsersController.getUser);
+router.put('/users/:userId', UsersController.updateUser);
+// router.get('/user/username/:username', UsersController.getUser);
+router.get('/user/:userId', UsersController.getUser);
+router.put('/user/:userId/edit', UsersController.updateUser);
+router.post('/user/application', UsersController.createApplication);
 
 // router.delete('/user/:userId', UsersController.deleteUser);
-
-// router.post('/users/experiences', UsersController.createExperience);
 // router.get('/users/experiences', UsersController.getExperience);
-// router.put('/users/experiences/:id', UsersController.updateExperience);
 // router.delete('/users/experiences/:id', UsersController.deleteExperience);
+
+//EMPLOYER
 
 // router.post('/login', EmployersController.loginEmployer);
 router.post('/employer/signup', EmployersController.createEmployer);

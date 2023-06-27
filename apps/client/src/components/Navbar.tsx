@@ -1,29 +1,27 @@
 import { Link } from 'react-router-dom';
-import { useUser } from '../context/UserContext';
+import { userContext } from '../App';
+import { useContext } from 'react';
 
 const Navbar = () => {
-  const { user } = useUser();
+  const [user, setUser] = useContext(userContext);
 
-  const { category, id } = user;
-
-  //also you need id to define which user dashboard are you going to ! LINK(id params)
-
-  const isLoggedIn = user !== null;
+  //{username: 'vincek', category: 'user', id: 3}
+  //{username: 'victorski', category: 'employer', id: 3}
 
   console.log(user);
 
   return (
     <nav className="bg-black py-3 w-screen lg:max-w-8xl">
-      <div className="max-w-5xl flex flex-wrap items-center justify-between mx-auto">
+      <div className="max-w-5xl flex flex-wrap items-center justify-around mx-auto">
         <Link to={`/`} className="flex items-center">
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             Coffee Career
           </span>
         </Link>
         <div className="flex md:order-2">
-          {isLoggedIn ? (
+          {user?.category === 'user' || user?.category === 'employer' ? (
             <Link
-              to={`/dashboard/${id}`}
+              to={`/${user?.category}/${user?.id}`}
               type="button"
               className="inline-flex justify-center hover:text-gray-400 items-center text-lg font-medium text-center text-gray-50 border-b-2 border-white"
             >
@@ -31,7 +29,7 @@ const Navbar = () => {
             </Link>
           ) : (
             <Link
-              to="/signup"
+              to="/login"
               type="button"
               className="inline-flex justify-center hover:text-gray-400 items-center text-lg font-medium text-center text-gray-50 border-b-2 border-white"
             >
