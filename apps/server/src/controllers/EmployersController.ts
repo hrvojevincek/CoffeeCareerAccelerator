@@ -8,6 +8,7 @@ dotenv.config();
 
 const EmployersController = {
   async createEmployer(req: Request, res: Response, next: NextFunction) {
+    console.log(req.body);
     try {
       const { username, password, email, category } = req.body.data;
       if (username === undefined) {

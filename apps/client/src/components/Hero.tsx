@@ -19,7 +19,7 @@ function Hero() {
             Jobseeker
           </Link>
           <Link
-            to="/UserPage/1"
+            to="/employer"
             className="inline-flex text-slate-900 bg-opacity-75 justify-center items-center py-3 px-5 font-bold text-center hover:text-gray-500 rounded-lg border border-white bg-gray-100 focus:ring-4 focus:ring-gray-400"
           >
             Employer

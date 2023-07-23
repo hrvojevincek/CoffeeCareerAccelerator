@@ -44,6 +44,7 @@ function App() {
           <Route path="/jobs/:id" element={<JobDetailPage />} />
           <Route path="/user/:id/*" element={<UserPage />} />
           <Route path="/employer/:id/*" element={<CompanyPage />} />
+          <Route path="/employer" element={<CompanyPage />} />
         </Routes>
       </userContext.Provider>
     </>

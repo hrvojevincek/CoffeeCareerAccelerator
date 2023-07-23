@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Link, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { userContext } from '../App';
@@ -24,8 +24,7 @@ type FeaturedJobsProps = {
 };
 
 const DetailWork: React.FC<FeaturedJobsProps> = ({ data }) => {
-  // const navigate = useNavigate();
-
+  const navigate = useNavigate();
   const notify = () => toast('Wow so easy!');
 
   const [user, setUser] = useContext(userContext);
@@ -34,13 +33,10 @@ const DetailWork: React.FC<FeaturedJobsProps> = ({ data }) => {
   console.log('DETAILWORK:', user, id);
 
   const applyForJob = async (id: number, user: User) => {
-    if (!user) {
-      console.error(
-        'DETAILWORK:',
-        'No registered user found. Register or Login'
-      );
-      alert('Please go Log in or Registrate!');
-      // navigate('/login');
+    if (user === undefined) {
+      toast.error('No registered user found. Please Register or Login!');
+      alert('Please Log in or Registrate!');
+      navigate('/login');
     }
 
     const url = 'http://localhost:8080/user/application/';
@@ -73,7 +69,7 @@ const DetailWork: React.FC<FeaturedJobsProps> = ({ data }) => {
           <>
             <div
               key={data.id}
-              className="flex p-5 mt-10 mx-auto bg-slate-100 rounded-xl md:max-w-4xl lg:max-w-6xl gap-10"
+              className="flex p-5 m-10 sm:w-fit mx-auto bg-slate-100 rounded-xl md:max-w-4xl lg:max-w-6xl gap-10"
             >
               <div>
                 <p className="text-xs text-slate-500">

@@ -2,12 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Navbar from '../components/Navbar';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { userContext } from '../App';
 
 const SignupPage = () => {
   const history = useNavigate();
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useContext(userContext);
 
   const {
     register,

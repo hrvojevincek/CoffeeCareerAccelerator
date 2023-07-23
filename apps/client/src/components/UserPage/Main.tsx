@@ -29,7 +29,6 @@ function Main() {
             <h1 className=" mb-4 text-xl font-bold text-gray-900 sm:text-3xl md:text-2xl">
               Your Profile
             </h1>
-
             {data && (
               <div>
                 <h1 className="mt-2 text-xl font-bold text-gray-900">
@@ -41,6 +40,7 @@ function Main() {
                 </p>
                 <p>City: {data.city}</p>
                 <p>E-mail: {data.email}</p>
+                <p>Bio: {data.bio}</p>
 
                 <h1 className="mt-2 text-2xl font-bold text-gray-900 ">
                   Experience
@@ -59,9 +59,7 @@ function Main() {
                 </h1>
                 {data.applications.map((item, i) => (
                   <div key={i}>
-                    <p>{item.jobId}</p>
-                    <p>{item.hired.toString()}</p>
-                    {/* Add other properties here */}
+                    <p>Applied for job: {item.jobId}</p>
                   </div>
                 ))}
               </div>
