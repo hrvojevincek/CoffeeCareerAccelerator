@@ -12,7 +12,7 @@ Node version 14.x
 ```git clone https://github.com/hrvojevincek/CofeeCareerAccelerator.git```
 
 ## Install packages
-´´´yarn´´´
+```yarn```
 
 ## Setup .env file
 
