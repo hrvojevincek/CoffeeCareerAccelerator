@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
-import React, { useContext } from 'react';
-import { userContext } from '../App';
+import React, { useContext } from "react";
+import { userContext } from "../App";
 
 type Inputs = {
   username: string;
@@ -15,25 +15,25 @@ type Inputs = {
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const [user, setUser] = useContext(userContext);
+  const [, setUser] = useContext(userContext);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({
-    mode: 'onChange',
+    mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const requestOptions: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         // Authorization: `Bearer ${document.cookie.split('=')[1]}`, // Retrieve the token from the cookie
       },
       body: JSON.stringify({ data }),
-      redirect: 'follow',
+      redirect: "follow",
     };
 
     // const forReal = await fetch(`http://localhost:8080/me`, requestOptions);
@@ -47,11 +47,11 @@ const LoginPage: React.FC = () => {
           console.error(result.error);
         } else {
           setUser(result);
-          navigate('/'); // redirects to home page
+          navigate("/"); // redirects to home page
         }
       })
       .catch((error) => {
-        console.error('error', error);
+        console.error("error", error);
       });
   };
 
@@ -76,7 +76,7 @@ const LoginPage: React.FC = () => {
                   Your username
                 </label>
                 <input
-                  {...register('username', { required: true })}
+                  {...register("username", { required: true })}
                   type="username"
                   name="username"
                   id="username"
@@ -93,7 +93,7 @@ const LoginPage: React.FC = () => {
                   Your password
                 </label>
                 <input
-                  {...register('password', {
+                  {...register("password", {
                     required: true,
                     minLength: 8,
                     maxLength: 15,
@@ -110,7 +110,7 @@ const LoginPage: React.FC = () => {
                     Minimum length 8 characters
                   </span>
                 )}
-                {errors.password && errors.password.type === 'maxLength' && (
+                {errors.password && errors.password.type === "maxLength" && (
                   <span className="block pl-3 mt-1 text-xs text-red-200">
                     Max length exceeded
                   </span>
@@ -148,7 +148,7 @@ const LoginPage: React.FC = () => {
                 Login to your account
               </button>
               <div className="pl-2 text-sm font-medium text-gray-500 dark:text-gray-300">
-                Not registered?{' '}
+                Not registered?{" "}
                 <Link
                   to="/signup"
                   className="pl-4 text-blue-700 hover:underline dark:text-blue-500"

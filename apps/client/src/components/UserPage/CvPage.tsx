@@ -1,22 +1,18 @@
-import { useParams } from 'react-router-dom';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 
 function CvPage() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UserExp>();
+  const { register, handleSubmit } = useForm<UserExp>();
   const { id } = useParams<{ id: string }>();
 
   const onSubmitExperience: SubmitHandler<UserExp> = async (data) => {
     const requestOptions: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ data }),
-      redirect: 'follow',
+      redirect: "follow",
     };
     try {
       const response = await fetch(
@@ -53,7 +49,7 @@ function CvPage() {
                 </label>
 
                 <input
-                  {...register('jobtitle')}
+                  {...register("jobtitle")}
                   type="text"
                   id="jobtitle"
                   name="jobtitle"
@@ -69,7 +65,7 @@ function CvPage() {
                 </label>
 
                 <input
-                  {...register('company')}
+                  {...register("company")}
                   type="text"
                   id="company"
                   name="company"
@@ -85,7 +81,7 @@ function CvPage() {
                 </label>
 
                 <input
-                  {...register('dates')}
+                  {...register("dates")}
                   type="text"
                   id="dates"
                   name="dates"
@@ -102,9 +98,9 @@ function CvPage() {
                 </label>
 
                 <textarea
-                  {...register('description')}
+                  {...register("description")}
                   id="description"
-                  rows="4"
+                  rows={4}
                   name="description"
                   className="mt-1
                   w-full rounded-md border-gray-200 bg-white text-sm

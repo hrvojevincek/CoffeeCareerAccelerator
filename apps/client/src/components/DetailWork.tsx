@@ -1,9 +1,9 @@
-import moment from 'moment';
-import { useParams, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { userContext } from '../App';
-import { useContext } from 'react';
+import moment from "moment";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { userContext } from "../App";
+import { useContext } from "react";
 
 type JobData = {
   id: number;
@@ -25,21 +25,21 @@ type FeaturedJobsProps = {
 
 const DetailWork: React.FC<FeaturedJobsProps> = ({ data }) => {
   const navigate = useNavigate();
-  const notify = () => toast('Wow so easy!');
+  const notify = () => toast("Wow so easy!");
 
-  const [user, setUser] = useContext(userContext);
+  const [user] = useContext(userContext);
   const { id } = useParams<{ id: string }>();
 
-  console.log('DETAILWORK:', user, id);
+  console.log("DETAILWORK:", user, id);
 
   const applyForJob = async (id: number, user: User) => {
     if (user === undefined) {
-      toast.error('No registered user found. Please Register or Login!');
-      alert('Please Log in or Registrate!');
-      navigate('/login');
+      toast.error("No registered user found. Please Register or Login!");
+      alert("Please Log in or Registrate!");
+      navigate("/login");
     }
 
-    const url = 'http://localhost:8080/user/application/';
+    const url = "http://localhost:8080/user/application/";
 
     const applicationData = {
       jobId: id,
@@ -47,18 +47,18 @@ const DetailWork: React.FC<FeaturedJobsProps> = ({ data }) => {
     };
 
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(applicationData),
     });
 
     if (response.ok) {
       notify();
-      toast.success('Application sent!');
+      toast.success("Application sent!");
     } else {
-      toast.error('Failed to send application. Please try again.');
+      toast.error("Failed to send application. Please try again.");
     }
   };
 
@@ -73,7 +73,7 @@ const DetailWork: React.FC<FeaturedJobsProps> = ({ data }) => {
             >
               <div>
                 <p className="text-xs text-slate-500">
-                  {moment(data.createdAt).format('ll')}
+                  {moment(data.createdAt).format("ll")}
                 </p>
                 <p className=" text-xl font-semibold leading-7 text-slate-900">
                   {data.employer.name}

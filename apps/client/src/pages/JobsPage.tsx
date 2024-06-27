@@ -1,27 +1,25 @@
-import { useEffect, useState } from 'react';
-import FeaturedJobs from '../components/FeaturedJobs';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import { useEffect, useState } from "react";
+import FeaturedJobs from "../components/FeaturedJobs";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
-function Jobs(props: LoggedInProp) {
-  const { isLoggedIn } = props;
-
+function Jobs() {
   //check if cookies have the token
 
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
   const [data, setData] = useState<JobData[]>([]);
 
   const fetchData = async (category: string) => {
     const url =
-      category === ''
+      category === ""
         ? `http://localhost:8080/jobs/`
         : `http://localhost:8080/jobs/categories/${category}`;
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
         setData(data);
-        if (category === '') {
+        if (category === "") {
           setCategories(data.map((job: any) => job.categories));
         }
       })
@@ -46,9 +44,9 @@ function Jobs(props: LoggedInProp) {
               <li className="mr-2">
                 <a
                   className={`${
-                    '' === selectedCategory ? '' : 'font-bold text-neutral-50'
+                    "" === selectedCategory ? "" : "font-bold text-neutral-50"
                   } cursor-pointer border-transparent rounded-t-lg hover:text-gray-100 hover:border-gray-300 dark:hover:text-gray-300`}
-                  onClick={() => setSelectedCategory('')}
+                  onClick={() => setSelectedCategory("")}
                 >
                   All
                 </a>
@@ -59,8 +57,8 @@ function Jobs(props: LoggedInProp) {
                   <a
                     className={`${
                       category === selectedCategory
-                        ? 'font-bold text-neutral-50'
-                        : ''
+                        ? "font-bold text-neutral-50"
+                        : ""
                     } cursor-pointer border-transparent rounded-t-lg hover:text-gray-50 hover:border-gray-300 dark:hover:text-gray-100`}
                     onClick={() => setSelectedCategory(category)}
                   >

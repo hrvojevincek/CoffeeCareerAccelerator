@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
 function Main() {
   const [data, setData] = useState<UserData | null>(null);

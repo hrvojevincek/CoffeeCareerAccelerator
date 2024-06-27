@@ -1,38 +1,36 @@
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import Navbar from '../components/Navbar';
-import { useContext, useState } from 'react';
-import { userContext } from '../App';
+import { useContext } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { userContext } from "../App";
+import Navbar from "../components/Navbar";
 
 const SignupPage = () => {
   const history = useNavigate();
 
-  const [user, setUser] = useContext(userContext);
+  const [, setUser] = useContext(userContext);
 
   const {
     register,
     setValue,
-    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({
-    mode: 'onChange',
+    mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append("Content-Type", "application/json");
 
     const raw = JSON.stringify({
       data: data,
     });
 
     const requestOptions: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: myHeaders,
       body: raw,
-      redirect: 'follow',
+      redirect: "follow",
     };
 
     fetch(`http://localhost:8080/${data.category}/signup`, requestOptions)
@@ -45,11 +43,11 @@ const SignupPage = () => {
         } else {
           console.log(result);
           setUser(result);
-          history('/'); // redirects to home page
+          history("/"); // redirects to home page
         }
       })
       .catch((error) => {
-        console.error('error', error);
+        console.error("error", error);
       });
   };
 
@@ -76,11 +74,11 @@ const SignupPage = () => {
                 </label>
                 <div className="flex">
                   <input
-                    {...register('username', {
+                    {...register("username", {
                       required: true,
                       minLength: {
                         value: 5,
-                        message: 'Enter min 5 characters',
+                        message: "Enter min 5 characters",
                       },
                       maxLength: 20,
                       pattern: /^[A-Za-z]+$/i,
@@ -94,9 +92,9 @@ const SignupPage = () => {
                     required
                   />
                   <select
-                    {...register('category')}
+                    {...register("category")}
                     onChange={(e) =>
-                      setValue('category', e.target.value, {
+                      setValue("category", e.target.value, {
                         shouldValidate: true,
                       })
                     }
@@ -113,7 +111,7 @@ const SignupPage = () => {
                     Minimum length 5 characters
                   </span>
                 )}
-                {errors.username && errors.username.type === 'maxLength' && (
+                {errors.username && errors.username.type === "maxLength" && (
                   <span className="block pl-3 mt-1 text-xs text-red-200">
                     Max length exceeded
                   </span>
@@ -127,7 +125,7 @@ const SignupPage = () => {
                   Your email
                 </label>
                 <input
-                  {...register('email', { required: true })}
+                  {...register("email", { required: true })}
                   type="email"
                   name="email"
                   id="email"
@@ -144,7 +142,7 @@ const SignupPage = () => {
                   Password
                 </label>
                 <input
-                  {...register('password', {
+                  {...register("password", {
                     required: true,
                     minLength: 8,
                     maxLength: 15,
@@ -161,7 +159,7 @@ const SignupPage = () => {
                     Minimum length 8 characters
                   </span>
                 )}
-                {errors.password && errors.password.type === 'maxLength' && (
+                {errors.password && errors.password.type === "maxLength" && (
                   <span className="block pl-3 mt-1 text-xs text-red-200">
                     Max length exceeded
                   </span>
@@ -182,7 +180,7 @@ const SignupPage = () => {
                     htmlFor="terms"
                     className="font-light text-gray-500 dark:text-gray-300"
                   >
-                    I accept the{' '}
+                    I accept the{" "}
                     <a
                       className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                       href="#"

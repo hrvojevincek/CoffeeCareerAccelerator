@@ -1,22 +1,18 @@
-import { useParams } from 'react-router-dom';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useParams } from "react-router-dom";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 function EditProfile() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UserProfile>();
+  const { register, handleSubmit } = useForm<UserProfile>();
   const { id } = useParams<{ id: string }>();
 
   const onSubmitDetails: SubmitHandler<UserProfile> = async (data) => {
     const requestOptions: RequestInit = {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ data }),
-      redirect: 'follow',
+      redirect: "follow",
     };
     try {
       const response = await fetch(
@@ -56,7 +52,7 @@ function EditProfile() {
                 </label>
 
                 <input
-                  {...register('firstName')}
+                  {...register("firstName")}
                   type="firstName"
                   name="firstName"
                   id="firstName"
@@ -72,7 +68,7 @@ function EditProfile() {
                 </label>
 
                 <input
-                  {...register('surname')}
+                  {...register("surname")}
                   type="surname"
                   id="surname"
                   name="surname"
@@ -88,7 +84,7 @@ function EditProfile() {
                 </label>
 
                 <input
-                  {...register('city')}
+                  {...register("city")}
                   type="city"
                   id="city"
                   name="city"
@@ -104,7 +100,7 @@ function EditProfile() {
                 </label>
 
                 <input
-                  {...register('email')}
+                  {...register("email")}
                   type="email"
                   id="email"
                   name="email"
@@ -120,9 +116,9 @@ function EditProfile() {
                 </label>
 
                 <textarea
-                  {...register('bio')}
+                  {...register("bio")}
                   id="bio"
-                  rows="4"
+                  rows={4}
                   name="bio"
                   className="mt-1
                   w-full rounded-md border-gray-200 bg-white text-sm

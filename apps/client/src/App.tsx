@@ -1,17 +1,17 @@
-import 'flowbite';
-import 'flowbite/dist/flowbite.css';
+import "flowbite";
+import "flowbite/dist/flowbite.css";
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 
-import MainPage from './pages/MainPage';
-import JobDetailPage from './pages/JobDetailPage';
-import CompanyPage from './pages/CompanyPage';
-import JobsPage from './pages/JobsPage';
-import SignupPage from './pages/SignupPage';
-import LoginPage from './pages/LoginPage';
-import UserPage from './pages/UserPage';
-import { useState } from 'react';
-import React from 'react';
+import MainPage from "./pages/MainPage";
+import JobDetailPage from "./pages/JobDetailPage";
+import CompanyPage from "./pages/CompanyPage";
+import JobsPage from "./pages/JobsPage";
+import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
+import UserPage from "./pages/UserPage";
+import { useState } from "react";
+import React from "react";
 
 // type contextValue = [user: User | null, setUser: () => void];
 
@@ -23,7 +23,7 @@ type UserContextType = [
 const initialContextState: UserContextType = [
   null,
   () => {
-    console.warn('setUser function not yet provided');
+    console.warn("setUser function not yet provided");
   },
 ];
 

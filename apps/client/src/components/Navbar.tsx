@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
-import { userContext } from '../App';
-import { useContext } from 'react';
+import { Link } from "react-router-dom";
+import { userContext } from "../App";
+import { useContext } from "react";
 
 const Navbar = () => {
-  const [user, setUser] = useContext(userContext);
+  const [user] = useContext(userContext);
 
   //{username: 'vincek', category: 'user', id: 3}
   //{username: 'victorski', category: 'employer', id: 3}
@@ -17,7 +17,7 @@ const Navbar = () => {
           </span>
         </Link>
         <div className="flex md:order-2">
-          {user?.category === 'user' || user?.category === 'employer' ? (
+          {user?.category === "user" || user?.category === "employer" ? (
             <Link
               to={`/${user?.category}/${user?.id}`}
               type="button"
