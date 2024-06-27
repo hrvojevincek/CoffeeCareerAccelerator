@@ -1,0 +1,46 @@
+2024-06-27T07:29:05.167877Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/1.cookie"), AnchoredSystemPathBuf(".turbo/cookies/.turbo-cookie")}
+2024-06-27T07:29:05.167888Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-06-27T07:29:05.567070Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/client/vite.config.ts.timestamp-1719473345461-f6015ae1a648e.mjs")}
+2024-06-27T07:29:05.567084Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("client"), path: AnchoredSystemPathBuf("apps/client") }}))
+2024-06-27T07:29:05.667098Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/client/vite.config.ts.timestamp-1719473345461-f6015ae1a648e.mjs")}
+2024-06-27T07:29:05.667106Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("client"), path: AnchoredSystemPathBuf("apps/client") }}))
+2024-06-27T07:36:17.667711Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/2.cookie")}
+2024-06-27T07:36:17.667918Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-06-27T07:36:18.067965Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/client/vite.config.ts.timestamp-1719473777970-88352b41cb967.mjs")}
+2024-06-27T07:36:18.067974Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("client"), path: AnchoredSystemPathBuf("apps/client") }}))
+2024-06-27T07:36:18.168196Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/client/vite.config.ts.timestamp-1719473777970-88352b41cb967.mjs")}
+2024-06-27T07:36:18.168205Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("client"), path: AnchoredSystemPathBuf("apps/client") }}))
+2024-06-27T07:38:28.300406Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:38:28.301020Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:40:12.692130Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:40:12.692207Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:40:13.891485Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:40:13.891492Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:40:14.392039Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:40:14.392047Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:40:14.492003Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:40:14.492010Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:40:14.560860Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-06-27T07:40:14.592476Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:40:14.592487Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:40:14.599417Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-06-27T07:42:12.893149Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:42:12.893196Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:42:13.993155Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:42:13.993164Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:42:15.992373Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:42:15.992385Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:42:15.992429Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-06-27T07:43:06.394461Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:43:06.394753Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:43:06.693300Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:43:06.693311Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:43:06.693338Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-06-27T07:43:27.093842Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:43:27.093877Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:43:27.892952Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:43:27.892962Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:43:27.923008Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-06-27T07:43:31.293437Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/server/prisma/seed.ts")}
+2024-06-27T07:43:31.293457Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("server"), path: AnchoredSystemPathBuf("apps/server") }}))
+2024-06-27T07:43:31.293488Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
