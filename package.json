@@ -15,7 +15,7 @@
     "apps/*"
   ],
   "devDependencies": {
-    "turbo": "^1.10.3"
-  },
-  "dependencies": {}
+    "turbo": "^1.10.3",
+    "vercel": "^34.2.8"
+  }
 }
