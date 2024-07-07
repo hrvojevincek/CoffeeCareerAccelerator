@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
-import Jobs from '../models/Jobs';
-import dotenv from 'dotenv';
+import { NextFunction, Request, Response } from "express";
+import Jobs from "../models/Jobs";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -40,7 +40,7 @@ const JobsController = {
       if (job) {
         res.json(job);
       } else {
-        res.status(404).json({ message: 'Job not found' });
+        res.status(404).json({ message: "Job not found" });
       }
     } catch (error) {
       next(error);
@@ -55,7 +55,7 @@ const JobsController = {
       if (job) {
         res.json(job);
       } else {
-        res.status(404).json({ message: 'Job not found' });
+        res.status(404).json({ message: "Job not found" });
       }
     } catch (error) {
       next(error);

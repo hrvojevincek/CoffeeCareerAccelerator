@@ -1,8 +1,32 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 class User {
+  static async getUserByEmail(email: string): Promise<User> {
+    const user = await prisma.user.findUnique({
+      where: { email: email },
+    });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return user;
+  }
+
+  static async getUserById(userId: number): Promise<User> {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        experience: true,
+        applications: true,
+      },
+    });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return user;
+  }
+
   static async createUser(
     username: string,
     password: string,
@@ -38,20 +62,6 @@ class User {
     return users;
   }
 
-  static async getUser(userId: number): Promise<User> {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      include: {
-        experience: true,
-        applications: true,
-      },
-    });
-    if (user === null) {
-      throw new Error('User not found');
-    }
-    return user;
-  }
-
   static async updateUser(
     userId: number,
     email: string,
@@ -83,7 +93,7 @@ class User {
       },
     });
     if (user === null) {
-      throw new Error('User does not exist.');
+      throw new Error("User does not exist.");
     }
     return user;
   }

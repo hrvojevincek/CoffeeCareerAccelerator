@@ -1,31 +1,33 @@
-import { NextFunction, Request, Response } from 'express';
-import { checkToken } from '../lib/helpers';
-import { DecodedToken } from '../../types';
+// import { NextFunction, Request, Response } from "express";
+// import { checkToken } from "../lib/helpers";
+// import { DecodedToken } from "../../types";
 
-const userAuthorizationMiddleware = async (
-  req: Request,
-  _: Response,
-  next: NextFunction
-) => {
-  try {
-    const authCookies = req.headers.cookie;
-    if (!authCookies) {
-      throw new Error('Authorization header/cookie is required');
-    }
+// const userAuthorizationMiddleware = async (
+//   req: Request,
+//   _: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     console.log("**req object:**", req); // Log the entire req object
 
-    const token = authCookies.split(' ')[1];
+//     const authCookies = req.headers.cookie;
+//     if (!authCookies) {
+//       throw new Error("Authorization header/cookie is required");
+//     }
 
-    if (!token) {
-      throw new Error('Missing token in headers');
-    }
-    const { userId } = checkToken(token) as DecodedToken;
+//     const token = authCookies.split(" ")[1];
 
-    req.userId = userId as number;
+//     if (!token) {
+//       throw new Error("Missing token in headers");
+//     }
+//     const { userId } = checkToken(token) as DecodedToken;
 
-    next();
-  } catch (e) {
-    next(e);
-  }
-};
+//     req.userId = userId;
 
-export default userAuthorizationMiddleware;
+//     next();
+//   } catch (e) {
+//     next(e);
+//   }
+// };
+
+// export default userAuthorizationMiddleware;

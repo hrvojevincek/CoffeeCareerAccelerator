@@ -1,8 +1,7 @@
-import { NextFunction, Request, Response } from 'express';
-import Employers from '../models/Employers';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import { NextFunction, Request, Response } from "express";
+import Employers from "../models/Employers";
 
 dotenv.config();
 
@@ -12,16 +11,16 @@ const EmployersController = {
     try {
       const { username, password, email, category } = req.body.data;
       if (username === undefined) {
-        throw new Error('Missing parameters: username');
+        throw new Error("Missing parameters: username");
       }
       if (password === undefined) {
-        throw new Error('Missing parameters: password');
+        throw new Error("Missing parameters: password");
       }
       const hashPassword = await bcrypt.hash(password, 10);
 
       await Employers.createEmployer(username, hashPassword, email, category);
 
-      res.status(201).json({ message: 'Employer created successfully' });
+      res.status(201).json({ message: "Employer created successfully" });
     } catch (e) {
       next(e);
     }
@@ -44,7 +43,7 @@ const EmployersController = {
       if (employer) {
         res.json(employer);
       } else {
-        res.status(404).json({ message: 'employer not found' });
+        res.status(404).json({ message: "employer not found" });
       }
     } catch (error) {
       next(error);
