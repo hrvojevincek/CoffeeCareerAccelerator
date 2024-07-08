@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import React, { useContext } from "react";
-import { userContext } from "../App";
+import { userContext } from "../../../App";
 
 type Inputs = {
   username: string;
@@ -59,7 +58,6 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
-      <Navbar />
       <div className="h-screen flex justify-center items-center sm:bg-cover md:bg-cover bg-cover bg-[url('https://europeancoffeetrip.com/wp-content/uploads/2018/12/Elbgold-Coffee-Lab-2.jpg')]">
         <div className="w-full rounded-lg shadow dark:border sm:max-w-md dark:bg-gray-800 dark:border-gray-900">
           <div className="px-6 py-6 lg:px-8">

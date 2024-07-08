@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { userContext } from "../App";
-import Navbar from "../components/Navbar";
+import { userContext } from "../../../App";
 
 const SignupPage = () => {
   const history = useNavigate();
@@ -56,7 +55,6 @@ const SignupPage = () => {
 
   return (
     <>
-      <Navbar />
       <section className=" h-screen flex justify-center items-center sm:bg-cover md:bg-cover bg-cover bg-[url('https://europeancoffeetrip.com/wp-content/uploads/2018/12/Elbgold-Coffee-Lab-2.jpg')]">
         <div className=" w-full rounded-lg shadow dark:border sm:max-w-md dark:bg-gray-800 dark:border-gray-900">
           <div className="space-y-4 md:space-y-6 sm:p-8">

@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import FeaturedJobs from '../components/FeaturedJobs';
-import Hero from '../components/Hero';
-import Navbar from '../components/Navbar';
+import { useEffect, useState } from "react";
+import FeaturedJobs from "../../components/FeaturedJobs";
+import Hero from "../../components/Hero";
 
 const MainPage = () => {
   useEffect(() => {
@@ -11,7 +10,7 @@ const MainPage = () => {
   const [data, setData] = useState<JobData[]>([]);
 
   const fetchData = async () => {
-    await fetch('http://localhost:8080/jobs/')
+    await fetch("http://localhost:8080/jobs/")
       .then((response) => response.json())
       .then((data) => {
         setData(data);
@@ -21,7 +20,6 @@ const MainPage = () => {
 
   return (
     <div className="">
-      <Navbar />
       <Hero />
       <FeaturedJobs data={data} />
     </div>

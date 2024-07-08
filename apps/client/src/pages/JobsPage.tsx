@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import FeaturedJobs from "../components/FeaturedJobs";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 function Jobs() {
@@ -32,9 +31,7 @@ function Jobs() {
 
   return (
     <>
-      <div className="h-screen bg-right bg-fixed bg-[url('https://www.theradicalproject.com/wp-content/uploads/2023/04/00-coffee-roastery-landscape-image.jpg')] ">
-        <Navbar />
-
+      <div className="h-screen bg-right bg-fixed bg-[url('https://images.squarespace-cdn.com/content/v1/65521fe39084f270bb13c228/1704576752170-OVJ1URPN05ZF9FY97H5P/00+coffee+roastery+landscape+image.jpg?format=1500w')] ">
         <div className="mt-10 rounded-lg bg-black mx-auto  md:max-w-4xl lg:max-w-6xl gap-10">
           <div className="mx-10 py-4 z-10 rounded-xl border-white">
             <h1 className=" dark:text-white text-2xl font-semibold">
