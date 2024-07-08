@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Employer, PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
@@ -111,7 +111,7 @@ async function main() {
     },
   ];
 
-  let createdEmployers = [];
+  let createdEmployers: Employer[] = [];
   for (const employerData of employersData) {
     const employer = await prisma.employer.create({
       data: employerData,
