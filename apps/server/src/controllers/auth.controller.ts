@@ -6,7 +6,6 @@ import { generateTokenAndSetCookie } from "../lib/generateToken";
 const prisma = new PrismaClient();
 
 export const signup = async (req: Request, res: Response) => {
-  console.log("we are here");
   try {
     const { password, username, email, category } = req.body;
 
@@ -76,7 +75,6 @@ export const login = async (req: Request, res: Response) => {
     if (!user || !isPasswordCorrect) {
       return res.status(400).json({ error: "Invalid username or password" });
     }
-
     generateTokenAndSetCookie(String(user.id), res);
 
     res.status(200).json({

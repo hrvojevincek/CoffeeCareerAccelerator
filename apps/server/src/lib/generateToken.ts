@@ -2,7 +2,7 @@ import { Response } from "express";
 import jwt from "jsonwebtoken";
 
 export const generateTokenAndSetCookie = (userId: string, res: Response) => {
-  const token = jwt.sign({ userId }, process.env.JWT_SECRE as string, {
+  const token = jwt.sign({ userId }, process.env.JWT_SECRET as string, {
     expiresIn: "15d",
   });
 

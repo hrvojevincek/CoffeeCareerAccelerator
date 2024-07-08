@@ -20,11 +20,14 @@ const SignupPage = () => {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const myHeaders = new Headers();
+
     myHeaders.append("Content-Type", "application/json");
 
     const raw = JSON.stringify({
       data: data,
     });
+
+    console.log("we are here", raw);
 
     const requestOptions: RequestInit = {
       method: "POST",

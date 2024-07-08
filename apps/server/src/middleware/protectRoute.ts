@@ -9,7 +9,6 @@ export const protectRoute = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("we are here");
   try {
     const token = req.cookies.jwt;
     if (!token) {
@@ -23,10 +22,9 @@ export const protectRoute = async (
     if (!decoded) {
       return res.status(401).json({ error: "Unauthorized: Invalid Token" });
     }
-
     const user = await prisma.user.findUnique({
       where: {
-        id: decoded.userId,
+        id: Number(decoded.userId),
       },
       select: {
         id: true,

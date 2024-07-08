@@ -4,7 +4,7 @@ import { protectRoute } from "../middleware/protectRoute";
 
 const userRoutes = express.Router();
 
-userRoutes.get("/user/:userId", protectRoute, UsersController.getUser);
+userRoutes.get("/:userId", protectRoute, UsersController.getUser);
 
 userRoutes.post(
   "/user/application",
@@ -12,8 +12,8 @@ userRoutes.post(
   UsersController.createApplication
 );
 
-userRoutes.put("/user/:userId", protectRoute, UsersController.updateUser);
+userRoutes.put("/:userId", protectRoute, UsersController.updateUser);
 
-userRoutes.get("/users", protectRoute, UsersController.getUsers);
+userRoutes.get("/", protectRoute, UsersController.getUsers);
 
 export default userRoutes;
