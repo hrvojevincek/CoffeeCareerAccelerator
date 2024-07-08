@@ -10,6 +10,7 @@ import MainPage from './pages/home/MainPage';
 import SignupPage from './pages/auth/signup/SignupPage';
 import LoginPage from './pages/auth/login/LoginPage';
 import Navbar from './components/Navbar';
+import { User } from './types';
 
 type UserContextType = [
     user: User | null,
