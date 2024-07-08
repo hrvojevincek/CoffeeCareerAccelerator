@@ -13,8 +13,6 @@ import UserPage from "./pages/UserPage";
 import { useState } from "react";
 import React from "react";
 
-// type contextValue = [user: User | null, setUser: () => void];
-
 type UserContextType = [
   user: User | null,
   setUser: React.Dispatch<React.SetStateAction<User | null>>
@@ -52,10 +50,4 @@ function App() {
 }
 
 export default App;
-
-//company post job
-//user send aplication
-// ====
-//do filters for job
-//company recieve aplication
-//add user experience
+s;

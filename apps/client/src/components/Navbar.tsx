@@ -26,14 +26,24 @@ const Navbar = () => {
               My Dashboard
             </Link>
           ) : (
-            <Link
-              to="/login"
-              type="button"
-              className="inline-flex justify-center hover:text-gray-400 items-center text-lg font-medium text-center text-gray-50 border-b-2 border-white"
-            >
-              Get Started
-            </Link>
+            <>
+              <Link
+                to="/login"
+                type="button"
+                className="inline-flex justify-center hover:text-gray-400 items-center text-lg font-medium text-center text-gray-50 border-b-2 border-white"
+              >
+                Get Started
+              </Link>
+            </>
           )}
+          <Link
+            to="https://github.com/hrvojevincek/CoffeeCareerAccelerator"
+            className="flex items-center"
+          >
+            <span className="self-center ml-4 text-sm font-semibold whitespace-nowrap dark:text-white">
+              GITHUB
+            </span>
+          </Link>
         </div>
         <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
           <ul className="flex flex-col md:p-0 mt-4 font-medium text-white rounded-lg md:flex-row md:space-x-8 md:mt-0">
