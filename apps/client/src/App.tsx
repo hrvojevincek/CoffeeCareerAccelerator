@@ -26,8 +26,6 @@ const initialContextState: UserContextType = [
 export const userContext =
     React.createContext<UserContextType>(initialContextState);
 
-console.log(userContext);
-
 function App() {
     const [user, setUser] = useState<User | null>(null);
 

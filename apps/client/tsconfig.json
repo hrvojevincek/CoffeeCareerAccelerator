@@ -20,7 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*.ts*"],
+  "include": ["src/**/*.ts*", "src/utils/db/dummyJobs.js"],
   "exclude": ["node_modules", "dist", "lib"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
