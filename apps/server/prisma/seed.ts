@@ -224,6 +224,16 @@ async function main() {
       money: "30.000€",
       posted: true,
     },
+    {
+      title: "Barista",
+      categories: "Barista",
+      description:
+        "Join our team of passionate baristas. We are looking for skilled individuals who can create exceptional coffee experiences for our customers. As a Barista, you will be responsible for brewing and serving coffee, providing excellent customer service, and maintaining a clean and welcoming environment. Join us and be part of a team that values quality, craftsmanship, and the art of coffee.",
+      location: "Madrid, Spain",
+      employerId: createdEmployers[4].id,
+      money: "30.000€",
+      posted: true,
+    },
   ];
 
   for (const jobData of jobsData) {
