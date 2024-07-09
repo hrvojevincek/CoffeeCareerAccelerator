@@ -6,19 +6,19 @@ import { useRoutes } from 'react-router-dom';
 // import Applications from '../components/UserPage/Applications';
 
 function UserPage() {
-  const element = useRoutes([
-    // Sub-route path is relative to the current route ("/user/:id")
-    { path: '/', element: <Main /> },
-    { path: 'edit/', element: <EditProfile /> },
-    { path: 'cvpage', element: <CvPage /> },
-  ]);
+    const element = useRoutes([
+        // Sub-route path is relative to the current route ("/user/:id")
+        { path: '/', element: <Main /> },
+        { path: 'edit/', element: <EditProfile /> },
+        { path: 'cvpage', element: <CvPage /> },
+    ]);
 
-  return (
-    <div className="flex">
-      <Aside />
-      {element}
-    </div>
-  );
+    return (
+        <div className='flex'>
+            <Aside />
+            {element}
+        </div>
+    );
 }
 
 export default UserPage;
