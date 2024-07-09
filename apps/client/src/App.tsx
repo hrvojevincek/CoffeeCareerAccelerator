@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import JobDetailPage from './pages/JobDetailPage';
 import CompanyPage from './pages/CompanyPage';
-import JobsPage from './pages/JobsPage';
+import JobsPage from './pages/jobs/JobsPage';
 import UserPage from './pages/UserPage';
 import { useState } from 'react';
 import React from 'react';

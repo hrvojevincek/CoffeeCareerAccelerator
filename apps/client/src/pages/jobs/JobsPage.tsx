@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import FeaturedJobs from '../components/FeaturedJobs';
-import Footer from '../components/Footer';
-import { JobData } from '../types/types';
-import dummyJobs from '../utils/db/dummyJobs';
+import FeaturedJobs from '../../components/FeaturedJobs';
+import Footer from '../../components/Footer';
+import { JobData } from '../../types/types';
+import dummyJobs from '../../utils/db/dummyJobs';
 
 function Jobs() {
     //check if cookies have the token
