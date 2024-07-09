@@ -1,5 +1,8 @@
 # Full Stack solo project @ Arol.Dev
-Building solo project as a senior part of Software Engineer Program Mentorship @ Arol.Dev
+Frontend: React, FlowbiteUI, ContextAPI
+Backend: Node, Express, Prisma, Postgrsql
+
+Senior part solo project at Software Engineer Program Mentorship @ Arol.Dev
 
 ## Full Stack CoffeeCareerAccelerator with React, Tailwind, Prisma, Postgrsql
 
