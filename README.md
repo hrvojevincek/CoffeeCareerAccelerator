@@ -1,4 +1,4 @@
-# Full Stack solo project @ Arol.Dev
+# Full Stack Project @ Arol.Dev
 Frontend: React, FlowbiteUI, ContextAPI
 Backend: Node, Express, Prisma, Postgrsql
 
