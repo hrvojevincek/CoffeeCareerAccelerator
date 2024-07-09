@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import FeaturedJobs from '../../components/FeaturedJobs';
 import Hero from '../../components/Hero';
-import { JobData } from '../../types';
+import { JobData } from '../../types/types';
 
 const MainPage = () => {
     useEffect(() => {

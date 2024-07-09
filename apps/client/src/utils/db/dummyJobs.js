@@ -1,129 +1,136 @@
+import moment from "moment"
+
 const createdEmployers = [
     {
-        username: "blueBottle",
-        email: "info@bluebottlecoffee.com",
-        password: "bluebottle123",
-        category: "employer"
+        id: 1,
+        name: "Blue Bottle Coffee"
     },
     {
-        username: "intelligentsiaCoffee",
-        email: "info@intelligentsiacoffee.com",
-        password: "intelligentsia123",
-        category: "employer"
+        id: 2,
+        name: "Intelligentsia Coffee"
     },
     {
-        username: "laMarzocco",
-        email: "info@lamarzocco.com",
-        password: "lamarzocco123",
-        category: "employer"
+        id: 3,
+        name: "La Marzocco"
     },
     {
-        username: "theBarn",
-        email: "info@thebarn.de",
-        password: "thebarn123",
-        category: "employer"
+        id: 4,
+        name: "The Barn"
     },
     {
-        username: "fiveElephant",
-        email: "info@fiveelephant.com",
-        password: "fiveelephant123",
-        category: "employer"
+        id: 5,
+        name: "Five Elephant"
     },
     {
-        username: "squareMileCoffeeRoasters",
-        email: "info@squaremilecoffee.com",
-        password: "squaremile123",
-        category: "employer"
+        id: 6,
+        name: "Square Mile Coffee Roasters"
     },
     {
-        username: "monmouthCoffeeCompany",
-        email: "info@monmouthcoffee.co.uk",
-        password: "monmouth123",
-        category: "employer"
+        id: 7,
+        name: "Monmouth Coffee Company"
     },
     {
-        username: "workshopCoffee",
-        email: "info@workshopcoffee.com",
-        password: "workshop123",
-        category: "employer"
+        id: 8,
+        name: "Workshop Coffee"
     },
     {
-        username: "caravanCoffeeRoasters",
-        email: "info@caravancoffeeroasters.co.uk",
-        password: "caravan123",
-        category: "employer"
+        id: 9,
+        name: "Caravan Coffee Roasters"
     }
 ]
 
-export const dummyJobs = [
+const dummyJobs = [
     {
+        id: 1,
         title: "Barista",
-        categories: "Barista",
-        description:
-            "Join our team of passionate baristas. We are looking for skilled individuals who can create exceptional coffee experiences for our customers. As a Barista, you will be responsible for brewing and serving coffee, providing excellent customer service, and maintaining a clean and welcoming environment. Join us and be part of a team that values quality, craftsmanship, and the art of coffee.",
+        description: "Join our team of passionate baristas...",
         location: "Madrid, Spain",
-        employerId: createdEmployers[4].id,
-        money: "30.000€",
+        employer: {
+            id: 5,
+            name: "Five Elephant"
+        },
+        createdAt: moment().subtract(10, "days").format(),
+        updatedAt: moment().subtract(2, "days").format(),
         posted: true
     },
     {
+        id: 2,
         title: "Head Barista",
-        categories: "Head Barista",
         description:
-            "We are seeking an experienced and talented Head Barista to lead our coffee team. As a Head Barista, you will be responsible for supervising the baristas, training new staff, creating new coffee recipes, and ensuring the highest quality of coffee preparation. Join us and showcase your expertise in the coffee industry while working in a dynamic and fast-paced environment.",
+            "We are seeking an experienced and talented Head Barista...",
         location: "Berlin, Germany",
-        employerId: createdEmployers[2].id,
-        money: "30.000€",
+        employer: {
+            id: 2,
+            name: "Intelligentsia Coffee"
+        },
+        createdAt: moment().subtract(15, "days").format(),
+        updatedAt: moment().subtract(5, "days").format(),
         posted: true
     },
     {
+        id: 3,
         title: "Roaster",
-        categories: "Roaster",
-        description:
-            "Become part of our roasting team as a Roaster. In this role, you will work closely with our green coffee sourcing team to select and roast the finest coffee beans. You will be responsible for monitoring and controlling the roasting process, ensuring consistent quality and flavor profiles. Join us and contribute to our commitment to providing exceptional coffee experiences through meticulous roasting techniques.",
+        description: "Become part of our roasting team as a Roaster...",
         location: "London, United Kingdom",
-        employerId: createdEmployers[3].id,
-        money: "30.000€",
+        employer: {
+            id: 3,
+            name: "La Marzocco"
+        },
+        createdAt: moment().subtract(20, "days").format(),
+        updatedAt: moment().subtract(7, "days").format(),
         posted: true
     },
     {
+        id: 4,
         title: "Head Roaster",
-        categories: "Head Roaster",
-        description:
-            "We are seeking a skilled and experienced Head Roaster to lead our roasting operations. As a Head Roaster, you will oversee the entire roasting process, manage the roasting team, develop roast profiles, and ensure the highest level of quality and consistency. Join us and be part of a company dedicated to showcasing the artistry and complexity of specialty coffee through expert roasting techniques.",
+        description: "We are seeking a skilled and experienced Head Roaster...",
         location: "Madrid, Spain",
-        employerId: createdEmployers[4].id,
-        money: "30.000€",
+        employer: {
+            id: 4,
+            name: "The Barn"
+        },
+        createdAt: moment().subtract(25, "days").format(),
+        updatedAt: moment().subtract(10, "days").format(),
         posted: true
     },
     {
+        id: 5,
         title: "Manager",
-        categories: "Manager",
-        description:
-            "Join our team as a Manager and lead our coffee shop to success. As a Manager, you will oversee all aspects of the operations, including staff management, inventory control, customer service, and financial performance. Bring your leadership skills and passion for specialty coffee to create a welcoming and thriving coffee shop environment.",
+        description: "Join our team as a Manager and lead our coffee shop...",
         location: "Barcelona, Spain",
-        employerId: createdEmployers[3].id,
-        money: "30.000€",
+        employer: {
+            id: 6,
+            name: "Square Mile Coffee Roasters"
+        },
+        createdAt: moment().subtract(30, "days").format(),
+        updatedAt: moment().subtract(15, "days").format(),
         posted: true
     },
     {
+        id: 6,
         title: "Assistant Manager",
-        categories: "Assistant Manager",
         description:
-            "We are looking for an Assistant Manager to support our coffee shop operations. As an Assistant Manager, you will assist the Manager in daily tasks, including staff supervision, inventory management, and customer service. This role provides an excellent opportunity to develop your leadership skills in the specialty coffee industry.",
+            "We are looking for an Assistant Manager to support our coffee shop operations...",
         location: "New York, USA",
-        employerId: createdEmployers[5].id,
-        money: "30.000€",
+        employer: {
+            id: 7,
+            name: "Monmouth Coffee Company"
+        },
+        createdAt: moment().subtract(35, "days").format(),
+        updatedAt: moment().subtract(20, "days").format(),
         posted: true
     },
     {
+        id: 7,
         title: "Barista",
-        categories: "Barista",
-        description:
-            "Join our team of passionate baristas. We are looking for skilled individuals who can create exceptional coffee experiences for our customers. As a Barista, you will be responsible for brewing and serving coffee, providing excellent customer service, and maintaining a clean and welcoming environment. Join us and be part of a team that values quality, craftsmanship, and the art of coffee.",
+        description: "Join our team of passionate baristas...",
         location: "Madrid, Spain",
-        employerId: createdEmployers[4].id,
-        money: "30.000€",
+        employer: {
+            id: 9,
+            name: "Caravan Coffee Roasters"
+        },
+        createdAt: moment().subtract(40, "days").format(),
+        updatedAt: moment().subtract(25, "days").format(),
         posted: true
     }
 ]
