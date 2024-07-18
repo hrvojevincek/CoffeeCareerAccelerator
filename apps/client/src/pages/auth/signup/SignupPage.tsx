@@ -1,13 +1,12 @@
-import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { userContext } from '../../../App';
+import { useUserContext } from '../../../contexts/UserContext';
 import { Inputs } from '../../../types/types';
 
 const SignupPage = () => {
     const history = useNavigate();
 
-    const [, setUser] = useContext(userContext);
+    const { setUser } = useUserContext();
 
     const {
         register,

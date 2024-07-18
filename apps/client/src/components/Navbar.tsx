@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
-import { userContext } from '../App';
-import { useContext } from 'react';
+import { useUserContext } from '../contexts/UserContext';
 
 const Navbar = ({ children }: { children: React.ReactNode }) => {
-    const [user] = useContext(userContext);
+    const { user } = useUserContext();
 
     return (
         <>

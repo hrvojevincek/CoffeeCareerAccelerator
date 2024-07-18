@@ -1,9 +1,8 @@
 import moment from 'moment';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { userContext } from '../App';
-import { useContext } from 'react';
+import { useUserContext } from '../contexts/UserContext';
 import { JobData, User } from '../types/types';
 
 type FeaturedJobsProps = {
@@ -14,7 +13,7 @@ const DetailWork: React.FC<FeaturedJobsProps> = ({ data }) => {
     const navigate = useNavigate();
     const notify = () => toast('Wow so easy!');
 
-    const [user] = useContext(userContext);
+    const { user } = useUserContext();
     const { id } = useParams<{ id: string }>();
 
     const applyForJob = async (id: number, user: User) => {

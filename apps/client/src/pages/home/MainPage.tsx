@@ -16,14 +16,16 @@ const MainPage = () => {
             .then(data => {
                 setData(data);
             })
-            .catch(err => console.error(err));
+            .catch(err => console.error('error in the catch', err));
     };
 
+    console.log(data);
+
     return (
-        <div className=''>
+        <>
             <Hero />
             {data && <FeaturedJobs data={data} />}
-        </div>
+        </>
     );
 };
 
