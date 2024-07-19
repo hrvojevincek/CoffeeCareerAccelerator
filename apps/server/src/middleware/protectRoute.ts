@@ -4,6 +4,8 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+// ! DO KOKIES IN SESSION - as youll have clerk
+
 export const protectRoute = async (
   req: Request,
   res: Response,

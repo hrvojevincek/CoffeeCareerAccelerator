@@ -18,7 +18,10 @@ app.use("/api/users", userRoutes);
 app.use("/api/jobs", jobRoutes);
 
 app.listen(PORT, () => {
-  console.log(" 🚀 Server listening on https://localhost:8080/ 🚀");
+  console.log(
+    "1. Implement Clerk! 2. Implement TANSTACK 3.Implement Zustand.",
+    " 🚀 Server listening on https://localhost:8080/ 🚀"
+  );
 });
 
 export default app;
