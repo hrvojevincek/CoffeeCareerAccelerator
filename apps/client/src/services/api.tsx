@@ -4,7 +4,13 @@ import type { JobData, User, UserData } from '../types/types';
 
 // Determine the base URL based on the environment
 const getBaseUrl = (): string => {
-  return (import.meta.env.VITE_PROD_API_URL as string) || 'http://localhost:8080';
+  // Check if running in production mode
+  if (import.meta.env.PROD) {
+    return 'https://coffee-career-api.vercel.app';
+  }
+
+  // For development environment
+  return 'http://localhost:8080';
 };
 
 // Create a base axios instance with common settings
