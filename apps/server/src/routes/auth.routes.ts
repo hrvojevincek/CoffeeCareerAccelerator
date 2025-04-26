@@ -6,6 +6,18 @@ import { loginSchema, signupSchema } from '../lib/validations';
 
 const router = express.Router();
 
+// Test endpoint to check cookies
+router.get('/cookie-test', (req, res) => {
+  res.status(200).json({
+    message: 'Cookie test endpoint',
+    cookies: req.cookies,
+    headers: {
+      origin: req.headers.origin,
+      referer: req.headers.referer,
+    },
+  });
+});
+
 router.get('/me', protectRoute, getMe);
 router.post('/signup', validateRequest(signupSchema), signup);
 router.post('/login', validateRequest(loginSchema), login);
