@@ -12,14 +12,16 @@ interface FeaturedJobsProps {
 
 export default function FeaturedJobs({ jobs }: FeaturedJobsProps) {
   return (
-    <div>
-      <h2 className="text-2xl font-semibold border-b pb-4">Featured Jobs</h2>
+    <div className="p-6 rounded-lg shadow-md bg-black/80">
+      <h2 className="text-2xl font-semibold border-b pb-4 text-white">Featured Jobs</h2>
       <div className="mt-6 grid gap-6 grid-cols-1 sm:grid-cols-2">
         {jobs.map(job => (
-          <div className="border rounded-xl p-6" key={job.id}>
-            <div className="flex justify-between mb-1">
+          <div className="border rounded-xl p-6 bg-white shadow-sm" key={job.id}>
+            <div className="flex flex-col sm:flex-row sm:justify-between mb-1">
               <div className="mb-2 text-xl font-semibold">{job.title}</div>
-              <div className="text-slate-500 text-sm">Posted {moment(job.createdAt).fromNow()}</div>
+              <div className="text-slate-500 text-sm mb-2 sm:mb-0">
+                Posted {moment(job.createdAt).fromNow()}
+              </div>
             </div>
 
             <div className="flex items-center gap-1 mb-3">

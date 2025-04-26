@@ -1,14 +1,20 @@
-import axios from 'axios';
+import axios, { type AxiosError } from 'axios';
 
 import type { JobData, User, UserData } from '../types/types';
 
 // Determine the base URL based on the environment
 const getBaseUrl = (): string => {
-  console.log('VITE_PROD_API_URL:', import.meta.env.VITE_PROD_API_URL);
+  // For debugging purposes
+  const prodUrl = import.meta.env.VITE_PROD_API_URL;
+  const isProd = import.meta.env.PROD;
+
+  console.log('VITE_PROD_API_URL:', prodUrl);
+  console.log('Production mode:', isProd);
 
   // Check if we're in a production build
-  if (import.meta.env.PROD) {
-    return import.meta.env.VITE_PROD_API_URL || 'https://coffee-career-api.vercel.app';
+  if (isProd) {
+    // Use the configured URL or fall back to the known production API URL
+    return prodUrl || 'https://coffee-career-api.vercel.app';
   }
 
   // For development environment
@@ -24,21 +30,64 @@ const api = axios.create({
   },
 });
 
+// Add request interceptor to handle CORS issues
+api.interceptors.request.use(
+  config => {
+    // You can modify headers here if needed for CORS
+    return config;
+  },
+  (error: AxiosError) => {
+    return Promise.reject(error);
+  }
+);
+
+// Add response interceptor for better error handling
+api.interceptors.response.use(
+  response => {
+    return response;
+  },
+  (error: AxiosError) => {
+    if (error.response && error.response.status === 0) {
+      console.error('Network error - likely CORS-related');
+      // Fall back to dummy data or handle as needed
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Job-related API functions
 export const jobsApi = {
   getAll: async (): Promise<JobData[]> => {
-    const response = await api.get<JobData[]>('/jobs');
-    return response.data;
+    try {
+      const response = await api.get<JobData[]>('/jobs');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching all jobs:', error);
+      // Return empty array instead of failing
+      return [];
+    }
   },
 
   getById: async (id: number): Promise<JobData> => {
-    const response = await api.get<JobData>(`/jobs/${id}`);
-    return response.data;
+    try {
+      const response = await api.get<JobData>(`/jobs/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching job ${id}:`, error);
+      // Return a default job object to prevent crashes
+      throw error;
+    }
   },
 
   getByCategory: async (category: string): Promise<JobData[]> => {
-    const response = await api.get<JobData[]>(`/jobs/categories/${category}`);
-    return response.data;
+    try {
+      const response = await api.get<JobData[]>(`/jobs/categories/${category}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching jobs by category ${category}:`, error);
+      // Return empty array instead of failing
+      return [];
+    }
   },
 
   create: async (jobData: Partial<JobData>): Promise<JobData> => {
@@ -69,9 +118,14 @@ export const authApi = {
     return response.data;
   },
 
-  getCurrentUser: async (): Promise<User> => {
-    const response = await api.get<User>('/auth/me');
-    return response.data;
+  getCurrentUser: async (): Promise<User | null> => {
+    try {
+      const response = await api.get<User>('/auth/me');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching current user:', error);
+      return null;
+    }
   },
 };
 

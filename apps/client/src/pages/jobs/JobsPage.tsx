@@ -46,13 +46,14 @@ function Jobs() {
 
   return (
     <>
-      <div className="h-screen overflow-auto bg-right bg-fixed bg-[url('https://images.squarespace-cdn.com/content/v1/65521fe39084f270bb13c228/1704576752170-OVJ1URPN05ZF9FY97H5P/00+coffee+roastery+landscape+image.jpg?format=1500w')] ">
+      <div className="min-h-screen overflow-auto bg-right bg-fixed bg-[url('https://images.squarespace-cdn.com/content/v1/65521fe39084f270bb13c228/1704576752170-OVJ1URPN05ZF9FY97H5P/00+coffee+roastery+landscape+image.jpg?format=1500w')] ">
         <div className="pt-20 pb-10">
-          <div className="rounded-lg bg-black mx-auto  md:max-w-4xl lg:max-w-6xl gap-10">
-            <div className="mx-10 py-4 z-10 rounded-xl border-white">
-              <h1 className="dark:text-white text-2xl font-semibold">Filter Jobs</h1>
-              <div className="flex gap-2 items-center">
+          <div className="rounded-lg bg-black/80 mx-auto md:max-w-4xl lg:max-w-6xl">
+            <div className="mx-10 py-4 rounded-xl">
+              <h1 className="text-white text-2xl font-semibold">Filter Jobs</h1>
+              <div className="flex flex-wrap gap-2 items-center mt-2">
                 <button
+                  key="all-button"
                   type="button"
                   onClick={() => handleCategoryFilter('All')}
                   className={`w-fit px-3 py-1 rounded-full text-xs ${
@@ -65,7 +66,7 @@ function Jobs() {
 
                 {categories.map(category => (
                   <button
-                    key={category}
+                    key={`category-${category}`}
                     type="button"
                     onClick={() => handleCategoryFilter(category)}
                     className={`w-fit px-3 py-1 rounded-full text-xs ${
@@ -81,7 +82,7 @@ function Jobs() {
           </div>
         </div>
 
-        <div className="mx-auto lg:max-w-7xl overflow-auto">
+        <div className="container mx-auto px-4 lg:max-w-6xl mb-10">
           <FeaturedJobs jobs={data} />
         </div>
       </div>
