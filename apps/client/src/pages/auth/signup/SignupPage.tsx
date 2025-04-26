@@ -1,12 +1,12 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { useUserContext } from '../../../contexts/UserContext';
-import { Inputs } from '../../../types/types';
+
+import { useSignup } from '../../../hooks/useAuth';
+import { type Inputs } from '../../../types/types';
 
 const SignupPage = () => {
-  const history = useNavigate();
-
-  const { setUser } = useUserContext();
+  const navigate = useNavigate();
+  const signup = useSignup();
 
   const {
     register,
@@ -18,39 +18,14 @@ const SignupPage = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = data => {
-    const myHeaders = new Headers();
-
-    myHeaders.append('Content-Type', 'application/json');
-
-    const raw = JSON.stringify({
-      data: data,
+    signup.mutate(data, {
+      onSuccess: () => {
+        navigate('/');
+      },
+      onError: error => {
+        console.error('Signup error:', error);
+      },
     });
-
-    console.log('we are here', raw);
-
-    const requestOptions: RequestInit = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow',
-    };
-
-    fetch(`http://localhost:8080/${data.category}/signup`, requestOptions)
-      .then(response => {
-        return response.json();
-      })
-      .then(result => {
-        if (result.error) {
-          console.error(result.error);
-        } else {
-          console.log(result);
-          setUser(result);
-          history('/'); // redirects to home page
-        }
-      })
-      .catch(error => {
-        console.error('error', error);
-      });
   };
 
   return (
@@ -65,8 +40,7 @@ const SignupPage = () => {
               <div>
                 <label
                   htmlFor="username"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Username
                 </label>
                 <div className="flex">
@@ -96,8 +70,7 @@ const SignupPage = () => {
                       })
                     }
                     name="category"
-                    className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-r-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                  >
+                    className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-r-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                     <option>Choose a category</option>
                     <option value="user">Jobseeker</option>
                     <option value="employer">Employer</option>
@@ -115,8 +88,7 @@ const SignupPage = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Your email
                 </label>
                 <input
@@ -132,8 +104,7 @@ const SignupPage = () => {
               <div>
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Password
                 </label>
                 <input
@@ -171,20 +142,19 @@ const SignupPage = () => {
                 <div className="ml-3 text-sm">
                   <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">
                     I accept the{' '}
-                    <a
+                    <Link
                       className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                      href="#"
-                    >
+                      to="/terms">
                       Terms and Conditions
-                    </a>
+                    </Link>
                   </label>
                 </div>
               </div>
               <button
                 type="submit"
                 className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Create an account
+                disabled={signup.isPending}>
+                {signup.isPending ? 'Creating account...' : 'Create an account'}
               </button>
               <p className=" font-medium text-sm text-gray-500 dark:text-gray-400">
                 Already have an account?

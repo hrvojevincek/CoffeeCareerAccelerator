@@ -1,8 +1,9 @@
+import { useRoutes } from 'react-router-dom';
+
 import Aside from '../components/UserPage/Aside';
 import CvPage from '../components/UserPage/CvPage';
 import EditProfile from '../components/UserPage/EditProfile';
 import Main from '../components/UserPage/Main';
-import { useRoutes } from 'react-router-dom';
 // import Applications from '../components/UserPage/Applications';
 
 function UserPage() {

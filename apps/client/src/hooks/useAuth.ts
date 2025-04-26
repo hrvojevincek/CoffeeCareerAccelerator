@@ -1,45 +1,55 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { authApi } from '../services/api';
-import { queryClient } from '../services/queryClient';
 
-import type { User } from '../types/types';
+import type { Inputs, User } from '../types/types.d';
 
-// Define response types to match API returns
-type LoginResponse = User;
-type SignupResponse = User;
-type LogoutResponse = { success: boolean };
+// Key for the user data in React Query cache
+export const USER_QUERY_KEY = ['user'];
 
-export function useMe() {
+// Hook to fetch the current user
+export const useMe = () => {
   return useQuery<User>({
-    queryKey: ['me'],
-    queryFn: authApi.getMe,
+    queryKey: USER_QUERY_KEY,
+    queryFn: authApi.getCurrentUser,
     retry: false,
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
-}
+};
 
-export function useLogin() {
-  return useMutation<LoginResponse, Error, { username: string; password: string }>({
-    mutationFn: ({ username, password }) => authApi.login(username, password),
-    onSuccess: () => {
-      // Invalidate the me query to refetch user data
-      void queryClient.invalidateQueries({ queryKey: ['me'] });
+// Hook to login
+export const useLogin = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (credentials: { username: string; password: string }) => authApi.login(credentials),
+    onSuccess: userData => {
+      queryClient.setQueryData(USER_QUERY_KEY, userData);
     },
   });
-}
+};
 
-export function useSignup() {
-  return useMutation<SignupResponse, Error, Record<string, unknown>>({
-    mutationFn: userData => authApi.signup(userData),
-  });
-}
+// Hook to signup
+export const useSignup = () => {
+  const queryClient = useQueryClient();
 
-export function useLogout() {
-  return useMutation<LogoutResponse, Error, void>({
-    mutationFn: () => authApi.logout(),
-    onSuccess: () => {
-      // Clear user data from cache
-      void queryClient.invalidateQueries({ queryKey: ['me'] });
+  return useMutation({
+    mutationFn: (userData: Inputs) => authApi.signup(userData),
+    onSuccess: userData => {
+      queryClient.setQueryData(USER_QUERY_KEY, userData);
     },
   });
-}
+};
+
+// Hook to logout
+export const useLogout = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: authApi.logout,
+    onSuccess: () => {
+      queryClient.setQueryData(USER_QUERY_KEY, null);
+      void queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY });
+    },
+  });
+};

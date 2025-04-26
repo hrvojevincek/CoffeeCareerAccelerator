@@ -1,0 +1,7 @@
+# ESLint ignore file
+node_modules/
+dist/
+build/
+
+# Ignore JavaScript files that aren't part of the TypeScript project
+src/utils/db/dummyJob.js 

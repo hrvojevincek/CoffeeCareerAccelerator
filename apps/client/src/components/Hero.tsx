@@ -13,14 +13,12 @@ function Hero() {
         <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
           <Link
             to="/jobs"
-            className="inline-flex bg-opacity-75 justify-center text-slate-900 items-center py-3 px-5 font-bold text-center rounded-lg border bg-gray-200 hover:border-white focus:ring-4 focus:ring-gray-400 hover:text-gray-500"
-          >
+            className="inline-flex bg-opacity-75 justify-center text-slate-900 items-center py-3 px-5 font-bold text-center rounded-lg border bg-gray-200 hover:border-white focus:ring-4 focus:ring-gray-400 hover:text-gray-500">
             Jobseeker
           </Link>
           <Link
             to="/employer"
-            className="inline-flex text-slate-900 bg-opacity-75 justify-center items-center py-3 px-5 font-bold text-center hover:text-gray-500 rounded-lg border border-white bg-gray-100 focus:ring-4 focus:ring-gray-400"
-          >
+            className="inline-flex text-slate-900 bg-opacity-75 justify-center items-center py-3 px-5 font-bold text-center hover:text-gray-500 rounded-lg border border-white bg-gray-100 focus:ring-4 focus:ring-gray-400">
             Employer
           </Link>
         </div>

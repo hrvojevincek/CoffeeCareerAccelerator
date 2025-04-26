@@ -27,7 +27,7 @@ interface NavigateFunction {
     to: To,
     options?: {
       replace?: boolean;
-      state?: any;
+      state?: Record<string, unknown>;
       relative?: RelativeRoutingType;
     }
   ): void;

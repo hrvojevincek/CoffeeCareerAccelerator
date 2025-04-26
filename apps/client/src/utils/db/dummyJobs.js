@@ -1,6 +1,7 @@
 import moment from "moment"
 
-const createdEmployers = [
+// Export the employers data so it can be used elsewhere
+export const createdEmployers = [
   {
     id: 1,
     name: "Blue Bottle Coffee"

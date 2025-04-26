@@ -1,12 +1,24 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { UserExp } from '../../types/types';
+
+import { type UserExp } from '../../types/types';
+
+interface ApiResponse {
+  success: boolean;
+  data?: unknown;
+  message?: string;
+}
 
 function CvPage() {
   const { register, handleSubmit } = useForm<UserExp>();
   const { id } = useParams<{ id: string }>();
 
   const onSubmitExperience: SubmitHandler<UserExp> = async data => {
+    if (!id) {
+      console.error('User ID is undefined');
+      return;
+    }
+
     const requestOptions: RequestInit = {
       method: 'POST',
       headers: {
@@ -17,13 +29,16 @@ function CvPage() {
     };
     try {
       const response = await fetch(`http://localhost:8080/user/${id}/edit`, requestOptions);
-      console.log(response.body);
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const result = await response.json();
-      console.log(result);
+      const result = (await response.json()) as ApiResponse;
+      // Log only in development environment
+      if (process.env.NODE_ENV === 'development') {
+        console.log(result);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -39,75 +54,55 @@ function CvPage() {
             </h1>
             <form
               onSubmit={handleSubmit(onSubmitExperience)}
-              className="mt-8 grid grid-cols-6 gap-6"
-            >
+              className="mt-8 grid grid-cols-6 gap-6">
               <div className="col-span-6 sm:col-span-3">
-                <label className="block text-sm font-medium text-gray-700">Job Position</label>
-
+                <label htmlFor="jobPosition" className="block text-sm font-medium text-gray-700">
+                  Job Position
+                </label>
                 <input
-                  {...register('jobtitle')}
                   type="text"
-                  id="jobtitle"
-                  name="jobtitle"
+                  id="jobPosition"
                   className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  {...register('jobtitle')}
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
-                <label
-                  // for="LastName"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="company" className="block text-sm font-medium text-gray-700">
                   Company
                 </label>
-
                 <input
-                  {...register('company')}
                   type="text"
                   id="company"
-                  name="company"
                   className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  {...register('company')}
                 />
               </div>
               <div className="col-span-6 ">
-                <label
-                  // for="Email"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="yearsWorked" className="block text-sm font-medium text-gray-700">
                   Years Worked - From / To
                 </label>
-
                 <input
-                  {...register('dates')}
                   type="text"
-                  id="dates"
-                  name="dates"
+                  id="yearsWorked"
                   className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  {...register('dates')}
                   placeholder="01-2022 / 01-2023"
                 />
               </div>
               <div className="col-span-6 ">
-                <label
-                  // for="FirstName"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700">
                   Description
                 </label>
-
                 <textarea
-                  {...register('description')}
                   id="description"
                   rows={4}
-                  name="description"
-                  className="mt-1
-                  w-full rounded-md border-gray-200 bg-white text-sm
-                  text-gray-700 shadow-sm"
-                ></textarea>
+                  {...register('description')}
+                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"></textarea>
               </div>
               <div className="col-span-3 sm:flex sm:items-center sm:gap-4">
                 <button
                   type="submit"
-                  className="inline-block shrink-0 rounded-md border border-gray-600 bg-gray-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-gray-600 focus:outline-none focus:ring active:text-blue-500"
-                >
+                  className="inline-block shrink-0 rounded-md border border-gray-600 bg-gray-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-gray-600 focus:outline-none focus:ring active:text-blue-500">
                   Add Experience
                 </button>
               </div>

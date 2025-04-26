@@ -1,6 +1,13 @@
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { UserProfile } from '../../types/types';
+
+import type { UserProfile } from '../../types/types.d';
+
+interface ApiResponse {
+  success: boolean;
+  message?: string;
+  data?: UserProfile;
+}
 
 function EditProfile() {
   const { register, handleSubmit } = useForm<UserProfile>();
@@ -16,14 +23,15 @@ function EditProfile() {
       redirect: 'follow',
     };
     try {
-      const response = await fetch(`http://localhost:8080/user/${id}/edit`, requestOptions);
-      console.log(response.body);
+      const response = await fetch(
+        `http://localhost:8080/user/${id as string}/edit`,
+        requestOptions
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const result = await response.json();
-      console.log(result);
+      const _result = (await response.json()) as ApiResponse;
     } catch (error) {
       console.error(error);
     }
@@ -40,10 +48,7 @@ function EditProfile() {
 
             <form onSubmit={handleSubmit(onSubmitDetails)} className="mt-8 grid grid-cols-6 gap-6">
               <div className="col-span-6 sm:col-span-3">
-                <label
-                  // for="FirstName"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
                   First Name
                 </label>
 
@@ -56,10 +61,7 @@ function EditProfile() {
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
-                <label
-                  // for="LastName"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="surname" className="block text-sm font-medium text-gray-700">
                   Last Name
                 </label>
 
@@ -72,10 +74,7 @@ function EditProfile() {
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
-                <label
-                  // for="Email"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="city" className="block text-sm font-medium text-gray-700">
                   City
                 </label>
 
@@ -88,10 +87,7 @@ function EditProfile() {
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
-                <label
-                  // for="Password"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   E-mail
                 </label>
 
@@ -104,10 +100,7 @@ function EditProfile() {
                 />
               </div>
               <div className="col-span-6">
-                <label
-                  // for="FirstName"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="bio" className="block text-sm font-medium text-gray-700">
                   Bio / About
                 </label>
 
@@ -118,14 +111,12 @@ function EditProfile() {
                   name="bio"
                   className="mt-1
                   w-full rounded-md border-gray-200 bg-white text-sm
-                  text-gray-700 shadow-sm"
-                ></textarea>
+                  text-gray-700 shadow-sm"></textarea>
               </div>
               <div className="col-span-3 sm:flex sm:items-center sm:gap-4">
                 <button
                   type="submit"
-                  className="inline-block shrink-0 rounded-md border border-gray-600 bg-gray-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-gray-600 focus:outline-none focus:ring active:text-blue-500"
-                >
+                  className="inline-block shrink-0 rounded-md border border-gray-600 bg-gray-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-gray-600 focus:outline-none focus:ring active:text-blue-500">
                   Save Changes
                 </button>
               </div>
@@ -155,7 +146,9 @@ function EditProfile() {
                 </h1>
               </div>
               <div className="col-span-6 sm:col-span-3">
-                <label className="block text-sm font-medium text-gray-700">Job Position</label>
+                <label htmlFor="jobposition" className="block text-sm font-medium text-gray-700">
+                  Job Position
+                </label>
 
                 <input
                   // {...register('jobposition', { required: false })}
@@ -166,10 +159,7 @@ function EditProfile() {
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
-                <label
-                  // for="LastName"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="company" className="block text-sm font-medium text-gray-700">
                   Company
                 </label>
 
@@ -182,10 +172,7 @@ function EditProfile() {
                 />
               </div>
               <div className="col-span-6 ">
-                <label
-                  // for="Email"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="years" className="block text-sm font-medium text-gray-700">
                   Years Worked
                 </label>
 
@@ -198,10 +185,7 @@ function EditProfile() {
                 />
               </div>
               <div className="col-span-6 ">
-                <label
-                  // for="FirstName"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="jobDetails" className="block text-sm font-medium text-gray-700">
                   Description
                 </label>
 
@@ -212,16 +196,14 @@ function EditProfile() {
                   name="jobDetails"
                   className="mt-1
                   w-full rounded-md border-gray-200 bg-white text-sm
-                  text-gray-700 shadow-sm"
-                ></textarea>
+                  text-gray-700 shadow-sm"></textarea>
               </div>
 
               {/* ///!END=============================================================================== */}
               <div className="col-span-3 sm:flex sm:items-center sm:gap-4">
                 <button
                   type="submit"
-                  className="inline-block shrink-0 rounded-md border border-gray-600 bg-gray-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-gray-600 focus:outline-none focus:ring active:text-blue-500"
-                >
+                  className="inline-block shrink-0 rounded-md border border-gray-600 bg-gray-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-gray-600 focus:outline-none focus:ring active:text-blue-500">
                   Save Changes
                 </button>
               </div>

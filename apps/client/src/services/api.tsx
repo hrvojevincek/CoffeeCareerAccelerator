@@ -5,7 +5,7 @@ import type { JobData, User, UserData } from '../types/types';
 // Determine the base URL based on the environment
 const getBaseUrl = (): string => {
   // Check if running in production mode
-  if (import.meta.env.PROD) {
+  if (process.env.NODE_ENV === 'production') {
     return 'https://coffee-career-api.vercel.app';
   }
 
@@ -52,11 +52,8 @@ export const jobsApi = {
 
 // Auth-related API functions
 export const authApi = {
-  login: async (username: string, password: string): Promise<User> => {
-    const response = await api.post<User>('/api/auth/login', {
-      username,
-      password,
-    });
+  login: async (credentials: { username: string; password: string }): Promise<User> => {
+    const response = await api.post<User>('/api/auth/login', credentials);
     return response.data;
   },
 
@@ -70,7 +67,7 @@ export const authApi = {
     return response.data;
   },
 
-  getMe: async (): Promise<User> => {
+  getCurrentUser: async (): Promise<User> => {
     const response = await api.get<User>('/api/auth/me');
     return response.data;
   },

@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react';
+
 import FeaturedJobs from '../../components/FeaturedJobs';
 import Footer from '../../components/Footer';
-import { JobData } from '../../types/types';
+import { type JobData } from '../../types/types';
 import dummyJobs from '../../utils/db/dummyJobs';
 
 function Jobs() {
-  //check if cookies have the token
-
   const [selectedCategory, setSelectedCategory] = useState('');
   const [categories, setCategories] = useState<string[]>([]);
   const [data, setData] = useState<JobData[]>(dummyJobs);
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  const handleCategoryFilter = (category: string) => {
+    setActiveCategory(category);
+    setSelectedCategory(category === 'All' ? '' : category);
+  };
 
   const fetchData = async (category: string) => {
     const url =
@@ -22,11 +27,13 @@ function Jobs() {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const data = await response.json();
-      setData(data);
+      const fetchedData = (await response.json()) as JobData[];
+      setData(fetchedData);
 
       if (category === '') {
-        setCategories(data.map((job: any) => job.categories));
+        // Extract unique categories from job data
+        const uniqueCategories = [...new Set(fetchedData.map((job: JobData) => job.category))];
+        setCategories(uniqueCategories);
       }
     } catch (error) {
       console.error('Fetch error:', error);
@@ -35,7 +42,7 @@ function Jobs() {
   };
 
   useEffect(() => {
-    fetchData(selectedCategory);
+    void fetchData(selectedCategory);
   }, [selectedCategory]);
 
   return (
@@ -44,38 +51,39 @@ function Jobs() {
         <div className="pt-20 pb-10">
           <div className="rounded-lg bg-black mx-auto  md:max-w-4xl lg:max-w-6xl gap-10">
             <div className="mx-10 py-4 z-10 rounded-xl border-white">
-              <h1 className=" dark:text-white text-2xl font-semibold">Filter Jobs</h1>
-              <ul className=" flex flex-wrap pt-10 text-1xl text-center  dark:text-white">
-                <li className="mr-2">
-                  <a
-                    className={`${
-                      '' === selectedCategory ? '' : 'font-bold text-neutral-50'
-                    } cursor-pointer border-transparent rounded-t-lg hover:text-gray-100 hover:border-gray-300 dark:hover:text-gray-300`}
-                    onClick={() => setSelectedCategory('')}
-                  >
-                    All
-                  </a>
-                </li>
+              <h1 className="dark:text-white text-2xl font-semibold">Filter Jobs</h1>
+              <div className="flex gap-2 items-center">
+                <button
+                  type="button"
+                  onClick={() => handleCategoryFilter('All')}
+                  className={`w-fit px-3 py-1 rounded-full text-xs ${
+                    activeCategory === 'All'
+                      ? 'bg-blue-100 text-blue-600'
+                      : 'bg-gray-100 text-gray-600'
+                  }`}>
+                  All
+                </button>
 
-                {categories.map((category, i) => (
-                  <li key={i} className="mr-2">
-                    <a
-                      className={`${
-                        category === selectedCategory ? 'font-bold text-neutral-50' : ''
-                      } cursor-pointer border-transparent rounded-t-lg hover:text-gray-50 hover:border-gray-300 dark:hover:text-gray-100`}
-                      onClick={() => setSelectedCategory(category)}
-                    >
-                      {category}
-                    </a>
-                  </li>
+                {categories.map(category => (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => handleCategoryFilter(category)}
+                    className={`w-fit px-3 py-1 rounded-full text-xs ${
+                      activeCategory === category
+                        ? 'bg-blue-100 text-blue-600'
+                        : 'bg-gray-100 text-gray-600'
+                    }`}>
+                    {category}
+                  </button>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="mx-auto lg:max-w-7xl overflow-auto">
-          <FeaturedJobs data={data} />
+          <FeaturedJobs jobs={data} />
         </div>
       </div>
       <Footer />
