@@ -1,9 +1,10 @@
-import { Link } from 'react-router-dom';
-
-import React from 'react';
+import { AxiosError } from 'axios';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useUserContext } from '../../../contexts/UserContext';
+import { authApi } from '../../../services/api';
 
 type Inputs = {
     username: string;
@@ -13,8 +14,8 @@ type Inputs = {
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
-
     const { setUser } = useUserContext();
+    const [isLoading, setIsLoading] = useState(false);
 
     const {
         register,
@@ -25,36 +26,35 @@ const LoginPage: React.FC = () => {
     });
 
     const onSubmit: SubmitHandler<Inputs> = async data => {
-        const requestOptions: RequestInit = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                // Authorization: `Bearer ${document.cookie.split('=')[1]}`, // Retrieve the token from the cookie
-            },
-            body: JSON.stringify({ data }),
-            redirect: 'follow',
-        };
+        try {
+            setIsLoading(true);
 
-        // const forReal = await fetch(`http://localhost:8080/me`, requestOptions);
+            // Use the authApi for login
+            const result = await authApi.login(data.username, data.password);
 
-        // if (forReal.status === 404) {}
+            // Set user context with the returned data
+            setUser(result);
 
-        fetch(`http://localhost:8080/login`, requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                if (result.error) {
-                    console.error(result.error);
-                } else {
-                    setUser(result);
-                    navigate('/'); // redirects to home page
-                }
-            })
-            .catch(error => {
-                console.error('error', error);
-            });
+            // Show success toast
+            toast.success('Login successful!');
+
+            // Navigate to home page
+            navigate('/');
+        } catch (error) {
+            console.error('Login error:', error);
+
+            // Show error message to user
+            toast.error(
+                (error as AxiosError<{ error?: string; message?: string }>)
+                    ?.response?.data?.error ||
+                    (error as AxiosError<{ error?: string; message?: string }>)
+                        ?.response?.data?.message ||
+                    'An error occurred during login'
+            );
+        } finally {
+            setIsLoading(false);
+        }
     };
-
-    //{id, username, category}
 
     return (
         <>
@@ -122,7 +122,6 @@ const LoginPage: React.FC = () => {
                                             type='checkbox'
                                             value=''
                                             className='w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800'
-                                            required
                                         />
                                     </div>
                                     <label
@@ -139,8 +138,11 @@ const LoginPage: React.FC = () => {
                             </div>
                             <button
                                 type='submit'
+                                disabled={isLoading}
                                 className='w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
-                                Login to your account
+                                {isLoading
+                                    ? 'Logging in...'
+                                    : 'Login to your account'}
                             </button>
                             <div className='pl-2 text-sm font-medium text-gray-500 dark:text-gray-300'>
                                 Not registered?{' '}

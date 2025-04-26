@@ -6,13 +6,16 @@ const prisma = new PrismaClient();
 
 // ! DO KOKIES IN SESSION - as youll have clerk
 
+// Auth middleware to protect routes
 export const protectRoute = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const token = req.cookies.jwt;
+    // Check for access token first, then fall back to old jwt token for backward compatibility
+    const token = req.cookies.access_token || req.cookies.jwt;
+
     if (!token) {
       return res.status(401).json({ error: "Unauthorized: No Token Provided" });
     }
@@ -24,6 +27,7 @@ export const protectRoute = async (
     if (!decoded) {
       return res.status(401).json({ error: "Unauthorized: Invalid Token" });
     }
+
     const user = await prisma.user.findUnique({
       where: {
         id: Number(decoded.userId),
@@ -50,6 +54,14 @@ export const protectRoute = async (
     req.user = user;
     next();
   } catch (err) {
+    // Check if the error is because the token is expired
+    if (err instanceof jwt.TokenExpiredError) {
+      return res.status(401).json({
+        error: "Token expired",
+        code: "TOKEN_EXPIRED",
+      });
+    }
+
     console.log("Error in protectRoute middleware", err);
     return res.status(500).json({ error: "Internal Server Error" });
   }
