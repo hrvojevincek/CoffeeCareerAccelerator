@@ -37,30 +37,13 @@ app.use(
   })
 );
 
-// Add CORS headers for all routes as a fallback
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  );
-
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  next();
-});
-
 app.use(express.json({ limit: '5mb' }));
 app.use(cookieParser());
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/jobs', jobRoutes);
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/jobs', jobRoutes);
 
 // Global error handler - must be after routes
 app.use(errorHandler);

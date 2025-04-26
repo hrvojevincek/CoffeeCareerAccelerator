@@ -1,21 +1,17 @@
-import { Router } from "express";
-import JobsController from "../controllers/JobsController";
-import { protectRoute } from "../middleware/protectRoute";
+import { Router } from 'express';
+import JobsController from '../controllers/JobsController';
+import { protectRoute } from '../middleware/protectRoute';
 
 const jobRoutes = Router();
 
-jobRoutes.post("/jobs", protectRoute, JobsController.createJob);
+jobRoutes.post('/', protectRoute, JobsController.createJob);
 
-jobRoutes.get("/jobs", protectRoute, JobsController.getJobs);
+jobRoutes.get('/', JobsController.getJobs);
 
-jobRoutes.get("/jobs/:id", protectRoute, JobsController.getJob);
+jobRoutes.get('/:id', JobsController.getJob);
 
-jobRoutes.get(
-  "/jobs/categories/:category",
-  protectRoute,
-  JobsController.findByCategory
-);
+jobRoutes.get('/categories/:category', JobsController.findByCategory);
 
-jobRoutes.delete("/jobs/:id", protectRoute, JobsController.deleteJob);
+jobRoutes.delete('/:id', protectRoute, JobsController.deleteJob);
 
 export default jobRoutes;
