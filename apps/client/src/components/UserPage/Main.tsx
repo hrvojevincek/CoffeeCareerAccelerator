@@ -1,27 +1,23 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { UserData } from '../../types/types';
+
+import { useUserById } from '../../hooks/useUser';
 
 function Main() {
-  const [data, setData] = useState<UserData | null>(null);
-
   const { id } = useParams<{ id: string }>();
+  const { data, isLoading, error } = useUserById(id ? parseInt(id, 10) : 0);
 
-  const fetchData = async () => {
-    const url = `http://localhost:8080/user/${id}/`;
+  if (isLoading) {
+    return <div className="text-center p-8">Loading user data...</div>;
+  }
 
-    await fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        setData(data);
-      })
-      .catch(err => console.error(err));
-  };
+  if (error) {
+    return <div className="text-center p-8 text-red-500">Error loading user data</div>;
+  }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  if (!data) {
+    return <div className="text-center p-8">User not found</div>;
+  }
+
   return (
     <>
       <div className=" lg:min-h-screen lg:grid-cols-12">
@@ -30,35 +26,33 @@ function Main() {
             <h1 className=" mb-4 text-xl font-bold text-gray-900 sm:text-3xl md:text-2xl">
               Your Profile
             </h1>
-            {data && (
-              <div>
-                <h1 className="mt-2 text-xl font-bold text-gray-900">User Details</h1>
-                <p>
-                  Name / Surname:
-                  {data.name} {data.surname}
-                </p>
-                <p>City: {data.city}</p>
-                <p>E-mail: {data.email}</p>
-                <p>Bio: {data.bio}</p>
+            <div>
+              <h1 className="mt-2 text-xl font-bold text-gray-900">User Details</h1>
+              <p>
+                Name / Surname:
+                {data.name} {data.surname}
+              </p>
+              <p>City: {data.city}</p>
+              <p>E-mail: {data.email}</p>
+              <p>Bio: {data.bio}</p>
 
-                <h1 className="mt-2 text-2xl font-bold text-gray-900 ">Experience</h1>
-                {data.experience.map((item, i) => (
-                  <div key={i} className="mt-2 border-b-2">
-                    <p>Job Title: {item.jobtitle}</p>
-                    <p>Company: {item.company}</p>
-                    <p>When: {item.dates}</p>
-                    <p>Job Description: {item.description}</p>
-                  </div>
-                ))}
+              <h1 className="mt-2 text-2xl font-bold text-gray-900 ">Experience</h1>
+              {data.experience.map((item, i) => (
+                <div key={i} className="mt-2 border-b-2">
+                  <p>Job Title: {item.jobtitle}</p>
+                  <p>Company: {item.company}</p>
+                  <p>When: {item.dates}</p>
+                  <p>Job Description: {item.description}</p>
+                </div>
+              ))}
 
-                <h1 className="mt-2 text-2xl font-bold text-gray-900">Applications</h1>
-                {data.applications.map((item, i) => (
-                  <div key={i}>
-                    <p>Applied for job: {item.jobId}</p>
-                  </div>
-                ))}
-              </div>
-            )}
+              <h1 className="mt-2 text-2xl font-bold text-gray-900">Applications</h1>
+              {data.applications.map((item, i) => (
+                <div key={i}>
+                  <p>Applied for job: {item.jobId}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </main>
       </div>

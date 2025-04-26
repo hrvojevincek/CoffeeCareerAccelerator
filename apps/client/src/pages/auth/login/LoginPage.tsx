@@ -1,21 +1,20 @@
 import { AxiosError } from 'axios';
-import React, { useState } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useUserContext } from '../../../contexts/UserContext';
-import { authApi } from '../../../services/api';
+import { useLogin } from '../../../hooks/useAuth';
 
 type Inputs = {
   username: string;
-  category: string;
   password: string;
 };
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { setUser } = useUserContext();
-  const [isLoading, setIsLoading] = useState(false);
+  const login = useLogin();
 
   const {
     register,
@@ -27,10 +26,11 @@ const LoginPage: React.FC = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async data => {
     try {
-      setIsLoading(true);
-
-      // Use the authApi for login
-      const result = await authApi.login(data.username, data.password);
+      // Use the login mutation
+      const result = await login.mutateAsync({
+        username: data.username,
+        password: data.password,
+      });
 
       // Set user context with the returned data
       setUser(result);
@@ -49,8 +49,6 @@ const LoginPage: React.FC = () => {
           (error as AxiosError<{ error?: string; message?: string }>)?.response?.data?.message ||
           'An error occurred during login'
       );
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -63,8 +61,7 @@ const LoginPage: React.FC = () => {
               <div>
                 <label
                   htmlFor="username"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Your username
                 </label>
                 <input
@@ -82,8 +79,7 @@ const LoginPage: React.FC = () => {
               <div>
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Your password
                 </label>
                 <input
@@ -120,8 +116,7 @@ const LoginPage: React.FC = () => {
                   </div>
                   <label
                     htmlFor="remember"
-                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
+                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                     Remember me
                   </label>
                 </div>
@@ -131,17 +126,15 @@ const LoginPage: React.FC = () => {
               </div>
               <button
                 type="submit"
-                disabled={isLoading}
-                className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                {isLoading ? 'Logging in...' : 'Login to your account'}
+                disabled={login.isPending}
+                className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                {login.isPending ? 'Logging in...' : 'Login to your account'}
               </button>
               <div className="pl-2 text-sm font-medium text-gray-500 dark:text-gray-300">
                 Not registered?{' '}
                 <Link
                   to="/signup"
-                  className="pl-4 text-blue-700 hover:underline dark:text-blue-500"
-                >
+                  className="pl-4 text-blue-700 hover:underline dark:text-blue-500">
                   Create account
                 </Link>
               </div>
