@@ -1,8 +1,20 @@
 import axios from 'axios';
 
+import type { JobData, User, UserData } from '../types/types';
+
+// Determine the base URL based on the environment
+const getBaseUrl = () => {
+  if (import.meta.env.PROD) {
+    // For production build on Vercel
+    return 'https://coffee-career-api.vercel.app';
+  }
+  // For local development
+  return 'http://localhost:8080';
+};
+
 // Create a base axios instance with common settings
 const api = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: getBaseUrl(),
   withCredentials: true, // This ensures cookies are sent with requests
   headers: {
     'Content-Type': 'application/json',
@@ -11,72 +23,72 @@ const api = axios.create({
 
 // Job-related API functions
 export const jobsApi = {
-  getAll: async () => {
-    const response = await api.get('/api/jobs/jobs');
+  getAll: async (): Promise<JobData[]> => {
+    const response = await api.get<JobData[]>('/api/jobs/jobs');
     return response.data;
   },
 
-  getById: async (id: number) => {
-    const response = await api.get(`/api/jobs/jobs/${id}`);
+  getById: async (id: number): Promise<JobData> => {
+    const response = await api.get<JobData>(`/api/jobs/jobs/${id}`);
     return response.data;
   },
 
-  getByCategory: async (category: string) => {
-    const response = await api.get(`/api/jobs/jobs/categories/${category}`);
+  getByCategory: async (category: string): Promise<JobData[]> => {
+    const response = await api.get<JobData[]>(`/api/jobs/jobs/categories/${category}`);
     return response.data;
   },
 
-  create: async (jobData: any) => {
-    const response = await api.post('/api/jobs/jobs', jobData);
+  create: async (jobData: Partial<JobData>): Promise<JobData> => {
+    const response = await api.post<JobData>('/api/jobs/jobs', jobData);
     return response.data;
   },
 
-  delete: async (id: number) => {
-    const response = await api.delete(`/api/jobs/jobs/${id}`);
+  delete: async (id: number): Promise<{ success: boolean }> => {
+    const response = await api.delete<{ success: boolean }>(`/api/jobs/jobs/${id}`);
     return response.data;
   },
 };
 
 // Auth-related API functions
 export const authApi = {
-  login: async (username: string, password: string) => {
-    const response = await api.post('/api/auth/login', {
+  login: async (username: string, password: string): Promise<User> => {
+    const response = await api.post<User>('/api/auth/login', {
       username,
       password,
     });
     return response.data;
   },
 
-  signup: async (userData: any) => {
-    const response = await api.post('/api/auth/signup', userData);
+  signup: async (userData: Record<string, unknown>): Promise<User> => {
+    const response = await api.post<User>('/api/auth/signup', userData);
     return response.data;
   },
 
-  logout: async () => {
-    const response = await api.post('/api/auth/logout');
+  logout: async (): Promise<{ success: boolean }> => {
+    const response = await api.post<{ success: boolean }>('/api/auth/logout');
     return response.data;
   },
 
-  getMe: async () => {
-    const response = await api.get('/api/auth/me');
+  getMe: async (): Promise<User> => {
+    const response = await api.get<User>('/api/auth/me');
     return response.data;
   },
 };
 
 // User-related API functions
 export const userApi = {
-  getById: async (id: number) => {
-    const response = await api.get(`/api/users/${id}`);
+  getById: async (id: number): Promise<UserData> => {
+    const response = await api.get<UserData>(`/api/users/${id}`);
     return response.data;
   },
 
-  update: async (id: number, userData: any) => {
-    const response = await api.put(`/api/users/${id}`, { data: userData });
+  update: async (id: number, userData: Partial<UserData>): Promise<UserData> => {
+    const response = await api.put<UserData>(`/api/users/${id}`, { data: userData });
     return response.data;
   },
 
-  createApplication: async (jobId: number, userId: number) => {
-    const response = await api.post('/api/users/application', {
+  createApplication: async (jobId: number, userId: number): Promise<{ success: boolean }> => {
+    const response = await api.post<{ success: boolean }>('/api/users/application', {
       jobId,
       userId,
     });
