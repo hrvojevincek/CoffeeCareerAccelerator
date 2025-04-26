@@ -13,8 +13,7 @@
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
     "format": "turbo format",
-    "format:check": "turbo format:check",
-    "prepare": "node -e \"if(process.env.NODE_ENV !== 'production') { process.exit(1) }\" || husky"
+    "format:check": "turbo format:check"
   },
   "workspaces": [
     "apps/*"

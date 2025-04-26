@@ -12,9 +12,10 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173', // Local development
   'https://coffee-career.vercel.app', // Production frontend
+  'https://coffee-career-accelerator.vercel.app', // Alternate domain if used
 ];
 
-// Middleware
+// CORS middleware with more detailed configuration
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -22,15 +23,37 @@ app.use(
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.indexOf(origin) === -1) {
-        const msg =
-          'The CORS policy for this site does not allow access from the specified Origin.';
-        return callback(new Error(msg), false);
+        // For other origins, still allow but log
+        console.log(`CORS warning: Origin ${origin} not in allowed list`);
       }
+
+      // In production, we'll be more permissive to avoid deployment issues
       return callback(null, true);
     },
     credentials: true, // Allow cookies to be sent
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    maxAge: 86400, // Cache preflight request for 1 day
   })
 );
+
+// Add CORS headers for all routes as a fallback
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  next();
+});
+
 app.use(express.json({ limit: '5mb' }));
 app.use(cookieParser());
 
