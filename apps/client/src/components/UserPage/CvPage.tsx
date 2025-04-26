@@ -1,25 +1,22 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
-import { UserExp } from "../../types/types";
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import { UserExp } from '../../types/types';
 
 function CvPage() {
   const { register, handleSubmit } = useForm<UserExp>();
   const { id } = useParams<{ id: string }>();
 
-  const onSubmitExperience: SubmitHandler<UserExp> = async (data) => {
+  const onSubmitExperience: SubmitHandler<UserExp> = async data => {
     const requestOptions: RequestInit = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ data }),
-      redirect: "follow",
+      redirect: 'follow',
     };
     try {
-      const response = await fetch(
-        `http://localhost:8080/user/${id}/edit`,
-        requestOptions
-      );
+      const response = await fetch(`http://localhost:8080/user/${id}/edit`, requestOptions);
       console.log(response.body);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -45,12 +42,10 @@ function CvPage() {
               className="mt-8 grid grid-cols-6 gap-6"
             >
               <div className="col-span-6 sm:col-span-3">
-                <label className="block text-sm font-medium text-gray-700">
-                  Job Position
-                </label>
+                <label className="block text-sm font-medium text-gray-700">Job Position</label>
 
                 <input
-                  {...register("jobtitle")}
+                  {...register('jobtitle')}
                   type="text"
                   id="jobtitle"
                   name="jobtitle"
@@ -66,7 +61,7 @@ function CvPage() {
                 </label>
 
                 <input
-                  {...register("company")}
+                  {...register('company')}
                   type="text"
                   id="company"
                   name="company"
@@ -82,7 +77,7 @@ function CvPage() {
                 </label>
 
                 <input
-                  {...register("dates")}
+                  {...register('dates')}
                   type="text"
                   id="dates"
                   name="dates"
@@ -99,7 +94,7 @@ function CvPage() {
                 </label>
 
                 <textarea
-                  {...register("description")}
+                  {...register('description')}
                   id="description"
                   rows={4}
                   name="description"

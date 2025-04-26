@@ -6,15 +6,15 @@ import AppRoutes from './components/AppRoutes/AppRoutes';
 import Navbar from './components/Navbar';
 
 const App: React.FC = () => {
-    return (
-        <QueryClientProvider client={queryClient}>
-            <UserProvider>
-                <Navbar>
-                    <AppRoutes />
-                </Navbar>
-            </UserProvider>
-        </QueryClientProvider>
-    );
+  return (
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+        <Navbar>
+          <AppRoutes />
+        </Navbar>
+      </UserProvider>
+    </QueryClientProvider>
+  );
 };
 
 export default App;
