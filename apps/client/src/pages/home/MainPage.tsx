@@ -16,7 +16,7 @@ const MainPage = () => {
   return (
     <>
       <Hero />
-      {data && <FeaturedJobs data={data} />}
+      {data && <FeaturedJobs jobs={data} />}
     </>
   );
 };

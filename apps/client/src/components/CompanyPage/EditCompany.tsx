@@ -31,7 +31,7 @@ function EditProfile() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const _result = (await response.json()) as ApiResponse;
+      (await response.json()) as ApiResponse;
     } catch (error) {
       console.error(error);
     }
