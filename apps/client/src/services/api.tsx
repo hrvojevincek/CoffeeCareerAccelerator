@@ -25,27 +25,27 @@ const api = axios.create({
 // Job-related API functions
 export const jobsApi = {
   getAll: async (): Promise<JobData[]> => {
-    const response = await api.get<JobData[]>('/api/jobs/jobs');
+    const response = await api.get<JobData[]>('/api/jobs');
     return response.data;
   },
 
   getById: async (id: number): Promise<JobData> => {
-    const response = await api.get<JobData>(`/api/jobs/jobs/${id}`);
+    const response = await api.get<JobData>(`/api/jobs/${id}`);
     return response.data;
   },
 
   getByCategory: async (category: string): Promise<JobData[]> => {
-    const response = await api.get<JobData[]>(`/api/jobs/jobs/categories/${category}`);
+    const response = await api.get<JobData[]>(`/api/jobs/categories/${category}`);
     return response.data;
   },
 
   create: async (jobData: Partial<JobData>): Promise<JobData> => {
-    const response = await api.post<JobData>('/api/jobs/jobs', jobData);
+    const response = await api.post<JobData>('/api/jobs', jobData);
     return response.data;
   },
 
   delete: async (id: number): Promise<{ success: boolean }> => {
-    const response = await api.delete<{ success: boolean }>(`/api/jobs/jobs/${id}`);
+    const response = await api.delete<{ success: boolean }>(`/api/jobs/${id}`);
     return response.data;
   },
 };
