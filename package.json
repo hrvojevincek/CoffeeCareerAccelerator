@@ -14,7 +14,7 @@
     "lint:fix": "turbo lint:fix",
     "format": "turbo format",
     "format:check": "turbo format:check",
-    "prepare": "husky"
+    "prepare": "node -e \"if(process.env.NODE_ENV !== 'production') { process.exit(1) }\" || husky"
   },
   "workspaces": [
     "apps/*"

@@ -2,6 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "turbo run build",
   "devCommand": "turbo run dev",
-  "installCommand": "npm install",
+  "installCommand": "npm pkg delete scripts.prepare && npm install",
   "framework": null
 }
