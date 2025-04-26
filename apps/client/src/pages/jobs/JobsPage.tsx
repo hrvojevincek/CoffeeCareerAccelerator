@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import FeaturedJobs from '../../components/FeaturedJobs';
 import Footer from '../../components/Footer';
+import { jobsApi } from '../../services/api';
 import { type JobData } from '../../types/types';
 import dummyJobs from '../../utils/db/dummyJobs';
 
@@ -17,17 +18,15 @@ function Jobs() {
   };
 
   const fetchData = async (category: string) => {
-    const url =
-      category === ''
-        ? `http://localhost:8080/jobs/`
-        : `http://localhost:8080/jobs/categories/${category}`;
-
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      let fetchedData: JobData[];
+
+      if (category === '') {
+        fetchedData = await jobsApi.getAll();
+      } else {
+        fetchedData = await jobsApi.getByCategory(category);
       }
-      const fetchedData = (await response.json()) as JobData[];
+
       setData(fetchedData);
 
       if (category === '') {

@@ -5,6 +5,7 @@ import { useParams } from 'react-router';
 import DetailWork from '../components/DetailWork';
 import Footer from '../components/Footer';
 import RelatedJobs from '../components/RelatedJobs';
+import { jobsApi } from '../services/api';
 import { type JobData } from '../types/types';
 
 function JobDetails() {
@@ -15,12 +16,7 @@ function JobDetails() {
     if (!id) return;
 
     try {
-      const response = await fetch(`http://localhost:8080/jobs/${id}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = (await response.json()) as JobData;
+      const data = await jobsApi.getById(Number(id));
       setJob(data);
     } catch (err) {
       console.error(err);

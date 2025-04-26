@@ -4,9 +4,9 @@ import type { JobData, User, UserData } from '../types/types';
 
 // Determine the base URL based on the environment
 const getBaseUrl = (): string => {
-  // Check if running in production mode
-  if (process.env.NODE_ENV === 'production') {
-    return 'https://coffee-career-api.vercel.app';
+  // If the VITE_PROD_API_URL environment variable is set, use it
+  if (import.meta.env.VITE_PROD_API_URL) {
+    return import.meta.env.VITE_PROD_API_URL;
   }
 
   // For development environment
