@@ -9,7 +9,6 @@ export const signup = async (req: Request, res: Response) => {
   try {
     const { password, username, email, category } = req.body;
 
-    // Check if username or email already exists (do both checks)
     const [existingUser, existingEmail] = await Promise.all([
       prisma.user.findUnique({ where: { username } }),
       prisma.user.findUnique({ where: { email } }),
@@ -49,13 +48,10 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
 
-    // Find user by username
     const user = await prisma.user.findUnique({
       where: { username },
     });
 
-    // Always compare password even if user doesn't exist (prevent timing attacks)
-    // Hash for the literal string "invalid_password", generated once with 12 rounds
     const dummyHash = '$2b$12$7Sl5OLm/x4HeRzvfP3hP8OpKOA.J0Xcbw3oUjHvy9heM/1bsenYsG';
     const isPasswordCorrect = await bcrypt.compare(password, user?.password || dummyHash);
 
@@ -63,7 +59,6 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // Update last login
     await prisma.user.update({
       where: { id: user.id },
       data: { lastLogin: new Date() },
@@ -85,7 +80,6 @@ export const login = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   try {
-    // Clear all auth cookies
     const cookieOptions = {
       httpOnly: true,
       secure: config.server.isProd,
@@ -143,7 +137,6 @@ export const refreshToken = async (req: Request, res: Response) => {
       return res.status(401).json({ error: 'No refresh token provided' });
     }
 
-    // Verify the refresh token
     const decoded = jwt.verify(refreshToken, config.auth.jwtRefreshSecret) as {
       userId: string;
     };
@@ -152,7 +145,6 @@ export const refreshToken = async (req: Request, res: Response) => {
       return res.status(401).json({ error: 'Invalid refresh token' });
     }
 
-    // Check if user exists and is active
     const user = await prisma.user.findUnique({
       where: {
         id: Number(decoded.userId),
@@ -174,7 +166,6 @@ export const refreshToken = async (req: Request, res: Response) => {
       return res.status(403).json({ error: 'Account deactivated' });
     }
 
-    // Generate new tokens
     generateTokenAndSetCookie(decoded.userId, res);
 
     res.status(200).json({

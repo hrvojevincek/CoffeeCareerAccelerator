@@ -14,7 +14,6 @@ cleanupInterval = setInterval(
     let cleanedCount = 0;
 
     for (const [key, data] of requestCounts.entries()) {
-      // Remove entries that are 1 minute past their reset time (with buffer)
       if (now > data.resetTime + 60000) {
         requestCounts.delete(key);
         cleanedCount++;
@@ -29,11 +28,8 @@ cleanupInterval = setInterval(
     }
   },
   10 * 60 * 1000
-); // Every 10 minutes
+);
 
-// Export cleanup function for graceful shutdown
-// This prevents memory leaks by clearing the setInterval when the server shuts down
-// Should be called during: SIGTERM, SIGINT, uncaught exceptions, or server restarts
 export const stopCleanup = () => {
   if (cleanupInterval) {
     clearInterval(cleanupInterval);
@@ -41,7 +37,6 @@ export const stopCleanup = () => {
   }
 };
 
-// Emergency cleanup if Map gets too large (prevent memory exhaustion)
 const MAX_ENTRIES = 10000;
 
 interface RateLimitOptions {
@@ -57,14 +52,12 @@ export const createRateLimit = (options: RateLimitOptions) => {
     const key = `${ip}:${req.route?.path || req.path}`;
     const now = Date.now();
 
-    // Emergency cleanup if we have too many entries
     if (requestCounts.size > MAX_ENTRIES) {
       console.warn(`⚠️ Rate limiter emergency cleanup: ${requestCounts.size} entries`);
       for (const [mapKey, data] of requestCounts.entries()) {
         if (now > data.resetTime) {
           requestCounts.delete(mapKey);
         }
-        // Only clean up to a reasonable size, then break
         if (requestCounts.size <= MAX_ENTRIES * 0.7) break;
       }
     }
@@ -82,7 +75,6 @@ export const createRateLimit = (options: RateLimitOptions) => {
     requestData.count++;
     requestCounts.set(key, requestData);
 
-    // Set headers
     res.setHeader('X-RateLimit-Limit', options.maxRequests);
     res.setHeader('X-RateLimit-Remaining', Math.max(0, options.maxRequests - requestData.count));
     res.setHeader('X-RateLimit-Reset', requestData.resetTime);
@@ -99,7 +91,6 @@ export const createRateLimit = (options: RateLimitOptions) => {
   };
 };
 
-// Utility function to get current rate limiter stats (useful for monitoring)
 export const getRateLimiterStats = () => {
   const now = Date.now();
   let activeEntries = 0;
@@ -121,7 +112,6 @@ export const getRateLimiterStats = () => {
   };
 };
 
-// Different rate limits for different endpoints
 export const generalRateLimit = createRateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   maxRequests: 100,
@@ -129,7 +119,7 @@ export const generalRateLimit = createRateLimit({
 
 export const authRateLimit = createRateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  maxRequests: 5, // Stricter for auth endpoints
+  maxRequests: 5,
 });
 
 export const apiRateLimit = createRateLimit({

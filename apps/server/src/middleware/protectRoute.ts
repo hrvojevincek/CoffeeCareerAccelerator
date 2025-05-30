@@ -108,8 +108,6 @@ export const requireRole = (roles: string[]) => {
     }
 
     const user = req.user as AuthenticatedUser;
-    // Note: user.category is non-nullable as defined in the database schema and TypeScript interface
-    // No null check needed since category is required (NOT NULL) in the database
     if (!roles.includes(user.category)) {
       return res.status(403).json({
         error: 'Insufficient permissions',

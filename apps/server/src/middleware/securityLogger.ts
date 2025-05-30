@@ -10,20 +10,17 @@ interface SecurityEvent {
 
 class SecurityLogger {
   private events: SecurityEvent[] = [];
-  private readonly maxEvents = 1000; // Configurable limit
+  private readonly maxEvents = 1000;
 
   log(event: SecurityEvent) {
     this.events.push(event);
 
-    // Rotate events if we exceed the limit
     if (this.events.length > this.maxEvents) {
       this.events = this.events.slice(-this.maxEvents);
     }
 
-    // In production, send to external logging service
     if (process.env.NODE_ENV === 'production') {
       console.log(`[SECURITY] ${event.type}:`, JSON.stringify(event));
-      // TODO: Send to logging service (e.g., Winston, DataDog, etc.)
     }
   }
 
