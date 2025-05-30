@@ -3,57 +3,44 @@ import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import { generateTokenAndSetCookie } from '../lib/generateToken';
 import jwt from 'jsonwebtoken';
+import { config } from '../config/environment';
 
 export const signup = async (req: Request, res: Response) => {
   try {
     const { password, username, email, category } = req.body;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: 'Invalid email format' });
-    }
-
-    const existingUser = await prisma.user.findUnique({
-      where: { username },
-    });
+    // Check if username or email already exists (do both checks)
+    const [existingUser, existingEmail] = await Promise.all([
+      prisma.user.findUnique({ where: { username } }),
+      prisma.user.findUnique({ where: { email } }),
+    ]);
 
     if (existingUser) {
       return res.status(400).json({ error: 'Username is already taken' });
     }
 
-    const existingEmail = await prisma.user.findUnique({
-      where: { email },
-    });
-
     if (existingEmail) {
       return res.status(400).json({ error: 'Email is already taken' });
     }
 
-    if (password.length < 6) {
-      return res.status(400).json({ error: 'Password must be at least 6 characters long' });
-    }
-
-    const salt = await bcrypt.genSalt(10);
+    // Hash password with higher salt rounds for better security
+    const salt = await bcrypt.genSalt(config.auth.bcryptRounds);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = await prisma.user.create({
       data: { username, password: hashedPassword, email, category },
     });
 
-    if (newUser) {
-      generateTokenAndSetCookie(String(newUser.id), res);
+    generateTokenAndSetCookie(String(newUser.id), res);
 
-      res.status(201).json({
-        id: newUser.id,
-        username: newUser.username,
-        email: newUser.email,
-        category: newUser.category,
-      });
-    } else {
-      res.status(400).json({ error: 'Invalid user data' });
-    }
+    res.status(201).json({
+      id: newUser.id,
+      username: newUser.username,
+      email: newUser.email,
+      category: newUser.category,
+    });
   } catch (error) {
-    console.log('Error in signup controller', error);
+    console.error('Error in signup controller:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
@@ -61,14 +48,26 @@ export const signup = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
+
+    // Find user by username
     const user = await prisma.user.findUnique({
       where: { username },
     });
-    const isPasswordCorrect = await bcrypt.compare(password, user?.password || '');
+
+    // Always compare password even if user doesn't exist (prevent timing attacks)
+    const dummyHash = '$2b$12$dummyhashtopreventtimingattacks1234567890';
+    const isPasswordCorrect = await bcrypt.compare(password, user?.password || dummyHash);
 
     if (!user || !isPasswordCorrect) {
-      return res.status(400).json({ error: 'Invalid username or password' });
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
+
+    // Update last login
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { lastLogin: new Date() },
+    });
+
     generateTokenAndSetCookie(String(user.id), res);
 
     res.status(200).json({
@@ -78,17 +77,27 @@ export const login = async (req: Request, res: Response) => {
       category: user.category,
     });
   } catch (error) {
-    console.log('Error in login controller', error);
+    console.error('Error in login controller:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 export const logout = async (req: Request, res: Response) => {
   try {
-    res.cookie('jwt', '', { maxAge: 0 });
+    // Clear all auth cookies
+    const cookieOptions = {
+      httpOnly: true,
+      secure: config.server.isProd,
+      sameSite: config.server.isProd ? ('none' as const) : ('lax' as const),
+    };
+
+    res.clearCookie('access_token', cookieOptions);
+    res.clearCookie('refresh_token', cookieOptions);
+    res.clearCookie('jwt', cookieOptions); // Backward compatibility
+
     res.status(200).json({ message: 'Logged out successfully' });
   } catch (error) {
-    console.log('Error in logout controller', error);
+    console.error('Error in logout controller:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
@@ -103,12 +112,24 @@ export const getMe = async (req: Request, res: Response) => {
         id: true,
         username: true,
         email: true,
+        category: true,
+        name: true,
+        surname: true,
+        city: true,
+        bio: true,
+        createdAt: true,
+        isActive: true,
+        lastLogin: true,
       },
     });
 
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
     res.status(200).json(user);
   } catch (error) {
-    console.log('Error in getMe controller', error);
+    console.error('Error in getMe controller:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
@@ -122,10 +143,7 @@ export const refreshToken = async (req: Request, res: Response) => {
     }
 
     // Verify the refresh token
-    const decoded = jwt.verify(
-      refreshToken,
-      process.env.JWT_REFRESH_SECRET || (process.env.JWT_SECRET as string)
-    ) as {
+    const decoded = jwt.verify(refreshToken, config.auth.jwtRefreshSecret) as {
       userId: string;
     };
 
@@ -133,15 +151,26 @@ export const refreshToken = async (req: Request, res: Response) => {
       return res.status(401).json({ error: 'Invalid refresh token' });
     }
 
-    // Check if user exists
+    // Check if user exists and is active
     const user = await prisma.user.findUnique({
       where: {
         id: Number(decoded.userId),
+      },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        category: true,
+        isActive: true,
       },
     });
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
+    }
+
+    if (!user.isActive) {
+      return res.status(403).json({ error: 'Account deactivated' });
     }
 
     // Generate new tokens
@@ -157,7 +186,13 @@ export const refreshToken = async (req: Request, res: Response) => {
       },
     });
   } catch (error) {
-    console.log('Error in refreshToken controller', error);
+    if (error instanceof jwt.TokenExpiredError) {
+      return res.status(401).json({ error: 'Refresh token expired' });
+    }
+    if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({ error: 'Invalid refresh token' });
+    }
+    console.error('Error in refreshToken controller:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };

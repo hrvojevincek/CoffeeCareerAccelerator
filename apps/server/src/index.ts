@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import hpp from 'hpp';
 import { config } from './config/environment';
 import { errorHandler } from './middleware/errorHandler';
-import { apiRateLimit } from './middleware/rateLimit';
+import { apiRateLimit, getRateLimiterStats } from './middleware/rateLimit';
 import authRoutes from './routes/auth.routes';
 import employerRoutes from './routes/employer.routes';
 import jobRoutes from './routes/jobs.routes';
@@ -76,6 +76,16 @@ app.get('/health', (req, res) => {
     status: 'ok',
     environment: config.server.nodeEnv,
     serverUrl: config.urls.server(),
+  });
+});
+
+// Rate limiter stats endpoint (for monitoring)
+app.get('/health/rate-limiter', (req, res) => {
+  const stats = getRateLimiterStats();
+  res.status(200).json({
+    status: 'ok',
+    rateLimiter: stats,
+    timestamp: new Date().toISOString(),
   });
 });
 

@@ -6,7 +6,7 @@ const passwordSchema = z
   .min(8, 'Password must be at least 8 characters')
   .max(128, 'Password cannot exceed 128 characters')
   .regex(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
     'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
   );
 
@@ -41,10 +41,10 @@ export const signupSchema = z.object({
   }),
 });
 
-// User login validation schema with rate limiting considerations
+// User login validation schema - more lenient for login
 export const loginSchema = z.object({
   body: z.object({
-    username: z.string().min(1, 'Username is required').max(30),
+    username: z.string().min(1, 'Username is required').max(50),
     password: z.string().min(1, 'Password is required').max(128),
   }),
 });
@@ -53,11 +53,11 @@ export const loginSchema = z.object({
 export const userUpdateSchema = z.object({
   body: z.object({
     data: z.object({
-      email: z.string().email('Invalid email format').optional(),
-      name: z.string().optional(),
-      surname: z.string().optional(),
-      city: z.string().optional(),
-      bio: z.string().optional(),
+      email: emailSchema.optional(),
+      name: z.string().min(1).max(50).optional(),
+      surname: z.string().min(1).max(50).optional(),
+      city: z.string().min(1).max(100).optional(),
+      bio: z.string().max(500).optional(),
     }),
   }),
   params: z.object({
@@ -68,20 +68,20 @@ export const userUpdateSchema = z.object({
 // Job creation validation schema
 export const jobCreateSchema = z.object({
   body: z.object({
-    title: z.string().min(3, 'Title must be at least 3 characters'),
-    description: z.string().min(10, 'Description must be at least 10 characters'),
-    categories: z.string(),
-    location: z.string(),
-    money: z.string().optional(),
-    employer: z.number(),
+    title: z.string().min(3, 'Title must be at least 3 characters').max(100),
+    description: z.string().min(10, 'Description must be at least 10 characters').max(2000),
+    categories: z.string().min(1).max(100),
+    location: z.string().min(1).max(100),
+    money: z.string().max(50).optional(),
+    employer: z.number().int().positive(),
   }),
 });
 
 // Application creation validation schema
 export const applicationSchema = z.object({
   body: z.object({
-    jobId: z.number(),
-    userId: z.number(),
+    jobId: z.number().int().positive(),
+    userId: z.number().int().positive(),
   }),
 });
 

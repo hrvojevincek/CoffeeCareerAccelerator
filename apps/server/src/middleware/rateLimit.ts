@@ -4,6 +4,33 @@ import { config } from '../config/environment';
 // Enhanced in-memory rate limiter with different limits for different endpoints
 const requestCounts = new Map<string, { count: number; resetTime: number }>();
 
+// Cleanup stale entries every 10 minutes
+setInterval(
+  () => {
+    const now = Date.now();
+    let cleanedCount = 0;
+
+    for (const [key, data] of requestCounts.entries()) {
+      // Remove entries that are 1 minute past their reset time (with buffer)
+      if (now > data.resetTime + 60000) {
+        requestCounts.delete(key);
+        cleanedCount++;
+      }
+    }
+
+    // Log cleanup stats in development
+    if (config.server.isDev && cleanedCount > 0) {
+      console.log(
+        `🧹 Rate limiter cleanup: removed ${cleanedCount} stale entries. Current entries: ${requestCounts.size}`
+      );
+    }
+  },
+  10 * 60 * 1000
+); // Every 10 minutes
+
+// Emergency cleanup if Map gets too large (prevent memory exhaustion)
+const MAX_ENTRIES = 10000;
+
 interface RateLimitOptions {
   windowMs: number;
   maxRequests: number;
@@ -16,6 +43,18 @@ export const createRateLimit = (options: RateLimitOptions) => {
     const ip = req.ip || req.socket.remoteAddress || 'unknown';
     const key = `${ip}:${req.route?.path || req.path}`;
     const now = Date.now();
+
+    // Emergency cleanup if we have too many entries
+    if (requestCounts.size > MAX_ENTRIES) {
+      console.warn(`⚠️ Rate limiter emergency cleanup: ${requestCounts.size} entries`);
+      for (const [mapKey, data] of requestCounts.entries()) {
+        if (now > data.resetTime) {
+          requestCounts.delete(mapKey);
+        }
+        // Only clean up to a reasonable size, then break
+        if (requestCounts.size <= MAX_ENTRIES * 0.7) break;
+      }
+    }
 
     const requestData = requestCounts.get(key) || {
       count: 0,
@@ -44,6 +83,28 @@ export const createRateLimit = (options: RateLimitOptions) => {
     }
 
     next();
+  };
+};
+
+// Utility function to get current rate limiter stats (useful for monitoring)
+export const getRateLimiterStats = () => {
+  const now = Date.now();
+  let activeEntries = 0;
+  let staleEntries = 0;
+
+  for (const [, data] of requestCounts.entries()) {
+    if (now <= data.resetTime) {
+      activeEntries++;
+    } else {
+      staleEntries++;
+    }
+  }
+
+  return {
+    totalEntries: requestCounts.size,
+    activeEntries,
+    staleEntries,
+    memoryUsageApproxKB: Math.round((requestCounts.size * 100) / 1024), // Rough estimate
   };
 };
 

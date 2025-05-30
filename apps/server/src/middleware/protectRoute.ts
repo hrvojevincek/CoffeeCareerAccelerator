@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import prisma from '../lib/prisma';
 import { config } from '../config/environment';
+import { AuthenticatedUser } from '../../types';
 
 interface JWTPayload {
   userId: number;
@@ -31,7 +32,7 @@ export const protectRoute = async (req: Request, res: Response, next: NextFuncti
     }
 
     // Check if user still exists and is active
-    const user = await prisma.user.findUnique({
+    const user = (await prisma.user.findUnique({
       where: {
         id: Number(decoded.userId),
       },
@@ -46,10 +47,10 @@ export const protectRoute = async (req: Request, res: Response, next: NextFuncti
         bio: true,
         createdAt: true,
         updatedAt: true,
-        isActive: true, // Add this field to your user model
-        lastLogin: true, // Add this field to track last login
+        isActive: true,
+        lastLogin: true,
       },
-    });
+    })) as AuthenticatedUser | null;
 
     if (!user) {
       return res.status(404).json({
@@ -106,7 +107,8 @@ export const requireRole = (roles: string[]) => {
       });
     }
 
-    if (!roles.includes((req.user as any).category)) {
+    const user = req.user as AuthenticatedUser;
+    if (!user.category || !roles.includes(user.category)) {
       return res.status(403).json({
         error: 'Insufficient permissions',
         code: 'INSUFFICIENT_PERMISSIONS',

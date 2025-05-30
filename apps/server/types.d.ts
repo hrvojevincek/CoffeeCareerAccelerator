@@ -5,26 +5,30 @@ interface PrismaErrorMessage {
   error: string;
 }
 
-declare namespace Express {
-  export interface Application {
-    start: () => Server;
-  }
+export interface AuthenticatedUser {
+  id: number;
+  username: string;
+  email: string;
+  category: string;
+  name: string | null;
+  surname: string | null;
+  city: string | null;
+  bio: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  isActive: boolean;
+  lastLogin: Date | null;
+}
 
-  export interface Request {
-    user?: {
-      id: number;
-      username: string;
-      email: string;
-      category: string;
-      name: string | null;
-      surname: string | null;
-      city: string | null;
-      bio: string | null;
-      createdAt: Date;
-      updatedAt: Date;
-      isActive: boolean;
-      lastLogin: Date | null;
-    };
+declare global {
+  namespace Express {
+    export interface Application {
+      start: () => Server;
+    }
+
+    export interface Request {
+      user?: AuthenticatedUser;
+    }
   }
 }
 

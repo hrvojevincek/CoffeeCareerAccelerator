@@ -16,15 +16,59 @@ export const config = {
 
   // Auth configuration
   auth: {
-    jwtSecret: process.env.JWT_SECRET || 'your_jwt_secret',
-    jwtRefreshSecret:
-      process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET || 'your_jwt_refresh_secret',
+    jwtSecret: (() => {
+      const secret = process.env.JWT_SECRET;
+      if (!secret && process.env.NODE_ENV === 'production') {
+        throw new Error('JWT_SECRET is required in production');
+      }
+      if (secret && secret.length < 32) {
+        throw new Error('JWT_SECRET must be at least 32 characters long');
+      }
+      return secret || 'your_jwt_secret';
+    })(),
+    jwtRefreshSecret: (() => {
+      const secret = process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET;
+      if (!secret && process.env.NODE_ENV === 'production') {
+        throw new Error('JWT_REFRESH_SECRET is required in production');
+      }
+      if (secret && secret.length < 32) {
+        throw new Error('JWT_REFRESH_SECRET must be at least 32 characters long');
+      }
+      return secret || 'your_jwt_refresh_secret';
+    })(),
     jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
     cookieMaxAge: 24 * 60 * 60 * 1000, // 1 day
-    bcryptRounds: parseInt(process.env.BCRYPT_ROUNDS || '12'),
-    cookieSecret: process.env.COOKIE_SECRET || 'your_cookie_secret',
-    maxLoginAttempts: parseInt(process.env.MAX_LOGIN_ATTEMPTS || '5'),
-    lockTime: parseInt(process.env.LOCK_TIME || '7200000'),
+    bcryptRounds: (() => {
+      const rounds = parseInt(process.env.BCRYPT_ROUNDS || '12');
+      if (isNaN(rounds) || rounds < 10 || rounds > 15) {
+        throw new Error('BCRYPT_ROUNDS must be between 10 and 15');
+      }
+      return rounds;
+    })(),
+    cookieSecret: (() => {
+      const secret = process.env.COOKIE_SECRET;
+      if (!secret && process.env.NODE_ENV === 'production') {
+        throw new Error('COOKIE_SECRET is required in production');
+      }
+      if (secret && secret.length < 32) {
+        throw new Error('COOKIE_SECRET must be at least 32 characters long');
+      }
+      return secret || 'your_cookie_secret';
+    })(),
+    maxLoginAttempts: (() => {
+      const attempts = parseInt(process.env.MAX_LOGIN_ATTEMPTS || '5');
+      if (isNaN(attempts) || attempts < 1 || attempts > 100) {
+        throw new Error('MAX_LOGIN_ATTEMPTS must be between 1 and 100');
+      }
+      return attempts;
+    })(),
+    lockTime: (() => {
+      const time = parseInt(process.env.LOCK_TIME || '7200000');
+      if (isNaN(time) || time < 0) {
+        throw new Error('LOCK_TIME must be a non-negative number');
+      }
+      return time;
+    })(),
   },
 
   // Database configuration (via prisma env vars)
