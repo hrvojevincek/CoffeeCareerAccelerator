@@ -55,7 +55,8 @@ export const login = async (req: Request, res: Response) => {
     });
 
     // Always compare password even if user doesn't exist (prevent timing attacks)
-    const dummyHash = '$2b$12$dummyhashtopreventtimingattacks1234567890';
+    // Hash for the literal string "invalid_password", generated once with 12 rounds
+    const dummyHash = '$2b$12$7Sl5OLm/x4HeRzvfP3hP8OpKOA.J0Xcbw3oUjHvy9heM/1bsenYsG';
     const isPasswordCorrect = await bcrypt.compare(password, user?.password || dummyHash);
 
     if (!user || !isPasswordCorrect) {

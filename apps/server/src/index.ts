@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import hpp from 'hpp';
 import { config } from './config/environment';
 import { errorHandler } from './middleware/errorHandler';
-import { apiRateLimit, getRateLimiterStats } from './middleware/rateLimit';
+import { apiRateLimit, getRateLimiterStats, stopCleanup } from './middleware/rateLimit';
 import authRoutes from './routes/auth.routes';
 import employerRoutes from './routes/employer.routes';
 import jobRoutes from './routes/jobs.routes';
@@ -98,8 +98,51 @@ app.use('/employers', employerRoutes);
 // Global error handler - must be after routes
 app.use(errorHandler);
 
-app.listen(config.server.port, () => {
-  console.log(`🚀 Server listening on ${config.urls.server()} 🚀`);
-});
+// Only start the server if not in test mode
+if (process.env.NODE_ENV !== 'test') {
+  const server = app.listen(config.server.port, () => {
+    console.log(`🚀 Server listening on ${config.urls.server()} 🚀`);
+  });
+
+  // Graceful shutdown handlers
+  const gracefulShutdown = (signal: string) => {
+    console.log(`\n🔄 Received ${signal}. Starting graceful shutdown...`);
+
+    // Stop accepting new connections
+    server.close(() => {
+      console.log('💯 HTTP server closed.');
+
+      // Stop rate limiter cleanup interval
+      stopCleanup();
+
+      // Exit process
+      process.exit(0);
+    });
+
+    // Force close server after 30 seconds
+    setTimeout(() => {
+      console.error('⚠️ Could not close connections in time, forcefully shutting down');
+      process.exit(1);
+    }, 30000);
+  };
+
+  // Listen for shutdown signals
+  process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+  process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+
+  // Handle uncaught exceptions
+  process.on('uncaughtException', error => {
+    console.error('💥 Uncaught Exception:', error);
+    stopCleanup();
+    process.exit(1);
+  });
+
+  // Handle unhandled promise rejections
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('💥 Unhandled Rejection at:', promise, 'reason:', reason);
+    stopCleanup();
+    process.exit(1);
+  });
+}
 
 export default app;

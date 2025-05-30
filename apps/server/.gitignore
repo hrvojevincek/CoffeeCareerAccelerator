@@ -29,10 +29,14 @@ dist-ssr
 # Security - NEVER commit these files
 cookies.txt
 *.cookies
-*cookie*
 tokens.txt
 *.token
-*tokens*
+*.tokens
+session-data.txt
+session-*.txt
+auth-cookies.txt
+jwt-tokens.txt
+refresh-tokens.txt
 *.key
 *.pem
 *.p12
@@ -40,3 +44,6 @@ tokens.txt
 auth.json
 credentials.json
 secrets.json
+.env.local
+.env.production
+.env.staging

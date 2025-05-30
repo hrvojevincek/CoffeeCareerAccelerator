@@ -4,8 +4,11 @@ import { config } from '../config/environment';
 // Enhanced in-memory rate limiter with different limits for different endpoints
 const requestCounts = new Map<string, { count: number; resetTime: number }>();
 
+// Store cleanup interval ID for proper cleanup
+let cleanupInterval: NodeJS.Timeout;
+
 // Cleanup stale entries every 10 minutes
-setInterval(
+cleanupInterval = setInterval(
   () => {
     const now = Date.now();
     let cleanedCount = 0;
@@ -27,6 +30,16 @@ setInterval(
   },
   10 * 60 * 1000
 ); // Every 10 minutes
+
+// Export cleanup function for graceful shutdown
+// This prevents memory leaks by clearing the setInterval when the server shuts down
+// Should be called during: SIGTERM, SIGINT, uncaught exceptions, or server restarts
+export const stopCleanup = () => {
+  if (cleanupInterval) {
+    clearInterval(cleanupInterval);
+    console.log('🧹 Rate limiter cleanup stopped');
+  }
+};
 
 // Emergency cleanup if Map gets too large (prevent memory exhaustion)
 const MAX_ENTRIES = 10000;

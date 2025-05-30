@@ -78,6 +78,23 @@ The server will **automatically fail to start** if:
 - Proper HTTP status codes
 - Security event logging
 
+## Memory Management & Performance
+
+✅ **Rate Limiting with Memory Management**
+
+- In-memory rate limiter with automatic cleanup every 10 minutes
+- Emergency cleanup at 10,000 entries to prevent memory exhaustion
+- **Memory Leak Prevention**: setInterval properly cleared on shutdown
+- Graceful shutdown handlers for SIGTERM/SIGINT signals
+- Monitoring endpoint: `/health/rate-limiter`
+
+✅ **Resource Cleanup**
+
+- Rate limiter cleanup interval properly managed
+- Server closes gracefully on shutdown signals
+- Force shutdown after 30 seconds if graceful shutdown fails
+- Cleanup called on uncaught exceptions and unhandled rejections
+
 ## Deployment Steps
 
 1. Set all required environment variables
