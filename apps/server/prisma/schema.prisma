@@ -23,6 +23,8 @@ model User {
   updatedAt    DateTime      @updatedAt
   applications Application[]
   experience   Experience[]
+  isActive     Boolean       @default(true)
+  lastLogin    DateTime?
 }
 
 model Employer {

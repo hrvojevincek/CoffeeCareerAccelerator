@@ -1,22 +1,55 @@
-import express from 'express';
-import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import authRoutes from './routes/auth.routes';
-import userRoutes from './routes/user.routes';
-import jobRoutes from './routes/jobs.routes';
-import { errorHandler } from './middleware/errorHandler';
-import { rateLimit } from './middleware/rateLimit';
+import cors from 'cors';
+import express from 'express';
+import mongoSanitize from 'express-mongo-sanitize';
+import helmet from 'helmet';
+import hpp from 'hpp';
 import { config } from './config/environment';
+import { errorHandler } from './middleware/errorHandler';
+import { apiRateLimit } from './middleware/rateLimit';
+import authRoutes from './routes/auth.routes';
+import employerRoutes from './routes/employer.routes';
+import jobRoutes from './routes/jobs.routes';
+import userRoutes from './routes/user.routes';
 
 const app = express();
 
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrc: ["'self'"],
+        imgSrc: ["'self'", 'data:', 'https:'],
+        connectSrc: ["'self'"],
+        fontSrc: ["'self'"],
+        objectSrc: ["'none'"],
+        mediaSrc: ["'self'"],
+        frameSrc: ["'none'"],
+      },
+    },
+    crossOriginEmbedderPolicy: false,
+    hsts: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+      preload: true,
+    },
+  })
+);
+
+// Prevent NoSQL injection attacks
+app.use(mongoSanitize());
+
+// Prevent HTTP Parameter Pollution
+app.use(hpp());
+
 // Apply middleware
-app.use(express.json({ limit: '5mb' }));
+app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps, curl requests)
       if (!origin) return callback(null, true);
 
       const allowedOrigins = Array.isArray(config.urls.client)
@@ -35,7 +68,7 @@ app.use(
 );
 
 // Apply rate limiting
-app.use(rateLimit);
+app.use(apiRateLimit);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -50,6 +83,7 @@ app.get('/health', (req, res) => {
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/jobs', jobRoutes);
+app.use('/employers', employerRoutes);
 
 // Global error handler - must be after routes
 app.use(errorHandler);

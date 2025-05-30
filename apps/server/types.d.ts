@@ -1,4 +1,5 @@
 import { Server } from 'http';
+import { JwtPayload } from 'jsonwebtoken';
 
 interface PrismaErrorMessage {
   error: string;
@@ -7,6 +8,23 @@ interface PrismaErrorMessage {
 declare namespace Express {
   export interface Application {
     start: () => Server;
+  }
+
+  export interface Request {
+    user?: {
+      id: number;
+      username: string;
+      email: string;
+      category: string;
+      name: string | null;
+      surname: string | null;
+      city: string | null;
+      bio: string | null;
+      createdAt: Date;
+      updatedAt: Date;
+      isActive: boolean;
+      lastLogin: Date | null;
+    };
   }
 }
 
@@ -21,5 +39,5 @@ declare class Logger {
 type GenericType<T> = T[];
 
 // Now you can use this type with any other type
-let numbers: GenericType<number>;
-let strings: GenericType<string>;
+declare let numbers: GenericType<number>;
+declare let strings: GenericType<string>;

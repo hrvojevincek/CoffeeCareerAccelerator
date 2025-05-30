@@ -1,38 +1,64 @@
 import { Request, Response, NextFunction } from 'express';
 import { config } from '../config/environment';
 
-// Simple in-memory rate limiter
+// Enhanced in-memory rate limiter with different limits for different endpoints
 const requestCounts = new Map<string, { count: number; resetTime: number }>();
-const { windowMs, maxRequests } = config.rateLimit;
 
-export const rateLimit = (req: Request, res: Response, next: NextFunction) => {
-  const ip = req.ip || req.socket.remoteAddress || 'unknown';
-  const now = Date.now();
+interface RateLimitOptions {
+  windowMs: number;
+  maxRequests: number;
+  skipSuccessfulRequests?: boolean;
+  skipFailedRequests?: boolean;
+}
 
-  // Get or initialize request data for this IP
-  const requestData = requestCounts.get(ip) || { count: 0, resetTime: now + windowMs };
+export const createRateLimit = (options: RateLimitOptions) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const ip = req.ip || req.socket.remoteAddress || 'unknown';
+    const key = `${ip}:${req.route?.path || req.path}`;
+    const now = Date.now();
 
-  // Reset counter if window expired
-  if (now > requestData.resetTime) {
-    requestData.count = 0;
-    requestData.resetTime = now + windowMs;
-  }
+    const requestData = requestCounts.get(key) || {
+      count: 0,
+      resetTime: now + options.windowMs,
+    };
 
-  // Increment request count
-  requestData.count++;
-  requestCounts.set(ip, requestData);
+    if (now > requestData.resetTime) {
+      requestData.count = 0;
+      requestData.resetTime = now + options.windowMs;
+    }
 
-  // Set headers
-  res.setHeader('X-RateLimit-Limit', maxRequests);
-  res.setHeader('X-RateLimit-Remaining', Math.max(0, maxRequests - requestData.count));
-  res.setHeader('X-RateLimit-Reset', requestData.resetTime);
+    requestData.count++;
+    requestCounts.set(key, requestData);
 
-  if (requestData.count > maxRequests) {
-    return res.status(429).json({
-      status: 'error',
-      message: 'Too many requests, please try again later',
-    });
-  }
+    // Set headers
+    res.setHeader('X-RateLimit-Limit', options.maxRequests);
+    res.setHeader('X-RateLimit-Remaining', Math.max(0, options.maxRequests - requestData.count));
+    res.setHeader('X-RateLimit-Reset', requestData.resetTime);
 
-  next();
+    if (requestData.count > options.maxRequests) {
+      return res.status(429).json({
+        status: 'error',
+        message: 'Too many requests, please try again later',
+        retryAfter: Math.ceil((requestData.resetTime - now) / 1000),
+      });
+    }
+
+    next();
+  };
 };
+
+// Different rate limits for different endpoints
+export const generalRateLimit = createRateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  maxRequests: 100,
+});
+
+export const authRateLimit = createRateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  maxRequests: 5, // Stricter for auth endpoints
+});
+
+export const apiRateLimit = createRateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  maxRequests: 30,
+});
