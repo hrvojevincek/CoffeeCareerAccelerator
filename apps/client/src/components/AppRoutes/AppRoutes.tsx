@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import LoginPage from '../../pages/auth/login/LoginPage';
-import SignupPage from '../../pages/auth/signup/SignupPage';
+import AuthPage from '../../pages/auth/AuthPage';
 import CompanyPage from '../../pages/CompanyPage';
 import MainPage from '../../pages/home/MainPage';
 import JobDetailPage from '../../pages/JobDetailPage';
@@ -12,12 +11,12 @@ import { RequireAuth } from '../RequireAuth';
 const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<MainPage />} />
-    <Route path="/signup" element={<SignupPage />} />
-    <Route path="/login" element={<LoginPage />} />
+    <Route path="/auth" element={<AuthPage />} />
+    <Route path="/signup" element={<AuthPage />} />
+    <Route path="/login" element={<AuthPage />} />
     <Route path="/jobs" element={<JobsPage />} />
     <Route path="/jobs/:id" element={<JobDetailPage />} />
 
-    {/* Protected routes requiring authentication */}
     <Route
       path="/user/:id/*"
       element={

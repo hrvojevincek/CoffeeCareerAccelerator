@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 
 import { useMe } from '../hooks/useAuth';
+import { type User } from '../types/types';
 
 const Navbar = ({ children }: { children: React.ReactNode }) => {
   const { data: user, isSuccess } = useMe();
+  const typedUser = user as User;
 
   return (
     <>
@@ -15,9 +17,11 @@ const Navbar = ({ children }: { children: React.ReactNode }) => {
             </span>
           </Link>
           <div className="flex md:order-2">
-            {isSuccess && user && (user.category === 'user' || user.category === 'employer') ? (
+            {isSuccess &&
+            typedUser &&
+            (typedUser.category === 'user' || typedUser.category === 'employer') ? (
               <Link
-                to={`/${user.category}/${String(user.id)}`}
+                to={`/${typedUser.category}/${typedUser.id ? String(typedUser.id) : ''}`}
                 type="button"
                 className="inline-flex justify-center hover:text-gray-400 items-center text-lg font-medium text-center text-gray-50 border-b-2 border-white">
                 My Dashboard
@@ -25,7 +29,7 @@ const Navbar = ({ children }: { children: React.ReactNode }) => {
             ) : (
               <>
                 <Link
-                  to="/login"
+                  to="/auth"
                   type="button"
                   className="inline-flex justify-center hover:text-gray-400 items-center text-lg font-medium text-center text-gray-50 hover:border-gray-400 border-b-2 border-white">
                   Get Started
