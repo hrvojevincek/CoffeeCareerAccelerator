@@ -25,3 +25,18 @@ dist-ssr
 
 .env
 .vercel
+
+# Security - NEVER commit these files
+cookies.txt
+*.cookies
+*cookie*
+tokens.txt
+*.token
+*tokens*
+*.key
+*.pem
+*.p12
+*.pfx
+auth.json
+credentials.json
+secrets.json
