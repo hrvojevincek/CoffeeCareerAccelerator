@@ -22,8 +22,8 @@ export interface AuthenticatedUser {
 
 declare global {
   namespace Express {
-    export interface Application {
-      start: () => Server;
+  export interface Application {
+    start: () => Server;
     }
 
     export interface Request {

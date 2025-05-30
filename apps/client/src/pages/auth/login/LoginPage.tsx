@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { type AxiosError } from 'axios';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { useNotifications } from '../../../contexts/NotificationContext';
 import { useLogin } from '../../../hooks/useAuth';
 
 interface LoginForm {
@@ -14,6 +15,7 @@ interface LoginForm {
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const login = useLogin();
+  const notifications = useNotifications();
 
   const {
     register,
@@ -27,10 +29,14 @@ const LoginPage: React.FC = () => {
         username: data.username,
         password: data.password,
       });
+      notifications.showSuccess('🎉 Welcome back! You have successfully logged in.');
       navigate('/');
     } catch (err) {
-      const error = err as AxiosError;
+      const error = err as AxiosError<{ error?: string }>;
+      const errorMessage =
+        error.response?.data?.error || 'Login failed. Please check your credentials.';
       console.error('Login failed:', error);
+      notifications.showError(errorMessage);
     }
   };
 

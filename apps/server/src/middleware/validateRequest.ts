@@ -1,28 +1,39 @@
-import { Request, Response, NextFunction } from "express";
-import { AnyZodObject, ZodError } from "zod";
+import { Request, Response, NextFunction } from 'express';
+import { ZodSchema, ZodError } from 'zod';
 
-export const validateRequest = (schema: AnyZodObject) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+export const validateRequest = (schema: ZodSchema) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     try {
-      await schema.parseAsync({
+      schema.parse({
         body: req.body,
         query: req.query,
         params: req.params,
       });
-      return next();
+      next();
     } catch (error) {
       if (error instanceof ZodError) {
+        console.log('❌ Validation Error Details:', {
+          requestBody: req.body,
+          validationErrors: error.errors,
+          path: req.path,
+        });
+
+        const errorMessages = error.errors.map(err => ({
+          field: err.path.join('.'),
+          message: err.message,
+          code: err.code,
+          received: err.code === 'invalid_type' ? (err as any).received : undefined,
+        }));
+
         return res.status(400).json({
-          status: "error",
-          errors: error.errors.map((e) => ({
-            path: e.path.join("."),
-            message: e.message,
-          })),
+          error: 'Validation failed',
+          details: errorMessages,
+          message: 'Please check the required fields and formats',
         });
       }
-      return res
-        .status(500)
-        .json({ status: "error", message: "Internal Server Error" });
+
+      console.error('❌ Unexpected validation error:', error);
+      res.status(500).json({ error: 'Internal server error during validation' });
     }
   };
 };
