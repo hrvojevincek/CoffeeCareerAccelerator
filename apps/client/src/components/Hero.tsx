@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 function Hero() {
   return (
-    <div className="h-screen  flex items-center justify-center bg-no-repeat sm:bg-cover md:bg-bottom bg-fixed bg-[url('https://media.timeout.com/images/105871441/image.jpg')] bg-gray-300 bg-blend-multiply">
+    <div className="h-screen flex items-center justify-center bg-no-repeat bg-cover md:bg-bottom bg-[url('/hero-1280.jpg')] sm:bg-[url('/hero-1920.jpg')] bg-gray-300 bg-blend-multiply">
       <div className="px-4 mx-auto max-w-screen-xl text-center">
         <h1 className="mb-10 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
           Coffee Career Accelerator
