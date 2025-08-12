@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { type AxiosError } from 'axios';
 import { type SubmitHandler, useForm } from 'react-hook-form';

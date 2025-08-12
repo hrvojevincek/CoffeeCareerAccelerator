@@ -1,5 +1,5 @@
 import { Snackbar } from './Snackbar';
-import { useNotification, type Notification } from '../../hooks/useNotification';
+import { type Notification } from '../../hooks/useNotification';
 
 interface NotificationContainerProps {
   notifications: Notification[];

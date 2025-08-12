@@ -9,7 +9,7 @@ export const USER_QUERY_KEY = ['user'];
 
 // Hook to fetch the current user
 export const useMe = () => {
-  return useQuery<User>({
+  return useQuery<User | null>({
     queryKey: USER_QUERY_KEY,
     queryFn: authApi.getCurrentUser,
     retry: false,

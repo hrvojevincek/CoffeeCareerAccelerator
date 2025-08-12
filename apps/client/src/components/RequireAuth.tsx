@@ -34,7 +34,7 @@ export const RequireAuth = ({
   }
 
   // Check role-based access if allowedRoles is provided
-  if (allowedRoles && user.category && !allowedRoles.includes(user.category)) {
+  if (allowedRoles && user && user.category && !allowedRoles.includes(user.category)) {
     return <Navigate to="/" replace />;
   }
 
