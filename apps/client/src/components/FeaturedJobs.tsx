@@ -27,36 +27,41 @@ export default function FeaturedJobs({ jobs }: FeaturedJobsProps) {
             ? `${job.description.slice(0, 100)}${job.description.length > 100 ? '…' : ''}`
             : '';
           return (
-            <div className="rounded-xl p-6 bg-black/70 shadow-sm flex w-full" key={job.id}>
+            <div
+              key={job.id}
+              className="w-full p-6 bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700 rounded-xl">
               <div className="flex w-full items-start justify-between gap-6">
                 <div className="flex-1 min-w-0">
-                  <div className="flex flex-col mb-2 gap-1">
-                    <h3 className="text-2xl font-bold text-white truncate leading-tight">
-                      {job.title}
-                    </h3>
-                    <div className="flex items-center gap-2 text-white text-sm">
-                      {isNew && (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
-                          New
-                        </span>
-                      )}
-                      <span>Posted {postedFromNow}</span>
+                  <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-1">
+                      <h3 className="text-2xl font-bold text-white leading-snug tracking-tight truncate">
+                        {job.title}
+                      </h3>
+                      <div className="flex items-center gap-2 text-white text-sm">
+                        {isNew && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-white">
+                            New
+                          </span>
+                        )}
+                        <span>Posted {postedFromNow}</span>
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="h-8 w-8 rounded-full bg-gray-200 text-white flex items-center justify-center text-sm font-semibold">
-                      {getEmployerInitial(employerName)}
+                    <div className="flex items-center gap-3">
+                      <div className="h-8 w-8 rounded-full bg-gray-200 text-white flex items-center justify-center text-sm font-semibold">
+                        {getEmployerInitial(employerName)}
+                      </div>
+                      <div className="text-lg font-medium text-white truncate">{employerName}</div>
+                      <span className="ms-2 px-2.5 py-0.5 rounded-full text-xs bg-amber-100 text-white">
+                        {job.category}
+                      </span>
                     </div>
-                    <div className="text-lg font-medium text-white">{employerName}</div>
-                    <span className="ms-2 px-2.5 py-0.5 rounded-full text-xs bg-amber-100 text-white">
-                      {job.category}
-                    </span>
+                    {descriptionSnippet && (
+                      <p className="font-normal text-gray-700 dark:text-gray-400 leading-relaxed">
+                        {descriptionSnippet}
+                      </p>
+                    )}
                   </div>
-
-                  <div className="text-white text-sm mb-0 line-clamp-3">{descriptionSnippet}</div>
                 </div>
-
                 <div className="flex-shrink-0 flex flex-col items-end justify-between gap-4 w-48">
                   <div className="flex items-center justify-end text-white text-sm">
                     <div className="flex gap-1 items-center">
@@ -79,17 +84,17 @@ export default function FeaturedJobs({ jobs }: FeaturedJobsProps) {
                           d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                         />
                       </svg>
-                      <span>{job.location}</span>
+                      <span className="truncate">{job.location}</span>
                     </div>
                   </div>
-
                   <Link
                     to={`/jobs/${job.id}`}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600">
+                    aria-label={`Apply to ${job.title}`}
+                    className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Apply Now
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
+                      className="h-4 w-4 ml-1"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
