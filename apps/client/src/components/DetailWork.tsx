@@ -62,6 +62,8 @@ const DetailWork: React.FC<DetailWorkProps> = ({ data }) => {
     );
   };
 
+  const isLoggedIn = isValidUser(userData);
+
   return (
     <div className="pt-32">
       <div className="max-w-6xl mx-auto px-5">
@@ -132,7 +134,7 @@ const DetailWork: React.FC<DetailWorkProps> = ({ data }) => {
                       d="M3 7h18M3 12h18M3 17h18"
                     />
                   </svg>
-                  <span>Category: {data.category}</span>
+                  <span>Category: {data.title}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <svg
@@ -158,10 +160,16 @@ const DetailWork: React.FC<DetailWorkProps> = ({ data }) => {
               </ul>
               <button
                 onClick={() =>
-                  id !== undefined && isValidUser(userData) && applyForJob(parseInt(id), userData)
+                  id !== undefined && isLoggedIn && applyForJob(parseInt(id), userData as User)
                 }
                 type="button"
-                className="mt-6 w-full text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-4 py-2">
+                disabled={!isLoggedIn}
+                title={isLoggedIn ? undefined : 'Log in to apply'}
+                className={`mt-6 w-full text-white font-medium rounded-lg text-sm px-4 py-2 ${
+                  isLoggedIn
+                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800'
+                    : 'bg-gray-500 cursor-not-allowed opacity-50'
+                }`}>
                 Apply Now
               </button>
             </div>

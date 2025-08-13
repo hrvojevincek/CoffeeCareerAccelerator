@@ -1,9 +1,8 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { useParams, useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 import DetailWork from '../components/DetailWork';
-import Footer from '../components/Footer';
 import RelatedJobs from '../components/RelatedJobs';
 import { jobsApi } from '../services/api';
 import { type JobData } from '../types/types';
@@ -66,7 +65,6 @@ function JobDetails() {
           {job && <DetailWork data={job} />}
           <RelatedJobs />
         </div>
-        <Footer />
       </div>
     </>
   );
