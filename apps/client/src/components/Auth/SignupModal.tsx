@@ -83,7 +83,7 @@ export const SignupModal = ({ onSuccess, onSwitchToLogin }: SignupModalProps) =>
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Username
           </label>
-          <div className="flex">
+          <div className="relative flex items-center">
             <input
               {...register('username', {
                 required: 'Username is required',
@@ -104,7 +104,7 @@ export const SignupModal = ({ onSuccess, onSwitchToLogin }: SignupModalProps) =>
               name="username"
               id="username"
               placeholder="johndoe123"
-              className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:z-10 focus:relative block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ${
+              className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-1 focus:ring-gray-400 focus:border-gray-400 focus:z-10 focus:relative block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ${
                 errors.username || fieldErrors.username ? 'border-red-500' : ''
               }`}
             />
@@ -116,13 +116,26 @@ export const SignupModal = ({ onSuccess, onSwitchToLogin }: SignupModalProps) =>
               })}
               onChange={e => setValue('category', e.target.value, { shouldValidate: true })}
               name="category"
-              className={`flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-r-lg hover:bg-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white dark:border-gray-600 ${
+              className={`flex-shrink-0 z-10 -ml-px appearance-none py-2.5 pl-4 pr-10 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-r-lg hover:bg-gray-200 focus:ring-1 focus:ring-gray-400 focus:border-gray-400 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white dark:border-gray-600 ${
                 errors.category || fieldErrors.category ? 'border-red-500' : ''
               }`}>
               <option value="">Choose a category</option>
               <option value="user">Jobseeker</option>
               <option value="employer">Employer</option>
             </select>
+            <span className="pointer-events-none absolute inset-y-0 right-3 z-20 flex items-center text-gray-300">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                viewBox="0 0 20 20"
+                fill="currentColor">
+                <path
+                  fillRule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </span>
           </div>
           {(errors.username || fieldErrors.username) && (
             <span className="block pl-3 mt-1 text-xs text-red-400">
@@ -154,7 +167,7 @@ export const SignupModal = ({ onSuccess, onSwitchToLogin }: SignupModalProps) =>
             type="email"
             name="email"
             id="email"
-            className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:z-10 focus:relative block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ${
+            className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-1 focus:ring-gray-400 focus:border-gray-400 focus:z-10 focus:relative block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ${
               errors.email || fieldErrors.email ? 'border-red-500' : ''
             }`}
             placeholder="name@company.com"
@@ -189,7 +202,7 @@ export const SignupModal = ({ onSuccess, onSwitchToLogin }: SignupModalProps) =>
             name="password"
             id="password"
             placeholder="••••••••"
-            className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:z-10 focus:relative block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ${
+            className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-1 focus:ring-gray-400 focus:border-gray-400 focus:z-10 focus:relative block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ${
               errors.password || fieldErrors.password ? 'border-red-500' : ''
             }`}
           />
@@ -244,7 +257,7 @@ export const SignupModal = ({ onSuccess, onSwitchToLogin }: SignupModalProps) =>
               id="terms"
               aria-describedby="terms"
               type="checkbox"
-              className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+              className="w-4 h-4 border border-gray-400 rounded bg-gray-50 focus:ring-3 focus:ring-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-gray-500 dark:ring-offset-gray-800"
               required
             />
           </div>
@@ -253,11 +266,8 @@ export const SignupModal = ({ onSuccess, onSwitchToLogin }: SignupModalProps) =>
               I accept the{' '}
               <button
                 type="button"
-                className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                onClick={() => {
-                  // TODO: Implement terms and conditions modal/page
-                  console.log('Terms and conditions clicked');
-                }}>
+                className="font-medium underline underline-offset-2 text-gray-700 hover:text-gray-900 decoration-gray-400 transition-colors dark:text-gray-300 dark:hover:text-gray-200 dark:decoration-gray-500"
+                onClick={() => undefined}>
                 Terms and Conditions
               </button>
             </label>
@@ -269,10 +279,10 @@ export const SignupModal = ({ onSuccess, onSwitchToLogin }: SignupModalProps) =>
           type="submit"
           className={`w-full text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-4 focus:outline-none ${
             signupMutation.isPending
-              ? 'bg-gray-400 cursor-not-allowed'
+              ? 'bg-gray-500 cursor-not-allowed'
               : allRequirementsMet
-                ? 'bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-                : 'bg-gray-400 cursor-not-allowed'
+                ? 'bg-gray-800 hover:bg-gray-700 focus:ring-gray-500 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-500'
+                : 'bg-gray-500 cursor-not-allowed'
           }`}
           disabled={signupMutation.isPending || !allRequirementsMet}>
           {signupMutation.isPending ? 'Creating account...' : 'Create an account'}
@@ -285,7 +295,7 @@ export const SignupModal = ({ onSuccess, onSwitchToLogin }: SignupModalProps) =>
             <button
               type="button"
               onClick={onSwitchToLogin}
-              className="font-medium text-blue-600 hover:text-blue-500">
+              className="font-medium underline underline-offset-2 text-gray-700 hover:text-gray-900 decoration-gray-400 transition-colors dark:text-gray-300 dark:hover:text-gray-200 dark:decoration-gray-500">
               Login here
             </button>
           </p>

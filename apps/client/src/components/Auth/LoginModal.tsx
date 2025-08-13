@@ -53,7 +53,7 @@ export const LoginModal = ({ onSuccess, onSwitchToSignup }: LoginModalProps) => 
           id="username"
           type="text"
           autoComplete="username"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-400 focus:border-gray-400 dark:bg-gray-700 dark:text-white sm:text-sm"
           placeholder="Enter your username"
           {...register('username', { required: 'Username is required' })}
         />
@@ -70,7 +70,7 @@ export const LoginModal = ({ onSuccess, onSwitchToSignup }: LoginModalProps) => 
           id="password"
           type="password"
           autoComplete="current-password"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-400 focus:border-gray-400 dark:bg-gray-700 dark:text-white sm:text-sm"
           placeholder="Enter your password"
           {...register('password', { required: 'Password is required' })}
         />
@@ -83,7 +83,7 @@ export const LoginModal = ({ onSuccess, onSwitchToSignup }: LoginModalProps) => 
             id="remember-me"
             name="remember-me"
             type="checkbox"
-            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            className="h-4 w-4 text-gray-300 focus:ring-gray-400 border-gray-400 rounded"
           />
           <label
             htmlFor="remember-me"
@@ -95,11 +95,8 @@ export const LoginModal = ({ onSuccess, onSwitchToSignup }: LoginModalProps) => 
         <div className="text-sm">
           <button
             type="button"
-            className="font-medium text-blue-600 hover:text-blue-500 underline"
-            onClick={() => {
-              // TODO: Implement forgot password functionality
-              console.log('Forgot password clicked');
-            }}>
+            className="font-medium underline underline-offset-2 text-gray-700 hover:text-gray-900 decoration-gray-400 transition-colors dark:text-gray-300 dark:hover:text-gray-200 dark:decoration-gray-500"
+            onClick={() => undefined}>
             Forgot your password?
           </button>
         </div>
@@ -109,7 +106,7 @@ export const LoginModal = ({ onSuccess, onSwitchToSignup }: LoginModalProps) => 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 disabled:opacity-50 disabled:cursor-not-allowed">
           {isSubmitting ? 'Logging in...' : 'Login'}
         </button>
       </div>
@@ -120,7 +117,7 @@ export const LoginModal = ({ onSuccess, onSwitchToSignup }: LoginModalProps) => 
           <button
             type="button"
             onClick={onSwitchToSignup}
-            className="font-medium text-blue-600 hover:text-blue-500">
+            className="font-medium underline underline-offset-2 text-gray-700 hover:text-gray-900 decoration-gray-400 transition-colors dark:text-gray-300 dark:hover:text-gray-200 dark:decoration-gray-500">
             Sign up here
           </button>
         </p>

@@ -9,10 +9,10 @@ const Navbar = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <nav className="bg-black py-3 w-screen lg:max-w-8xl absolute top-0">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent py-3">
         <div className="max-w-5xl flex flex-wrap items-center justify-around mx-auto">
           <Link to="/" className="flex items-center">
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            <span className="self-center text-2xl font-semibold whitespace-nowrap text-white dark:text-white">
               Coffee Career
             </span>
           </Link>
@@ -31,7 +31,7 @@ const Navbar = ({ children }: { children: React.ReactNode }) => {
                 <Link
                   to="/auth"
                   type="button"
-                  className="inline-flex justify-center hover:text-gray-400 items-center text-lg font-medium text-center text-gray-50 hover:border-gray-400 border-b-2 border-white">
+                  className="inline-flex items-center justify-center px-5 py-2 text-sm font-semibold text-white rounded-full border border-white/80 bg-transparent hover:text-white/90 hover:border-white focus:outline-none focus:ring-2 focus:ring-white/30">
                   Get Started
                 </Link>
               </>

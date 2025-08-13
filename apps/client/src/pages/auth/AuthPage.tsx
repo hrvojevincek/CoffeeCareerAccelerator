@@ -24,7 +24,8 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cover bg-center bg-[url('https://europeancoffeetrip.com/wp-content/uploads/2018/12/Elbgold-Coffee-Lab-2.jpg')]">
+    <div className="relative min-h-screen flex items-center justify-center bg-no-repeat bg-cover bg-center bg-[url('https://europeancoffeetrip.com/wp-content/uploads/2018/12/Elbgold-Coffee-Lab-2.jpg')]">
+      <div className="absolute inset-0 bg-black/40"></div>
       <div className="relative z-10 w-full max-w-lg mx-4">
         <div className="bg-white dark:bg-black/80 rounded-2xl shadow-2xl overflow-hidden">
           {/* Header */}
