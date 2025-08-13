@@ -254,7 +254,7 @@ function Jobs() {
                 </div>
               </aside>
               <main className="lg:col-span-8 order-2">
-                <div className="rounded-lg bg-black/80 p-6">
+                <div className="bg-transparent">
                   <FeaturedJobs jobs={data} />
                 </div>
               </main>
