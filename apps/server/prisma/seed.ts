@@ -234,6 +234,106 @@ async function main() {
       money: '30.000€',
       posted: true,
     },
+    {
+      title: 'Shift Supervisor',
+      categories: 'Supervisor',
+      description:
+        'Support daily coffee bar operations, mentor junior baristas, and ensure an excellent guest experience through peak periods and smooth closing routines.',
+      location: 'Lisbon, Portugal',
+      employerId: createdEmployers[5].id,
+      money: '32.000€',
+      posted: true,
+    },
+    {
+      title: 'Cafe Manager',
+      categories: 'Manager',
+      description:
+        'Own shop performance, lead hiring and training, manage inventory and suppliers, and uphold brand standards while creating a welcoming community space.',
+      location: 'New York, USA',
+      employerId: createdEmployers[0].id,
+      money: '40.000€',
+      posted: true,
+    },
+    {
+      title: 'Coffee Trainer',
+      categories: 'Trainer',
+      description:
+        'Design and deliver training programs covering espresso fundamentals, milk texturing, brew methods, and sensory. Coach teams to elevate coffee quality.',
+      location: 'Berlin, Germany',
+      employerId: createdEmployers[1].id,
+      money: '35.000€',
+      posted: true,
+    },
+    {
+      title: 'Latte Artist',
+      categories: 'Barista',
+      description:
+        'Craft beautiful latte art and champion beverage presentation. Share techniques with the team and collaborate on seasonal drink development.',
+      location: 'Barcelona, Spain',
+      employerId: createdEmployers[6].id,
+      money: '31.000€',
+      posted: true,
+    },
+    {
+      title: 'Coffee Equipment Technician',
+      categories: 'Technician',
+      description:
+        'Maintain and repair espresso machines, grinders, and brew gear. Perform preventative maintenance schedules and on-site service calls.',
+      location: 'London, United Kingdom',
+      employerId: createdEmployers[2].id,
+      money: '38.000€',
+      posted: true,
+    },
+    {
+      title: 'Green Coffee Buyer Assistant',
+      categories: 'Supply Chain',
+      description:
+        'Assist with sourcing programs, cupping sessions, and logistics coordination. Help document quality data and maintain supplier relationships.',
+      location: 'Berlin, Germany',
+      employerId: createdEmployers[3].id,
+      money: '36.000€',
+      posted: true,
+    },
+    {
+      title: 'E-commerce Coordinator',
+      categories: 'Marketing',
+      description:
+        'Manage online product listings, coordinate promotions, and work with fulfillment to ensure timely, accurate orders for our subscribers.',
+      location: 'Remote',
+      employerId: createdEmployers[8].id,
+      money: '33.000€',
+      posted: true,
+    },
+    {
+      title: 'Roastery Production Assistant',
+      categories: 'Production',
+      description:
+        'Support roasting and packaging operations, manage green inventory rotation, and help maintain a clean and safe production environment.',
+      location: 'Madrid, Spain',
+      employerId: createdEmployers[4].id,
+      money: '30.000€',
+      posted: true,
+    },
+    {
+      title: 'Customer Support Specialist',
+      categories: 'Support',
+      description:
+        'Provide timely, friendly support to retail and wholesale customers via email and chat. Troubleshoot orders, subscriptions, and equipment questions.',
+      location: 'Remote',
+      employerId: createdEmployers[7].id,
+      money: '29.000€',
+      posted: true,
+    },
+    {
+      title: 'Wholesale Account Manager',
+      categories: 'Sales',
+      description:
+        'Grow and support wholesale partners, coordinate training and launches, and ensure quality at partner cafes through regular visits.',
+      location: 'London, United Kingdom',
+      employerId: createdEmployers[2].id,
+      money: '42.000€',
+      posted: true,
+    },
   ];
 
   for (const jobData of jobsData) {

@@ -33,13 +33,13 @@ export default function FeaturedJobs({ jobs }: FeaturedJobsProps) {
               <div className="flex w-full items-start justify-between gap-6">
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-col gap-3">
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-2">
                       <h3 className="text-2xl font-bold text-white leading-snug tracking-tight truncate">
                         {job.title}
                       </h3>
                       <div className="flex items-center gap-2 text-white text-sm">
                         {isNew && (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-white">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-300 text-black">
                             New
                           </span>
                         )}

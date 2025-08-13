@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { default as moment } from 'moment';
 
 import FeaturedJobs from '../../components/FeaturedJobs';
-import Footer from '../../components/Footer';
 import JobsFilters from '../../components/Jobs/JobsFilters';
 import { jobsApi } from '../../services/api';
 import { type JobData } from '../../types/types';
@@ -76,7 +75,7 @@ function Jobs() {
 
   return (
     <>
-      <div className="relative min-h-screen bg-no-repeat bg-cover bg-center bg-[url('https://images.squarespace-cdn.com/content/v1/65521fe39084f270bb13c228/1704576752170-OVJ1URPN05ZF9FY97H5P/00+coffee+roastery+landscape+image.jpg?format=1500w')]">
+      <div className="relative min-h-screen bg-no-repeat bg-cover bg-center bg-fixed bg-[url('https://images.squarespace-cdn.com/content/v1/65521fe39084f270bb13c228/1704576752170-OVJ1URPN05ZF9FY97H5P/00+coffee+roastery+landscape+image.jpg?format=1500w')]">
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="relative pt-20 pb-10">
           <div className="container mx-auto px-4 lg:max-w-6xl">
@@ -108,7 +107,6 @@ function Jobs() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }
