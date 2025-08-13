@@ -1,3 +1,5 @@
+import { useMemo, useState, useEffect } from 'react';
+
 import { default as moment } from 'moment';
 import { Link } from 'react-router-dom';
 
@@ -16,10 +18,30 @@ function getEmployerInitial(name?: string): string {
 }
 
 export default function FeaturedJobs({ jobs }: FeaturedJobsProps) {
+  const pageSize = 5;
+  const [page, setPage] = useState(1);
+  const totalPages = Math.max(1, Math.ceil(jobs.length / pageSize));
+
+  useEffect(() => {
+    // Reset to first page when jobs set changes or clamp if fewer pages
+    setPage(prev => Math.min(Math.max(1, prev), totalPages));
+  }, [jobs, totalPages]);
+
+  const paginatedJobs = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    return jobs.slice(start, start + pageSize);
+  }, [jobs, page]);
+
+  const handlePrev = () => setPage(p => Math.max(1, p - 1));
+  const handleNext = () => setPage(p => Math.min(totalPages, p + 1));
+
+  const startItem = jobs.length === 0 ? 0 : (page - 1) * pageSize + 1;
+  const endItem = Math.min(page * pageSize, jobs.length);
+
   return (
     <div className="p-0">
       <div className="flex flex-col gap-6">
-        {jobs.map(job => {
+        {paginatedJobs.map(job => {
           const postedFromNow = moment(job.createdAt).fromNow();
           const isNew = moment().diff(moment(job.createdAt), 'hours') < 48;
           const employerName = job.employer?.name || 'Company';
@@ -112,6 +134,30 @@ export default function FeaturedJobs({ jobs }: FeaturedJobsProps) {
             </div>
           );
         })}
+      </div>
+      <div className="flex items-center justify-between mt-6">
+        <div className="text-sm text-white/80">
+          {jobs.length > 0 ? `Showing ${startItem}–${endItem} of ${jobs.length}` : 'No jobs found'}
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handlePrev}
+            disabled={page === 1}
+            className="px-3 py-1.5 rounded-md border border-gray-600 text-white hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+            Previous
+          </button>
+          <span className="text-white text-sm">
+            Page {page} / {totalPages}
+          </span>
+          <button
+            type="button"
+            onClick={handleNext}
+            disabled={page === totalPages}
+            className="px-3 py-1.5 rounded-md border border-gray-600 text-white hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
