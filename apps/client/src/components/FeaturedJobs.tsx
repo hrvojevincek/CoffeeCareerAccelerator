@@ -17,9 +17,8 @@ function getEmployerInitial(name?: string): string {
 
 export default function FeaturedJobs({ jobs }: FeaturedJobsProps) {
   return (
-    <div className="p-6 rounded-lg shadow-md bg-black/80">
-      <h2 className="text-2xl font-semibold border-b pb-4 text-white">Featured Jobs</h2>
-      <div className="mt-6 grid gap-6 grid-cols-1 sm:grid-cols-2">
+    <div className="p-0">
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
         {jobs.map(job => {
           const postedFromNow = moment(job.createdAt).fromNow();
           const isNew = moment().diff(moment(job.createdAt), 'hours') < 48;
@@ -31,8 +30,10 @@ export default function FeaturedJobs({ jobs }: FeaturedJobsProps) {
             <div
               className="border rounded-xl p-6 bg-white shadow-sm flex flex-col min-h-64"
               key={job.id}>
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between mb-2">
-                <h3 className="text-2xl font-bold text-gray-900">{job.title}</h3>
+              <div className="flex flex-col mb-2 gap-1">
+                <h3 className="text-2xl font-bold text-gray-900 truncate leading-tight">
+                  {job.title}
+                </h3>
                 <div className="flex items-center gap-2 text-slate-500 text-sm">
                   {isNew && (
                     <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">

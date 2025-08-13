@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react';
+
 import { Link } from 'react-router-dom';
 
 import { useMe } from '../hooks/useAuth';
@@ -6,10 +8,27 @@ import { type User } from '../types/types';
 const Navbar = ({ children }: { children: React.ReactNode }) => {
   const { data: user, isSuccess } = useMe();
   const typedUser = user as User;
+  const [hidden, setHidden] = useState(false);
+  const lastYRef = useRef(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > lastYRef.current && y > 80) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+      lastYRef.current = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent py-3">
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 bg-transparent py-3 transition-transform duration-300 ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
         <div className="max-w-5xl flex flex-wrap items-center justify-around mx-auto">
           <Link to="/" className="flex items-center">
             <span className="self-center text-2xl font-semibold whitespace-nowrap text-white dark:text-white">
