@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useMe } from '../hooks/useAuth';
 
 import type { JobData, User } from '../types/types.d';
+import { LocationIcon } from './ui/Icon';
 
 type DetailWorkProps = {
   data: JobData;
@@ -76,41 +77,13 @@ const DetailWork: React.FC<DetailWorkProps> = ({ data }) => {
               </h1>
               <div className="mt-2 flex flex-wrap items-center gap-3 text-slate-600">
                 <div className="flex items-center gap-1">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    aria-hidden="true">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 111.414-11.314 8 8 0 0111.314 11.314z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
+                  <LocationIcon className="h-4 w-4" />
                   <span>{data.location}</span>
                 </div>
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
                   {data.category}
                 </span>
               </div>
-            </div>
-            <div>
-              <button
-                onClick={() =>
-                  id !== undefined && isValidUser(userData) && applyForJob(parseInt(id), userData)
-                }
-                type="button"
-                className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-8 py-2">
-                Apply Now
-              </button>
             </div>
           </div>
         </div>
@@ -129,24 +102,7 @@ const DetailWork: React.FC<DetailWorkProps> = ({ data }) => {
               <h3 className="text-lg font-semibold text-slate-900 mb-4">Job Overview</h3>
               <ul className="space-y-3 text-sm text-slate-700">
                 <li className="flex items-center gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 111.414-11.314 8 8 0 0111.314 11.314z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
+                  <LocationIcon className="h-4 w-4" />
                   <span>{data.location}</span>
                 </li>
                 <li className="flex items-center gap-2">
