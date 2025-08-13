@@ -8,9 +8,9 @@ jobRoutes.post('/', protectRoute, JobsController.createJob);
 
 jobRoutes.get('/', JobsController.getJobs);
 
-jobRoutes.get('/:id', JobsController.getJob);
-
 jobRoutes.get('/categories/:category', JobsController.findByCategory);
+
+jobRoutes.get('/:id', JobsController.getJob);
 
 jobRoutes.delete('/:id', protectRoute, JobsController.deleteJob);
 

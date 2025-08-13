@@ -41,7 +41,7 @@ class Jobs {
         employer: true,
       },
     });
-    return [job];
+    return job as unknown as Jobs;
   }
 
   static async deleteJob(id: number): Promise<Jobs> {
@@ -51,15 +51,15 @@ class Jobs {
     return job;
   }
 
-  static async findByCategory(category: string): Promise<Jobs> {
-    return await prisma.job.findMany({
+  static async findByCategory(category: string): Promise<Jobs[]> {
+    return (await prisma.job.findMany({
       where: {
         categories: category,
       },
       include: {
         employer: true,
       },
-    });
+    })) as unknown as Jobs[];
   }
 }
 
