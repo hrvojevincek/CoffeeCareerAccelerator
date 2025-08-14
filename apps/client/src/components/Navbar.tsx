@@ -42,7 +42,7 @@ const Navbar = ({ children }: { children: React.ReactNode }) => {
               <Link
                 to={`/${typedUser.category}/${typedUser.id ? String(typedUser.id) : ''}`}
                 type="button"
-                className="inline-flex justify-center hover:text-gray-400 items-center text-lg font-medium text-center text-gray-50 border-b-2 border-white">
+                className="inline-flex items-center justify-center px-5 py-2 text-sm font-semibold text-white rounded-full border border-white/80 bg-transparent hover:text-white/90 hover:border-white focus:outline-none focus:ring-2 focus:ring-white/30">
                 My Dashboard
               </Link>
             ) : (
