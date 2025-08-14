@@ -98,8 +98,8 @@ app.use('/employers', employerRoutes);
 // Global error handler - must be after routes
 app.use(errorHandler);
 
-// Only start the server if not in test mode
-if (process.env.NODE_ENV !== 'test') {
+// Only start the server if not in test mode AND not on Vercel
+if (!process.env.VERCEL && process.env.NODE_ENV !== 'test') {
   const server = app.listen(config.server.port, () => {
     console.log(`🚀 Server listening on ${config.urls.server()} 🚀`);
   });
