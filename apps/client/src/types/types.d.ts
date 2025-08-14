@@ -4,6 +4,7 @@ export type JobData = {
   description: string;
   location: string;
   category: string;
+  money?: string;
   createdAt: string;
   updatedAt: string;
   employerId: number;

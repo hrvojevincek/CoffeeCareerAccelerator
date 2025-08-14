@@ -5,8 +5,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useMe } from '../hooks/useAuth';
 
-import type { JobData, User } from '../types/types.d';
-import { LocationIcon } from './ui/Icon';
+import type { JobData, User } from '../types/types';
+import { LocationIcon, ClockIcon, MenuIcon, UserCircleIcon, DollarSignIcon } from './ui/Icon';
 
 type DetailWorkProps = {
   data: JobData;
@@ -67,34 +67,11 @@ const DetailWork: React.FC<DetailWorkProps> = ({ data }) => {
   return (
     <div className="pt-32">
       <div className="max-w-6xl mx-auto px-5">
-        <div className="bg-white/90 rounded-xl shadow-sm p-6">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <p className="text-xs text-slate-500">Posted {moment(data.createdAt).fromNow()}</p>
-              <p className="text-lg font-semibold leading-7 text-slate-900">
-                {data.employer?.name || 'Company'}
-              </p>
-              <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-gray-900">
-                {data.title}
-              </h1>
-              <div className="mt-2 flex flex-wrap items-center gap-3 text-slate-600">
-                <div className="flex items-center gap-1">
-                  <LocationIcon className="h-4 w-4" />
-                  <span>{data.location}</span>
-                </div>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
-                  {data.category}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <div className="bg-white/90 rounded-xl shadow-sm p-6">
               <h2 className="text-xl font-semibold text-slate-900 mb-3">Job Description</h2>
-              <div className="prose max-w-none text-slate-700 whitespace-pre-line">
+              <div className="prose max-w-none  text-slate-700 whitespace-pre-line">
                 {data.description}
               </div>
             </div>
@@ -108,54 +85,20 @@ const DetailWork: React.FC<DetailWorkProps> = ({ data }) => {
                   <span>{data.location}</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3" />
-                    <circle cx="12" cy="12" r="10" />
-                  </svg>
+                  <ClockIcon className="h-4 w-4" />
                   <span>Posted {moment(data.createdAt).format('ll')}</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3 7h18M3 12h18M3 17h18"
-                    />
-                  </svg>
-                  <span>Category: {data.title}</span>
+                  <MenuIcon className="h-4 w-4" />
+                  <span>Category: {data.category}</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
+                  <UserCircleIcon className="h-4 w-4" />
                   <span>Employer: {data.employer?.name || 'Company'}</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <DollarSignIcon className="h-4 w-4" />
+                  <span>Money: {data.money || 'Not specified'}</span>
                 </li>
               </ul>
               <button
