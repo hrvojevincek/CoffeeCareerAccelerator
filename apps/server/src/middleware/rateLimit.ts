@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { config } from '../config/environment';
+import { config } from '../config/simple-config';
 
 // Enhanced in-memory rate limiter with different limits for different endpoints
 const requestCounts = new Map<string, { count: number; resetTime: number }>();

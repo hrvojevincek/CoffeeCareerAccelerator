@@ -8,7 +8,7 @@ class Experience {
     company: string,
     dates: string,
     description: string,
-    userId?: number
+    userId: number
   ): Promise<Partial<Experience | null>> {
     const experience = await prisma.experience.create({
       data: {

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import prisma from '../lib/prisma';
-import { config } from '../config/environment';
+import { config } from '../config/simple-config';
 import { AuthenticatedUser } from '../../types';
 
 interface JWTPayload {

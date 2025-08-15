@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import { generateTokenAndSetCookie } from '../lib/generateToken';
 import jwt from 'jsonwebtoken';
-import { config } from '../config/environment';
+import { config } from '../config/simple-config';
 
 export const signup = async (req: Request, res: Response) => {
   try {

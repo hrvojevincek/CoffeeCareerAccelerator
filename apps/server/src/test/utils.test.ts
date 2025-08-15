@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { config } from '../config/environment';
+import { config } from '../config/simple-config';
 
 // Mock timing-sensitive operations
 const dummyHash = '$2b$12$7Sl5OLm/x4HeRzvfP3hP8OpKOA.J0Xcbw3oUjHvy9heM/1bsenYsG';

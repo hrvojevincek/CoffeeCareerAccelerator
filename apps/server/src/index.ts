@@ -4,7 +4,6 @@ import express from 'express';
 import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
 import hpp from 'hpp';
-import { config } from './config/environment';
 import { errorHandler } from './middleware/errorHandler';
 import { apiRateLimit, getRateLimiterStats, stopCleanup } from './middleware/rateLimit';
 import authRoutes from './routes/auth.routes';
@@ -38,48 +37,49 @@ app.use(
   })
 );
 
-// Prevent NoSQL injection attacks
 app.use(mongoSanitize());
 
-// Prevent HTTP Parameter Pollution
 app.use(hpp());
 
-// Apply middleware
 app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
+      if (!origin) {
+        console.log('🔓 CORS: Allowing request with no origin');
+        return callback(null, true);
+      }
 
-      const allowedOrigins = Array.isArray(config.urls.client)
-        ? config.urls.client
-        : [config.urls.client];
+      const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173'];
+      console.log(`🌐 CORS: Checking origin: ${origin}`);
+      console.log(`✅ CORS: Allowed origins: ${allowedOrigins.join(', ')}`);
 
-      if (allowedOrigins.indexOf(origin) !== -1) {
+      if (allowedOrigins.includes(origin)) {
+        console.log(`✅ CORS: Origin ${origin} is allowed`);
         callback(null, true);
       } else {
-        console.warn(`Origin ${origin} not allowed by CORS`);
-        callback(null, true); // Still allow for development purposes
+        console.log(`🔓 CORS: Allowing origin ${origin} in development mode`);
+        callback(null, true);
       }
     },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    exposedHeaders: ['Set-Cookie'],
   })
 );
 
-// Apply rate limiting
 app.use(apiRateLimit);
 
-// Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
-    environment: config.server.nodeEnv,
-    serverUrl: config.urls.server(),
+    environment: process.env.NODE_ENV || 'development',
+    serverUrl: `http://localhost:${process.env.PORT || 8080}`,
   });
 });
 
-// Rate limiter stats endpoint (for monitoring)
 app.get('/health/rate-limiter', (req, res) => {
   const stats = getRateLimiterStats();
   res.status(200).json({
@@ -89,55 +89,46 @@ app.get('/health/rate-limiter', (req, res) => {
   });
 });
 
-// Routes
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/jobs', jobRoutes);
 app.use('/employers', employerRoutes);
 
-// Global error handler - must be after routes
 app.use(errorHandler);
 
-// Only start the server if not in test mode AND not on Vercel
 if (!process.env.VERCEL && process.env.NODE_ENV !== 'test') {
-  const server = app.listen(config.server.port, () => {
-    console.log(`🚀 Server listening on ${config.urls.server()} 🚀`);
+  const server = app.listen(process.env.PORT || 8080, () => {
+    console.log(`🚀 Server listening on http://localhost:${process.env.PORT || 8080} 🚀`);
+    console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🌐 Database: Local Docker PostgreSQL (localhost:5434)`);
   });
 
-  // Graceful shutdown handlers
   const gracefulShutdown = (signal: string) => {
     console.log(`\n🔄 Received ${signal}. Starting graceful shutdown...`);
 
-    // Stop accepting new connections
     server.close(() => {
       console.log('💯 HTTP server closed.');
 
-      // Stop rate limiter cleanup interval
       stopCleanup();
 
-      // Exit process
       process.exit(0);
     });
 
-    // Force close server after 30 seconds
     setTimeout(() => {
       console.error('⚠️ Could not close connections in time, forcefully shutting down');
       process.exit(1);
     }, 30000);
   };
 
-  // Listen for shutdown signals
   process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
   process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
-  // Handle uncaught exceptions
   process.on('uncaughtException', error => {
     console.error('💥 Uncaught Exception:', error);
     stopCleanup();
     process.exit(1);
   });
 
-  // Handle unhandled promise rejections
   process.on('unhandledRejection', (reason, promise) => {
     console.error('💥 Unhandled Rejection at:', promise, 'reason:', reason);
     stopCleanup();

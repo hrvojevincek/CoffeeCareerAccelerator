@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { config } from '../config/environment';
+import { config } from '../config/simple-config';
 
 export const generateTokenAndSetCookie = (userId: string, res: Response) => {
   // Access token - short lived
