@@ -8,9 +8,6 @@ const getBaseUrl = (): string => {
   const prodUrl = import.meta.env.VITE_PROD_API_URL;
   const isProd = import.meta.env.PROD;
 
-  console.log('VITE_PROD_API_URL:', prodUrl);
-  console.log('Production mode:', isProd);
-
   // Check if we're in a production build
   if (isProd) {
     // Use the configured URL or fall back to the known production API URL

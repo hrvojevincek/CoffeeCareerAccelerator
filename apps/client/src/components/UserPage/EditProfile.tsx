@@ -1,49 +1,9 @@
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
 
 import type { UserProfile } from '../../types/types';
-import type { SubmitHandler } from 'react-hook-form';
-
-interface ApiResponse {
-  success: boolean;
-  data?: unknown;
-  message?: string;
-}
 
 function EditProfile() {
-  const { register, handleSubmit } = useForm<UserProfile>();
-  const { id } = useParams<{ id: string }>();
-
-  const onSubmitDetails: SubmitHandler<UserProfile> = async data => {
-    if (!id) {
-      console.error('User ID is undefined');
-      return;
-    }
-
-    const requestOptions: RequestInit = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ data }),
-      redirect: 'follow',
-    };
-    try {
-      const response = await fetch(`http://localhost:8080/user/${id}/edit`, requestOptions);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = (await response.json()) as ApiResponse;
-      // Log only in development environment
-      if (process.env.NODE_ENV === 'development') {
-        console.log(result);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { register } = useForm<UserProfile>();
 
   return (
     <section className="bg-white">
@@ -53,7 +13,7 @@ function EditProfile() {
             <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl md:text-2xl">
               Add your details
             </h1>
-            <form onSubmit={handleSubmit(onSubmitDetails)} className="mt-8 grid grid-cols-6 gap-6">
+            <form className="mt-8 grid grid-cols-6 gap-6">
               <div className="col-span-6 sm:col-span-3">
                 <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
                   First Name

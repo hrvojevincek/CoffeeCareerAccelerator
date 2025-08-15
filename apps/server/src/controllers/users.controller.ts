@@ -1,8 +1,8 @@
-import bcrypt from "bcrypt";
-import dotenv from "dotenv";
-import { NextFunction, Request, Response } from "express";
-import Application from "../models/Application";
-import User from "../models/Users";
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+import { NextFunction, Request, Response } from 'express';
+import Application from '../models/Application';
+import User from '../models/Users';
 
 dotenv.config();
 
@@ -23,16 +23,16 @@ const UsersController = {
     try {
       const { password, username, email, category } = req.body.data;
       if (!username) {
-        throw new Error("Missing parameters: username");
+        throw new Error('Missing parameters: username');
       }
       if (!password) {
-        throw new Error("Missing parameters: password");
+        throw new Error('Missing parameters: password');
       }
       const hashPassword = await bcrypt.hash(password, 10);
 
       await User.createUser(username, hashPassword, email, category);
 
-      res.status(201).json({ message: "User created successfully" });
+      res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
       next(error);
     }
@@ -55,7 +55,7 @@ const UsersController = {
       if (user) {
         res.status(201).json(user);
       } else {
-        res.status(404).json({ message: "User not found" });
+        res.status(404).json({ message: 'User not found' });
       }
     } catch (error) {
       next(error);
@@ -70,11 +70,11 @@ const UsersController = {
 
       const updatedUser = await User.updateUser(
         parseInt(userId),
-        email || "",
-        name || "",
-        surname || "",
-        city || "",
-        bio || ""
+        email || '',
+        name || '',
+        surname || '',
+        city || '',
+        bio || ''
       );
       return res.json(updatedUser);
     } catch (error) {
@@ -83,7 +83,6 @@ const UsersController = {
     }
   },
   async createApplication(req: Request, res: Response, next: NextFunction) {
-    console.log(req.body);
     try {
       const { jobId, userId } = req.body;
       const newApplication = await Application.createApplication({
@@ -93,7 +92,7 @@ const UsersController = {
 
       res.status(201).json(newApplication);
     } catch (error) {
-      res.status(500).json({ message: "createApp controller fault" });
+      res.status(500).json({ message: 'createApp controller fault' });
       next(error);
     }
   },
