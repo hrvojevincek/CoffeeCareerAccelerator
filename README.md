@@ -1,85 +1,146 @@
-# Full Stack Project @ Software Engineer Program Mentorship @ Arol.Dev
-Frontend: React, FlowbiteUI, ContextAPI
-Backend: Node, Express, Prisma, Postgrsql
+# ☕ Coffee Career Accelerator
 
-## Full Stack CoffeeCareerAccelerator with React, Tailwind, Prisma, Postgrsql
+A full-stack job board platform that connects coffee industry professionals with employment opportunities. Built with modern technologies for a seamless job search experience.
 
-A user-friendly platform that connects job seekers with various employment opportunities. It simplifies the job search process, allowing users to create an account, explore job categories, search for jobs by city, and browse through listings. Each job listing provides detailed information about the employer, enabling users to make informed decisions. The website aims to streamline the job search experience for a seamless and efficient process.
+## 🚀 Tech Stack
 
-## Prerequisites
-Node version 14.x
+- **Frontend**: React, Tailwind CSS, Context API
+- **Backend**: Node.js, Express, Prisma ORM
+- **Database**: PostgreSQL (Docker for local development)
+- **Package Manager**: npm (with Turborepo for monorepo management)
 
-## Cloning the repository
-```git clone https://github.com/hrvojevincek/CofeeCareerAccelerator.git```
+## 📋 Prerequisites
 
-## Install packages
-```yarn```
+- **Node.js**: Version 18.x or higher
+- **Docker**: For local PostgreSQL database
+- **Git**: For version control
 
-## Setup .env file
+## 🛠️ Local Development Setup
 
-```DATABASE_URL=```
+### 1. Clone the Repository
 
-## Start application
-```yarn run dev```
-
-## 🚀 MCP (Model Context Protocol) Setup
-
-This project supports AI-powered database management through Neon's MCP Server, allowing you to interact with your PostgreSQL database using natural language commands.
-
-### Prerequisites
-- Neon PostgreSQL database account
-- Neon API key
-- Cursor IDE (or other MCP-compatible client)
-
-### Setup Steps
-
-1. **Install MCP Server Package**
-   ```bash
-   cd apps/server
-   npm install --save-dev @neondatabase/mcp-server-neon
-   ```
-
-2. **Get Your Neon API Key**
-   - Go to [Neon Console](https://console.neon.tech)
-   - Navigate to API Keys in your account settings
-   - Create or copy your API key
-
-3. **Configure MCP in Cursor**
-   - Copy `mcp-config.example.json` to `mcp-config.json`
-   - Replace `<YOUR_NEON_API_KEY>` with your actual API key
-   - Open Cursor Settings (Cmd/Ctrl + ,)
-   - Search for "MCP" and add the configuration
-
-4. **Test MCP Connection**
-   ```bash
-   export NEON_API_KEY="your_api_key_here"
-   npx @neondatabase/mcp-server-neon start $NEON_API_KEY
-   ```
-
-### Available MCP Commands
-Once configured, you can use natural language commands like:
-- "List my Neon projects"
-- "Show tables in my database"
-- "Run a query to see all users"
-- "Create a new table for job applications"
-
-### Security Note
-- **Never commit** `mcp-config.json` to version control
-- Only use MCP for development, never in production
-- Keep your API key secure and private
-
-### Example Configuration
-```json
-{
-  "mcpServers": {
-    "neon": {
-      "command": "npx",
-      "args": [
-        "@neondatabase/mcp-server-neon",
-        "start",
-        "<YOUR_NEON_API_KEY>"
-      ]
-    }
-  }
-}
+```bash
+git clone https://github.com/hrvojevincek/CoffeeCareerAccelerator.git
+cd CoffeeCareerAccelerator
 ```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Environment Configuration
+
+Create a `.env` file in the `apps/server/` directory:
+
+```bash
+# Local Docker PostgreSQL Database
+DATABASE_URL="postgresql://postgres:postgres@localhost:5434/jobsboard"
+LOCAL_DATABASE_URL="postgresql://postgres:postgres@localhost:5434/jobsboard"
+
+# Development environment
+NODE_ENV=development
+
+# JWT Secrets (replace with your own secure secrets)
+JWT_SECRET="your_secure_jwt_secret_here_minimum_32_characters_long"
+JWT_REFRESH_SECRET="your_secure_refresh_secret_here_minimum_32_characters_long"
+COOKIE_SECRET="your_secure_cookie_secret_here_minimum_32_characters_long"
+
+# Other configuration
+BCRYPT_ROUNDS=12
+MAX_LOGIN_ATTEMPTS=5
+LOCK_TIME=7200000
+```
+
+### 4. Start Development Environment
+
+#### **Option A: Start Everything (Recommended)**
+
+```bash
+npm run dev
+```
+
+This will automatically:
+
+- 🐳 Start Docker PostgreSQL container
+- 🔧 Generate Prisma client
+- 🚀 Start both frontend and backend servers
+
+#### **Option B: Start Individual Services**
+
+```bash
+# Start only the backend (with Docker database)
+cd apps/server
+npm run dev
+
+# Start only the frontend
+cd apps/client
+npm run dev
+```
+
+### 5. Access Your Application
+
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:8080
+- **Database**: PostgreSQL on localhost:5434
+
+## 🗄️ Database Management
+
+### **Local Docker Database**
+
+- **Host**: localhost:5434
+- **Database**: jobsboard
+- **Username**: postgres
+- **Password**: postgres
+
+### **Database Commands**
+
+```bash
+# Generate Prisma client
+npx prisma generate
+
+# Run database migrations
+npx prisma migrate dev
+
+# Seed database with sample data
+npx prisma db seed
+
+# Open Prisma Studio (database GUI)
+npx prisma studio
+```
+
+### **Docker Commands**
+
+```bash
+# Stop database
+npm run docker:stop
+
+# Restart database
+npm run docker:restart
+
+# View running containers
+docker ps
+```
+
+## 🔧 Available Scripts
+
+### **Root Level (Monorepo)**
+
+- `npm run dev` - Start both frontend and backend
+- `npm run build` - Build all applications
+- `npm run lint` - Run linting across all packages
+
+### **Backend (apps/server)**
+
+- `npm run dev` - Start server with Docker database
+- `npm run dev:local` - Force local Docker database
+- `npm run docker:stop` - Stop Docker container
+- `npm run docker:restart` - Restart Docker container
+- `npm run seed` - Seed database with sample data
+
+### **Frontend (apps/client)**
+
+- `npm run dev` - Start Vite development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
